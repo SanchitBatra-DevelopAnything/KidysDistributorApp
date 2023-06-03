@@ -44,7 +44,7 @@ class _TermsAndConditionsPageState extends State<TermsAndConditionsPage> {
         children: <Widget>[
           PDFView(
             filePath: widget.path,
-            enableSwipe: false,
+            enableSwipe: true,
             swipeHorizontal: true,
             autoSpacing: false,
             pageFling: true,

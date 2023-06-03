@@ -16,7 +16,7 @@ class _BottomSheetModalState extends State<BottomSheetModal> {
       color: Colors.transparent,
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Color(0xffE6E3D3),
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(16.0),
             topRight: Radius.circular(16.0),
@@ -74,7 +74,10 @@ class _BottomSheetModalState extends State<BottomSheetModal> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 CupertinoButton(
-                  child: Text('Accept'),
+                  child: Text(
+                    'Accept',
+                    style: TextStyle(color: Color(0xffdd0e1c)),
+                  ),
                   onPressed: termsAccepted
                       ? () {
                           // Handle accept button press
@@ -82,9 +85,13 @@ class _BottomSheetModalState extends State<BottomSheetModal> {
                       : null,
                 ),
                 CupertinoButton(
-                  child: Text('Exit'),
+                  child: Text(
+                    'Exit',
+                    style: TextStyle(color: Color(0xffdd0e1c)),
+                  ),
                   onPressed: () {
                     // Handle exit button press
+                    Navigator.pop(context);
                   },
                 ),
               ],

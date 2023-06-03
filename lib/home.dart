@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'bottomSheetModal.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -9,6 +11,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  void _showBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) => BottomSheetModal(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,7 +42,9 @@ class _HomePageState extends State<HomePage> {
               height: 16,
             ),
             CupertinoButton(
-              onPressed: () {},
+              onPressed: () {
+                _showBottomSheet(context);
+              },
               color: Color(0xffdd0e1c),
               child: Text(
                 "LOGIN",

@@ -1,6 +1,12 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:kidys_distributor/termsAndConditions.dart';
+import 'package:path_provider/path_provider.dart';
 
 class BottomSheetModal extends StatefulWidget {
   @override
@@ -9,6 +15,36 @@ class BottomSheetModal extends StatefulWidget {
 
 class _BottomSheetModalState extends State<BottomSheetModal> {
   bool termsAccepted = false;
+  String pathPDF = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    fromAsset('assets/tnc.pdf', 'tnc.pdf').then((f) {
+      setState(() {
+        pathPDF = f.path;
+      });
+    });
+    super.initState();
+  }
+
+  Future<File> fromAsset(String asset, String filename) async {
+    // To open from assets, you can copy them to the app storage folder, and the access them "locally"
+    Completer<File> completer = Completer();
+
+    try {
+      var dir = await getApplicationDocumentsDirectory();
+      File file = File("${dir.path}/$filename");
+      var data = await rootBundle.load(asset);
+      var bytes = data.buffer.asUint8List();
+      await file.writeAsBytes(bytes, flush: true);
+      completer.complete(file);
+    } catch (e) {
+      throw Exception('Error parsing asset file!');
+    }
+
+    return completer.future;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,9 +97,15 @@ class _BottomSheetModalState extends State<BottomSheetModal> {
                       ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          // Navigate to a different page with the terms and conditions
-                          // You can use Navigator.push() to navigate to a new page
-                          Navigator.pushNamed(context, '/termsAndConditions');
+                          if (pathPDF.isNotEmpty) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    TermsAndConditionsPage(path: pathPDF),
+                              ),
+                            );
+                          }
                         },
                     ),
                   ],

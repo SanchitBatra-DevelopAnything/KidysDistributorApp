@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kidys_distributor/home.dart';
 import 'package:kidys_distributor/termsAndConditions.dart';
 
-void main() {
+Future<void> main() async {
   runApp(const MyApp());
 }
 

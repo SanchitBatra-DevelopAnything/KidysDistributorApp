@@ -2,8 +2,22 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class TermsAndConditionsPage extends StatelessWidget {
+  PreferredSizeWidget? _buildAppBar(BuildContext context) {
+    if (Platform.isIOS) {
+      return CupertinoNavigationBar(
+        middle: Text('TERMS AND CONDITIONS'),
+        backgroundColor: Color(0xffE6E3D3),
+      );
+    } else {
+      return AppBar(
+        title: Text('TERMS AND CONDITIONS'),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,18 +49,5 @@ class TermsAndConditionsPage extends StatelessWidget {
         )),
       ),
     );
-  }
-
-  PreferredSizeWidget? _buildAppBar(BuildContext context) {
-    if (Platform.isIOS) {
-      return CupertinoNavigationBar(
-        middle: Text('TERMS AND CONDITIONS'),
-        backgroundColor: Color(0xffE6E3D3),
-      );
-    } else {
-      return AppBar(
-        title: Text('TERMS AND CONDITIONS'),
-      );
-    }
   }
 }

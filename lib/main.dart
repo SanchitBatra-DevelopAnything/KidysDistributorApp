@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kidys_distributor/home.dart';
+import 'package:kidys_distributor/termsAndConditions.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,7 +26,11 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const HomePage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => HomePage(),
+        '/termsAndConditions': (context) => TermsAndConditionsPage(),
+      },
       debugShowCheckedModeBanner: false,
     );
   }

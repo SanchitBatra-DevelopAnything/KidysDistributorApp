@@ -63,6 +63,7 @@ class _BottomSheetModalState extends State<BottomSheetModal> {
                         ..onTap = () {
                           // Navigate to a different page with the terms and conditions
                           // You can use Navigator.push() to navigate to a new page
+                          Navigator.pushNamed(context, '/termsAndConditions');
                         },
                     ),
                   ],

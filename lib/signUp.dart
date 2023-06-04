@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:kidys_distributor/PlatformTextField.dart';
 
@@ -11,9 +13,11 @@ class SignUpForm extends StatefulWidget {
 class _SignUpFormState extends State<SignUpForm> {
   TextEditingController usernameController = TextEditingController();
   final FocusScopeNode _focusScopeNode = FocusScopeNode();
+  String? selectedArea;
 
   @override
   Widget build(BuildContext context) {
+    final areas = ["AREA 1", "AREA 2", "AREA 3", "AREA 4"];
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0XFFE6E3D3),
@@ -46,12 +50,87 @@ class _SignUpFormState extends State<SignUpForm> {
                               fontSize: 30, fontWeight: FontWeight.bold),
                         ),
                         Text("Create your profile to become our distributor!",
-                            style: TextStyle(fontWeight: FontWeight.bold))
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ))
                       ],
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 30),
                     PlatformTextField(
-                        labelText: "Username", controller: usernameController)
+                        labelText: "Your Name", controller: usernameController),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(20),
+                      width: MediaQuery.of(context).size.width,
+                      child: DropdownButton<String>(
+                          items: areas.map(buildMenuItem).toList(),
+                          isExpanded: true,
+                          focusColor: Color(0xffe6e3d3),
+                          hint: Text(
+                            "Select Area",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 15),
+                          ),
+                          dropdownColor: Color(0XFFE6E3D3),
+                          iconSize: 36,
+                          icon: Icon(Icons.arrow_drop_down,
+                              color: Color(0xffDD0E1C)),
+                          value: selectedArea,
+                          style: TextStyle(color: Colors.black),
+                          onChanged: (value) => {
+                                setState(
+                                  () => this.selectedArea = value,
+                                )
+                              }),
+                    ),
+                    SizedBox(
+                      height: 22,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CupertinoButton(
+                          onPressed: () {},
+                          color: Color(0XFFDD0E1C),
+                          child: Text(
+                            "Sign Up",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'Already signed up and received approval? ',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          TextSpan(
+                            text: 'Login',
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 15,
+                              decoration: TextDecoration.underline,
+                            ),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                //open bottom sheet.
+                              },
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -62,3 +141,11 @@ class _SignUpFormState extends State<SignUpForm> {
     );
   }
 }
+
+DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
+    value: item,
+    child: Text(item,
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 15,
+        )));

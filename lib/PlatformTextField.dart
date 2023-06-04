@@ -15,6 +15,7 @@ class PlatformTextField extends StatelessWidget {
         ? CupertinoTextField(
             placeholder: labelText,
             controller: controller,
+            autocorrect: false,
             showCursor: true,
             cursorColor: CupertinoColors.activeGreen,
             prefix: CupertinoButton(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kidys_distributor/home.dart';
+import 'package:kidys_distributor/signUp.dart';
 import 'package:kidys_distributor/termsAndConditions.dart';
 
 Future<void> main() async {
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => HomePage(),
         '/termsAndConditions': (context) => TermsAndConditionsPage(),
+        '/signup': (context) => SignUpForm(),
       },
       debugShowCheckedModeBanner: false,
     );

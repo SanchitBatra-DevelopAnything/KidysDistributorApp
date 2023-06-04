@@ -56,7 +56,9 @@ class _HomePageState extends State<HomePage> {
               height: 16,
             ),
             CupertinoButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, '/signup');
+              },
               color: Color(0xffdd0e1c),
               child: Text(
                 "SIGN UP",

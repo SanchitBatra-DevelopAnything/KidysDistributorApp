@@ -12,6 +12,7 @@ class SignUpForm extends StatefulWidget {
 
 class _SignUpFormState extends State<SignUpForm> {
   TextEditingController usernameController = TextEditingController();
+  TextEditingController GSTController = TextEditingController();
   final FocusScopeNode _focusScopeNode = FocusScopeNode();
   String? selectedArea;
 
@@ -55,9 +56,14 @@ class _SignUpFormState extends State<SignUpForm> {
                             ))
                       ],
                     ),
-                    SizedBox(height: 30),
+                    SizedBox(height: 20),
                     PlatformTextField(
-                        labelText: "Your Name", controller: usernameController),
+                        labelText: "YOUR NAME", controller: usernameController),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    PlatformTextField(
+                        labelText: "GST NUMBER", controller: GSTController),
                     SizedBox(
                       height: 10,
                     ),
@@ -86,7 +92,7 @@ class _SignUpFormState extends State<SignUpForm> {
                               }),
                     ),
                     SizedBox(
-                      height: 22,
+                      height: 20,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -106,30 +112,35 @@ class _SignUpFormState extends State<SignUpForm> {
                     SizedBox(
                       height: 20,
                     ),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'Already signed up and received approval? ',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: 'Already Registered? ',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              TextSpan(
+                                text: 'Login',
+                                style: TextStyle(
+                                  color: Colors.blue,
+                                  fontSize: 15,
+                                  decoration: TextDecoration.underline,
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    //open bottom sheet.
+                                  },
+                              ),
+                            ],
                           ),
-                          TextSpan(
-                            text: 'Login',
-                            style: TextStyle(
-                              color: Colors.blue,
-                              fontSize: 15,
-                              decoration: TextDecoration.underline,
-                            ),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                //open bottom sheet.
-                              },
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

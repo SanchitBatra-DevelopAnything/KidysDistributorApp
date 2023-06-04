@@ -124,6 +124,10 @@ class _BottomSheetModalState extends State<BottomSheetModal> {
                   onPressed: termsAccepted
                       ? () {
                           // Handle accept button press
+                          if (termsAccepted) {
+                            Navigator.pop(context);
+                            Navigator.pushReplacementNamed(context, '/login');
+                          }
                         }
                       : null,
                 ),

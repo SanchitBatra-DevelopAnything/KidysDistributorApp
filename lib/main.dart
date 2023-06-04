@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kidys_distributor/home.dart';
+import 'package:kidys_distributor/login.dart';
 import 'package:kidys_distributor/signUp.dart';
 import 'package:kidys_distributor/termsAndConditions.dart';
 
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
         '/': (context) => HomePage(),
         '/termsAndConditions': (context) => TermsAndConditionsPage(),
         '/signup': (context) => SignUpForm(),
+        '/login': (context) => LoginPage(),
       },
       debugShowCheckedModeBanner: false,
     );

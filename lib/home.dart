@@ -57,7 +57,7 @@ class _HomePageState extends State<HomePage> {
             ),
             CupertinoButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/signup');
+                Navigator.pushReplacementNamed(context, '/signup');
               },
               color: Color(0xffdd0e1c),
               child: Text(

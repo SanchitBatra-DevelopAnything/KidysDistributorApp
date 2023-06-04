@@ -3,6 +3,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:kidys_distributor/PlatformTextField.dart';
 
+import 'bottomSheetModal.dart';
+
 class SignUpForm extends StatefulWidget {
   const SignUpForm({Key? key}) : super(key: key);
 
@@ -15,6 +17,13 @@ class _SignUpFormState extends State<SignUpForm> {
   TextEditingController GSTController = TextEditingController();
   final FocusScopeNode _focusScopeNode = FocusScopeNode();
   String? selectedArea;
+
+  void _showBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) => BottomSheetModal(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,12 +67,18 @@ class _SignUpFormState extends State<SignUpForm> {
                     ),
                     SizedBox(height: 20),
                     PlatformTextField(
-                        labelText: "YOUR NAME", controller: usernameController),
+                      labelText: "YOUR NAME",
+                      controller: usernameController,
+                      type: TextInputType.text,
+                    ),
                     SizedBox(
                       height: 20,
                     ),
                     PlatformTextField(
-                        labelText: "GST NUMBER", controller: GSTController),
+                      labelText: "GST NUMBER",
+                      controller: GSTController,
+                      type: TextInputType.number,
+                    ),
                     SizedBox(
                       height: 10,
                     ),
@@ -135,6 +150,7 @@ class _SignUpFormState extends State<SignUpForm> {
                                 recognizer: TapGestureRecognizer()
                                   ..onTap = () {
                                     //open bottom sheet.
+                                    _showBottomSheet(context);
                                   },
                               ),
                             ],

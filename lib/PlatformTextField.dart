@@ -4,15 +4,20 @@ import 'package:flutter/material.dart';
 class PlatformTextField extends StatelessWidget {
   final String labelText;
   final TextEditingController controller;
+  final TextInputType type;
 
   const PlatformTextField(
-      {Key? key, required this.labelText, required this.controller})
+      {Key? key,
+      required this.labelText,
+      required this.controller,
+      required this.type})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Theme.of(context).platform == TargetPlatform.iOS
         ? CupertinoTextField(
+            keyboardType: type,
             placeholder: labelText,
             controller: controller,
             autocorrect: false,
@@ -35,6 +40,7 @@ class PlatformTextField extends StatelessWidget {
           )
         : TextFormField(
             style: TextStyle(fontSize: 18),
+            keyboardType: type,
             decoration: InputDecoration(
                 label: Text(labelText),
                 border: OutlineInputBorder(

@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:kidys_distributor/home.dart';
 import 'package:kidys_distributor/login.dart';
+import 'package:kidys_distributor/providers/auth.dart';
 import 'package:kidys_distributor/signUp.dart';
 import 'package:kidys_distributor/termsAndConditions.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   runApp(const MyApp());
@@ -12,6 +16,26 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(providers: [
+      ChangeNotifierProvider(create: (context) => AuthProvider()),
+    ], child: MaterialAppWithInitialRoute());
+  }
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
+
+class MaterialAppWithInitialRoute extends StatelessWidget {
+  const MaterialAppWithInitialRoute({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

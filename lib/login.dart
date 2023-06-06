@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kidys_distributor/providers/auth.dart';
 import 'package:kidys_distributor/signUp.dart';
+import 'package:provider/provider.dart';
 
 import 'PlatformTextField.dart';
 
@@ -15,10 +17,21 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController usernameController = TextEditingController();
   final FocusScopeNode _focusScopeNode = FocusScopeNode();
   String? selectedArea;
+  bool _isFirstTime = true;
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    if (_isFirstTime) {
+      Provider.of<AuthProvider>(context, listen: false).fetchAreasFromDB();
+    }
+    _isFirstTime = false; //never run the above if again.
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final areas = ["AREA 1", "AREA 2", "AREA 3", "AREA 4"];
+    final areas = Provider.of<AuthProvider>(context).areaNames;
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0XFFE6E3D3),

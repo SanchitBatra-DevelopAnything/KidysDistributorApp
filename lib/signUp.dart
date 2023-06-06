@@ -7,7 +7,6 @@ import 'package:kidys_distributor/PlatformTextField.dart';
 import 'package:kidys_distributor/providers/auth.dart';
 import 'package:provider/provider.dart';
 
-import 'PlatformDialog.dart';
 import 'bottomSheetModal.dart';
 
 class SignUpForm extends StatefulWidget {
@@ -32,6 +31,22 @@ class _SignUpFormState extends State<SignUpForm> {
     );
   }
 
+  Future<void> signUp(BuildContext context) async {
+    setState(() {
+      isSigningUp = true;
+    });
+
+    await Provider.of<AuthProvider>(context, listen: false).distributorSignUp(
+        usernameController.text.trim().toString().toUpperCase(),
+        selectedArea.toString().trim().toUpperCase(),
+        GSTController.text.trim());
+
+    setState(() {
+      showAlertDialog(context);
+      isSigningUp = false;
+    });
+  }
+
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
@@ -45,7 +60,7 @@ class _SignUpFormState extends State<SignUpForm> {
   showAlertDialog(BuildContext context) {
     showDialog(
         context: context,
-        builder: (context) => PlatformDialog(
+        builder: (context) => const PlatformDialog(
             title: "Signed Up!",
             content:
                 "Please wait for the notification approval before you login."));
@@ -80,24 +95,25 @@ class _SignUpFormState extends State<SignUpForm> {
                           height: MediaQuery.of(context).size.height * 0.2,
                           fit: BoxFit.contain,
                         ),
-                        Text(
+                        const Text(
                           "Get On Board!",
                           style: TextStyle(
                               fontSize: 30, fontWeight: FontWeight.bold),
                         ),
-                        Text("Create your profile to become our distributor!",
+                        const Text(
+                            "Create your profile to become our distributor!",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                             ))
                       ],
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     PlatformTextField(
                       labelText: "YOUR NAME",
                       controller: usernameController,
                       type: TextInputType.text,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     PlatformTextField(
@@ -105,24 +121,24 @@ class _SignUpFormState extends State<SignUpForm> {
                       controller: GSTController,
                       type: TextInputType.number,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Container(
-                      padding: EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(20),
                       width: MediaQuery.of(context).size.width,
                       child: DropdownButton<String>(
                           items: areas.map(buildMenuItem).toList(),
                           isExpanded: true,
                           focusColor: Color(0xffe6e3d3),
-                          hint: Text(
+                          hint: const Text(
                             "Select Area",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 15),
                           ),
                           dropdownColor: Color(0XFFE6E3D3),
                           iconSize: 36,
-                          icon: Icon(Icons.arrow_drop_down,
+                          icon: const Icon(Icons.arrow_drop_down,
                               color: Color(0xffDD0E1C)),
                           value: selectedArea,
                           style: TextStyle(color: Colors.black),
@@ -141,7 +157,7 @@ class _SignUpFormState extends State<SignUpForm> {
                         !isSigningUp
                             ? CupertinoButton(
                                 onPressed: () {
-                                  showAlertDialog(context);
+                                  signUp(context);
                                 },
                                 color: Color(0XFFDD0E1C),
                                 child: Text(

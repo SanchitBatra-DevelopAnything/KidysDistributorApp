@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:kidys_distributor/PlatformDialog.dart';
 import 'package:kidys_distributor/PlatformTextField.dart';
 import 'package:kidys_distributor/providers/auth.dart';
 import 'package:provider/provider.dart';
 
+import 'PlatformDialog.dart';
 import 'bottomSheetModal.dart';
 
 class SignUpForm extends StatefulWidget {
@@ -20,6 +23,7 @@ class _SignUpFormState extends State<SignUpForm> {
   final FocusScopeNode _focusScopeNode = FocusScopeNode();
   String? selectedArea;
   bool _isFirstTime = true;
+  bool isSigningUp = false;
 
   void _showBottomSheet(BuildContext context) {
     showModalBottomSheet(
@@ -36,6 +40,15 @@ class _SignUpFormState extends State<SignUpForm> {
     }
     _isFirstTime = false; //never run the above if again.
     super.didChangeDependencies();
+  }
+
+  showAlertDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) => PlatformDialog(
+            title: "Signed Up!",
+            content:
+                "Please wait for the notification approval before you login."));
   }
 
   @override
@@ -125,16 +138,23 @@ class _SignUpFormState extends State<SignUpForm> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        CupertinoButton(
-                          onPressed: () {},
-                          color: Color(0XFFDD0E1C),
-                          child: Text(
-                            "Sign Up",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
+                        !isSigningUp
+                            ? CupertinoButton(
+                                onPressed: () {
+                                  showAlertDialog(context);
+                                },
+                                color: Color(0XFFDD0E1C),
+                                child: Text(
+                                  "Sign Up",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              )
+                            : SpinKitPulse(
+                                color: Color(0xffDD0E1C),
+                                size: 50.0,
+                              ),
                       ],
                     ),
                     SizedBox(

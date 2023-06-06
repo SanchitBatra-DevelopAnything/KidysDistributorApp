@@ -36,7 +36,7 @@ class AuthProvider with ChangeNotifier {
       String distributorName, String area, String GSTNumber) async {
     //send http post here.
     const url =
-        "https://kidysadminapp-default-rtdb.firebaseio.com/distributorNotifications.json";
+        "https://kidysadminapp-default-rtdb.firebaseio.com/DistributorNotifications.json";
     await http.post(Uri.parse(url),
         body: json.encode({
           'distributorName': distributorName,

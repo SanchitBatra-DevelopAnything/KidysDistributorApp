@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:kidys_distributor/providers/auth.dart';
 import 'package:kidys_distributor/signUp.dart';
 import 'package:provider/provider.dart';
@@ -18,12 +19,28 @@ class _LoginPageState extends State<LoginPage> {
   final FocusScopeNode _focusScopeNode = FocusScopeNode();
   String? selectedArea;
   bool _isFirstTime = true;
+  bool isLoading = true;
 
   @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
+    if (!mounted) {
+      return;
+    }
     if (_isFirstTime) {
       Provider.of<AuthProvider>(context, listen: false).fetchAreasFromDB();
+      if (mounted) {
+        setState(() {
+          isLoading = true;
+        });
+      }
+      Provider.of<AuthProvider>(context, listen: false)
+          .fetchDistributorsFromDB()
+          .then((value) => {
+                setState(
+                  () => isLoading = false,
+                )
+              });
     }
     _isFirstTime = false; //never run the above if again.
     super.didChangeDependencies();
@@ -108,16 +125,21 @@ class _LoginPageState extends State<LoginPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        CupertinoButton(
-                          onPressed: () {},
-                          color: Color(0XFFDD0E1C),
-                          child: Text(
-                            "Login",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
+                        !isLoading
+                            ? CupertinoButton(
+                                onPressed: () {},
+                                color: Color(0XFFDD0E1C),
+                                child: Text(
+                                  "Login",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              )
+                            : SpinKitPulse(
+                                color: Color(0xffDD0E1C),
+                                size: 50.0,
+                              ),
                       ],
                     ),
                   ],

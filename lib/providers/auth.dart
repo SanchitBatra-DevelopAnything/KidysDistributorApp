@@ -63,4 +63,26 @@ class AuthProvider with ChangeNotifier {
       throw error;
     }
   }
+
+  Future<void> fetchDistributorsFromDB() async {
+    const url =
+        "https://kidysadminapp-default-rtdb.firebaseio.com/Distributors.json";
+    try {
+      final response = await http.get(Uri.parse(url));
+      final List<Distributor> loadedDistributors = [];
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+      extractedData.forEach((distributorId, distributorData) {
+        loadedDistributors.add(Distributor(
+            id: distributorId,
+            area: distributorData['area'],
+            distributorName: distributorData['distributorName'],
+            attached_price_list: distributorData['attachedPriceList'],
+            GSTNumber: distributorData['GST']));
+      });
+      _distributors = loadedDistributors;
+      notifyListeners();
+    } catch (error) {
+      throw error;
+    }
+  }
 }

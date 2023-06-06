@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:kidys_distributor/providers/auth.dart';
 import 'package:kidys_distributor/signUp.dart';
 import 'package:provider/provider.dart';
 
+import 'PlatformDialog.dart';
 import 'PlatformTextField.dart';
 
 class LoginPage extends StatefulWidget {
@@ -20,6 +22,7 @@ class _LoginPageState extends State<LoginPage> {
   String? selectedArea;
   bool _isFirstTime = true;
   bool isLoading = true;
+  bool _invalidLogin = false;
 
   @override
   void didChangeDependencies() {
@@ -44,6 +47,51 @@ class _LoginPageState extends State<LoginPage> {
     }
     _isFirstTime = false; //never run the above if again.
     super.didChangeDependencies();
+  }
+
+  void startLoginProcess(BuildContext context) {
+    var isPresent = false;
+    var distributors =
+        Provider.of<AuthProvider>(context, listen: false).distributors;
+    distributors.forEach((distributor) {
+      if (usernameController.text.trim().toLowerCase() ==
+              distributor.distributorName.toLowerCase() &&
+          selectedArea.toString().toLowerCase() ==
+              distributor.area.toLowerCase()) {
+        isPresent = true;
+      }
+      if (isPresent) {
+        if (mounted) {
+          setState(() {
+            _invalidLogin = false;
+          });
+        }
+        Provider.of<AuthProvider>(context, listen: false)
+            .setLoggedInDistributorAndArea(
+                usernameController.text.toUpperCase(), selectedArea!);
+
+        Navigator.of(context).pushReplacementNamed('/categories');
+      } else {
+        if (mounted) {
+          setState(() {
+            _invalidLogin = true;
+          });
+        }
+      }
+    });
+
+    if (_invalidLogin) {
+      showAlertDialog(context);
+    }
+  }
+
+  showAlertDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) => const PlatformDialog(
+            title: "Invalid Login!",
+            content:
+                "It might be that you provided correct credentials , but admin has not approved you yet. Try logging in after some time , if already registered!"));
   }
 
   @override
@@ -127,7 +175,9 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         !isLoading
                             ? CupertinoButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  startLoginProcess(context);
+                                },
                                 color: Color(0XFFDD0E1C),
                                 child: Text(
                                   "Login",
@@ -140,6 +190,41 @@ class _LoginPageState extends State<LoginPage> {
                                 color: Color(0xffDD0E1C),
                                 size: 50.0,
                               ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: 'Not Registered yet? ',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              TextSpan(
+                                text: 'Sign Up',
+                                style: TextStyle(
+                                  color: Colors.blue,
+                                  fontSize: 15,
+                                  decoration: TextDecoration.underline,
+                                ),
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    //open bottom sheet.
+                                    Navigator.of(context)
+                                        .pushReplacementNamed('/signup');
+                                  },
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ],

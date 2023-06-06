@@ -85,4 +85,15 @@ class AuthProvider with ChangeNotifier {
       throw error;
     }
   }
+
+  Future<void> setLoggedInDistributorAndArea(
+      String distributorName, String area) async {
+    // final SharedPreferences sharedPreferences =
+    //     await SharedPreferences.getInstance();
+    // sharedPreferences.setString("loggedInRetailer", retailerName);
+    // sharedPreferences.setString("loggedInShop", shopName);
+    this.loggedInDistributor = distributorName;
+    this.loggedInArea = area;
+    notifyListeners();
+  }
 }

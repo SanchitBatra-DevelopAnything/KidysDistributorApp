@@ -99,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
     final areas = Provider.of<AuthProvider>(context).areaNames;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color(0XFFE6E3D3),
+        backgroundColor: Color(0XFFf5f5f5),
         body: GestureDetector(
           onTap: () {
             // Unfocus the TextFormField when the user taps outside
@@ -155,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 15),
                           ),
-                          dropdownColor: Color(0XFFE6E3D3),
+                          dropdownColor: Color(0XFFf5f5f5),
                           iconSize: 36,
                           icon: Icon(Icons.arrow_drop_down,
                               color: Color(0xffDD0E1C)),

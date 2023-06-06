@@ -52,7 +52,7 @@ class _BottomSheetModalState extends State<BottomSheetModal> {
       color: Colors.transparent,
       child: Container(
         decoration: BoxDecoration(
-          color: Color(0xffE6E3D3),
+          color: Color(0XFFf5f5f5),
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(16.0),
             topRight: Radius.circular(16.0),

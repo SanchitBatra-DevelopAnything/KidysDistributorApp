@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
       decoration: BoxDecoration(
           // ignore: prefer_const_literals_to_create_immutables
           gradient: LinearGradient(
-              colors: [Color(0xffE6E3D3), Color(0xffFFFFFF)],
+              colors: [Color(0XFFf5f5f5), Color(0XFFf5f5f5)],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight)),
       child: Scaffold(

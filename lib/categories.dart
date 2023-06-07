@@ -78,49 +78,66 @@ class _CategoriesState extends State<Categories> {
                       borderRadius:
                           BorderRadius.only(topLeft: Radius.circular(75.0)),
                     ),
-                    child: ListView(
-                      primary: false,
-                      padding: EdgeInsets.only(left: 25.0, right: 20.0),
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.only(top: 45.0),
-                          child: Container(
-                            height: MediaQuery.of(context).size.height - 300.0,
-                            child: ListView(children: [
-                              Container(
-                                child: Text("HELLO"),
-                                height: 160,
+                    child: Flexible(
+                      child: GridView.builder(
+                        padding: const EdgeInsets.all(20.0),
+                        itemCount: 6,
+                        itemBuilder: (ctx, i) => Stack(
+                          alignment: AlignmentDirectional.bottomStart,
+                          children: [
+                            GestureDetector(
+                              onTap: () {},
+                              child: SizedBox(
+                                height: 300,
+                                width: 300,
+                                child: Card(
+                                  semanticContainer: true,
+                                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                                  child: Image.network(
+                                    "https://static01.nyt.com/images/2022/02/12/dining/JT-Chocolate-Chip-Cookies/JT-Chocolate-Chip-Cookies-threeByTwoMediumAt2X.jpg",
+                                    loadingBuilder: (context, child, progress) {
+                                      return progress == null
+                                          ? child
+                                          : LinearProgressIndicator(
+                                              backgroundColor: Colors.black12,
+                                            );
+                                    },
+                                    fit: BoxFit.fill,
+                                    semanticLabel: "SPECIALTY COOKIES",
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  elevation: 15,
+                                ),
                               ),
-                              Container(
-                                child: Text("HELLO"),
-                                height: 160,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 5.0, bottom: 5.0),
+                              child: GestureDetector(
+                                child: Text(
+                                  "CAKES & PASTRIES" == "CAKES & PASTRIES"
+                                      ? "CAKES"
+                                      : "CAKES",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                      backgroundColor: Colors.black54),
+                                ),
+                                onTap: () {},
                               ),
-                              Container(
-                                child: Text("HELLO"),
-                                height: 160,
-                              ),
-                              Container(
-                                child: Text("HELLO"),
-                                height: 160,
-                              ),
-                              Container(
-                                child: Text("HELLO"),
-                                height: 160,
-                              ),
-                              Container(
-                                child: Text("HELLO"),
-                                height: 160,
-                              ),
-                              Container(
-                                child: Text("HELLO"),
-                                height: 160,
-                              ),
-                            ]),
-                          ),
+                            )
+                          ],
                         ),
-                      ],
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 3 / 3,
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 10),
+                      ),
                     ),
-                  ),
+                  )
                 ],
               ),
             ),

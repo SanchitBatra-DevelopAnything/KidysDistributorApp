@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:kidys_distributor/providers/categories_provider.dart';
+import 'package:provider/provider.dart';
 
 class Categories extends StatefulWidget {
   const Categories({Key? key}) : super(key: key);
@@ -8,8 +11,37 @@ class Categories extends StatefulWidget {
 }
 
 class _CategoriesState extends State<Categories> {
+  bool _isFirstTime = true;
+  bool _isLoading = true;
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    if (_isFirstTime) {
+      // setState(() {
+      //   _isLoading = true;
+      // });
+
+      Provider.of<CategoriesProvider>(context, listen: false)
+          .fetchCategoriesFromDB()
+          .then((value) => setState(() {
+                print("FETCH COMPLETE!");
+                _isLoading = false;
+              }));
+    }
+    _isFirstTime = false; //never run the above if again.
+    super.didChangeDependencies();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    var categoriesData = Provider.of<CategoriesProvider>(context).categories;
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xFFDD0E1C),
@@ -53,9 +85,8 @@ class _CategoriesState extends State<Categories> {
               child: Row(
                 children: <Widget>[
                   Text(
-                    "Kidy's",
+                    "",
                     style: TextStyle(
-                      fontFamily: 'Montserrat',
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 25.0,
@@ -63,9 +94,8 @@ class _CategoriesState extends State<Categories> {
                   ),
                   SizedBox(width: 10.0),
                   Text(
-                    'Categories',
+                    'CATEGORIES',
                     style: TextStyle(
-                      fontFamily: 'Montserrat',
                       color: Colors.white,
                       fontSize: 25.0,
                     ),
@@ -83,65 +113,71 @@ class _CategoriesState extends State<Categories> {
                     bottomRight: Radius.circular(125.0),
                   ),
                 ),
-                child: GridView.builder(
-                  padding: const EdgeInsets.all(20.0),
-                  itemCount: 6,
-                  itemBuilder: (ctx, i) => Stack(
-                    alignment: AlignmentDirectional.bottomStart,
-                    children: [
-                      GestureDetector(
-                        onTap: () {},
-                        child: SizedBox(
-                          height: 300,
-                          width: 300,
-                          child: Card(
-                            semanticContainer: true,
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            child: Image.network(
-                              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS6WxxtNWu-pe7SITKq-XfESZtqU3w6TFdfBAZnMnoCg&s",
-                              loadingBuilder: (context, child, progress) {
-                                return progress == null
-                                    ? child
-                                    : LinearProgressIndicator(
-                                        backgroundColor: Colors.black12,
-                                      );
-                              },
-                              fit: BoxFit.fill,
-                              semanticLabel: "SPECIALTY COOKIES",
+                child: _isLoading
+                    ? Center(
+                        child: SpinKitPulse(
+                          color: Color(0xffDD0E1C),
+                          size: 50.0,
+                        ),
+                      )
+                    : GridView.builder(
+                        padding: const EdgeInsets.all(20.0),
+                        itemCount: categoriesData.length,
+                        itemBuilder: (ctx, i) => Stack(
+                          alignment: AlignmentDirectional.bottomStart,
+                          children: [
+                            GestureDetector(
+                              onTap: () {},
+                              child: SizedBox(
+                                height: 300,
+                                width: 300,
+                                child: Card(
+                                  semanticContainer: true,
+                                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                                  child: Image.network(
+                                    categoriesData[i].imageUrl,
+                                    loadingBuilder: (context, child, progress) {
+                                      return progress == null
+                                          ? child
+                                          : LinearProgressIndicator(
+                                              backgroundColor: Colors.black12,
+                                            );
+                                    },
+                                    fit: BoxFit.fill,
+                                    semanticLabel:
+                                        categoriesData[i].categoryName,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  elevation: 15,
+                                ),
+                              ),
                             ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
+                            Padding(
+                              padding: EdgeInsets.only(left: 5.0, bottom: 5.0),
+                              child: GestureDetector(
+                                child: Text(
+                                  categoriesData[i].categoryName.toUpperCase(),
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    backgroundColor: Colors.black54,
+                                  ),
+                                ),
+                                onTap: () {},
+                              ),
                             ),
-                            elevation: 15,
-                          ),
+                          ],
+                        ),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 3 / 3,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 5.0, bottom: 5.0),
-                        child: GestureDetector(
-                          child: Text(
-                            "CAKES & PASTRIES" == "CAKES & PASTRIES"
-                                ? "CAKES"
-                                : "SPECIALTY COOKIES",
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              backgroundColor: Colors.black54,
-                            ),
-                          ),
-                          onTap: () {},
-                        ),
-                      ),
-                    ],
-                  ),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 3 / 3,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                  ),
-                ),
               ),
             ),
           ],

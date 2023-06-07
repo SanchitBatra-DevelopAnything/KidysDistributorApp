@@ -22,7 +22,7 @@ class CategoriesProvider with ChangeNotifier {
       extractedData.forEach((categoryId, categoryData) {
         loadedCategories.add(Category(
             id: categoryId,
-            imageUrl: categoryData['imgUrl'],
+            imageUrl: categoryData['imageUrl'],
             categoryName: categoryData['categoryName']));
       });
       print("fetched category data  = ");

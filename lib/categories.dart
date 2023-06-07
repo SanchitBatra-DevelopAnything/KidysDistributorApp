@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:kidys_distributor/providers/auth.dart';
@@ -47,18 +49,18 @@ class _CategoriesState extends State<Categories> {
         Provider.of<AuthProvider>(context).loggedInDistributor;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color(0xFFDD0E1C),
+        backgroundColor: Color(0xFFFFFFFF),
         body: Column(
           children: <Widget>[
             Container(
               padding: EdgeInsets.all(10.0),
-              color: Color(0xFFDD0E1C),
+              color: Color(0xffFFFFFF),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   IconButton(
                     icon: Icon(Icons.arrow_back_ios),
-                    color: Colors.white,
+                    color: Colors.black,
                     onPressed: () {},
                   ),
                   Container(
@@ -68,12 +70,12 @@ class _CategoriesState extends State<Categories> {
                       children: <Widget>[
                         IconButton(
                           icon: Icon(Icons.work),
-                          color: Colors.white,
+                          color: Colors.black,
                           onPressed: () {},
                         ),
                         IconButton(
                           icon: Icon(Icons.shopping_cart_checkout),
-                          color: Colors.white,
+                          color: Colors.black,
                           onPressed: () {},
                         ),
                       ],
@@ -92,7 +94,7 @@ class _CategoriesState extends State<Categories> {
                   Text(
                     "WELCOME ${loggedInDistributor}",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 15.0,
                     ),
@@ -101,7 +103,7 @@ class _CategoriesState extends State<Categories> {
                   Text(
                     "KIDY'S CATEGORIES",
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold,
                       fontSize: 30.0,
                     ),
@@ -116,7 +118,6 @@ class _CategoriesState extends State<Categories> {
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(75.0),
-                    bottomRight: Radius.circular(125.0),
                   ),
                 ),
                 child: _isLoading
@@ -135,53 +136,79 @@ class _CategoriesState extends State<Categories> {
                             GestureDetector(
                               onTap: () {},
                               child: SizedBox(
-                                height: 300,
-                                width: 300,
+                                height: 400,
+                                width: double.infinity,
                                 child: Card(
                                   semanticContainer: true,
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  child: Image.network(
-                                    categoriesData[i].imageUrl,
-                                    loadingBuilder: (context, child, progress) {
-                                      return progress == null
-                                          ? child
-                                          : LinearProgressIndicator(
-                                              backgroundColor: Colors.black12,
-                                            );
-                                    },
-                                    fit: BoxFit.fill,
-                                    semanticLabel:
-                                        categoriesData[i].categoryName,
-                                  ),
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
                                   elevation: 15,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 5.0, bottom: 5.0),
-                              child: GestureDetector(
-                                child: Text(
-                                  categoriesData[i].categoryName.toUpperCase(),
-                                  style: TextStyle(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                    backgroundColor: Colors.black54,
+                                  child: Stack(
+                                    children: [
+                                      Container(
+                                        width: double.infinity,
+                                        child: Image.network(
+                                          categoriesData[i].imageUrl,
+                                          loadingBuilder:
+                                              (context, child, progress) {
+                                            return progress == null
+                                                ? child
+                                                : LinearProgressIndicator(
+                                                    backgroundColor:
+                                                        Colors.black12,
+                                                  );
+                                          },
+                                          fit: BoxFit.fitWidth,
+                                          semanticLabel:
+                                              categoriesData[i].categoryName,
+                                        ),
+                                      ),
+                                      Positioned.fill(
+                                        child: BackdropFilter(
+                                          filter: ImageFilter.blur(
+                                              sigmaX: 2.0, sigmaY: 2.0),
+                                          child: Container(
+                                            color:
+                                                Colors.black.withOpacity(0.5),
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 8.0),
+                                            child: Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                categoriesData[i]
+                                                    .categoryName
+                                                    .toUpperCase(),
+                                                style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 25.0,
+                                                  shadows: [
+                                                    Shadow(
+                                                      color: Colors.white,
+                                                      offset: Offset(2, 2),
+                                                      blurRadius: 10,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                onTap: () {},
                               ),
                             ),
                           ],
                         ),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 3 / 3,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
+                          crossAxisCount: 1,
+                          childAspectRatio: 3 / 2,
+                          crossAxisSpacing: 1,
+                          mainAxisSpacing: 1,
                         ),
                       ),
               ),

@@ -13,12 +13,12 @@ class _CategoriesState extends State<Categories> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xFFDD0E1C),
-        body: CustomScrollView(
-          slivers: <Widget>[
-            SliverAppBar(
-              pinned: true,
-              backgroundColor: Color(0xFFDD0E1C),
-              title: Row(
+        body: Column(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.all(10.0),
+              color: Color(0xFFDD0E1C),
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   IconButton(
@@ -43,108 +43,105 @@ class _CategoriesState extends State<Categories> {
                         ),
                       ],
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
-            SliverList(
-              delegate: SliverChildListDelegate(
-                [
-                  SizedBox(height: 25.0),
-                  Padding(
-                    padding: EdgeInsets.only(left: 40.0),
-                    child: Row(
-                      children: <Widget>[
-                        Text("Kidy's",
-                            style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 25.0)),
-                        SizedBox(width: 10.0),
-                        Text('Categories',
-                            style: TextStyle(
-                                fontFamily: 'Montserrat',
-                                color: Colors.white,
-                                fontSize: 25.0))
-                      ],
+            SizedBox(height: 25.0),
+            Padding(
+              padding: EdgeInsets.only(left: 40.0),
+              child: Row(
+                children: <Widget>[
+                  Text(
+                    "Kidy's",
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 25.0,
                     ),
                   ),
-                  SizedBox(height: 40.0),
-                  Expanded(
-                    child: Container(
-                      height: MediaQuery.of(context).size.height - 300.0,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(75.0),
-                            bottomRight: Radius.circular(75.0)),
-                      ),
-                      child: Flexible(
-                        child: GridView.builder(
-                          padding: const EdgeInsets.all(20.0),
-                          itemCount: 6,
-                          itemBuilder: (ctx, i) => Stack(
-                            alignment: AlignmentDirectional.bottomStart,
-                            children: [
-                              GestureDetector(
-                                onTap: () {},
-                                child: SizedBox(
-                                  height: 300,
-                                  width: 300,
-                                  child: Card(
-                                    semanticContainer: true,
-                                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                                    child: Image.network(
-                                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS6WxxtNWu-pe7SITKq-XfESZtqU3w6TFdfBAZnMnoCg&s",
-                                      loadingBuilder:
-                                          (context, child, progress) {
-                                        return progress == null
-                                            ? child
-                                            : LinearProgressIndicator(
-                                                backgroundColor: Colors.black12,
-                                              );
-                                      },
-                                      fit: BoxFit.fill,
-                                      semanticLabel: "SPECIALTY COOKIES",
-                                    ),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                    ),
-                                    elevation: 15,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsets.only(left: 5.0, bottom: 5.0),
-                                child: GestureDetector(
-                                  child: Text(
-                                    "CAKES & PASTRIES" == "CAKES & PASTRIES"
-                                        ? "CAKES"
-                                        : "SPECIALTY COOKIES",
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        backgroundColor: Colors.black54),
-                                  ),
-                                  onTap: () {},
-                                ),
-                              )
-                            ],
+                  SizedBox(width: 10.0),
+                  Text(
+                    'Categories',
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      color: Colors.white,
+                      fontSize: 25.0,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 40.0),
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(75.0),
+                    bottomRight: Radius.circular(125.0),
+                  ),
+                ),
+                child: GridView.builder(
+                  padding: const EdgeInsets.all(20.0),
+                  itemCount: 6,
+                  itemBuilder: (ctx, i) => Stack(
+                    alignment: AlignmentDirectional.bottomStart,
+                    children: [
+                      GestureDetector(
+                        onTap: () {},
+                        child: SizedBox(
+                          height: 300,
+                          width: 300,
+                          child: Card(
+                            semanticContainer: true,
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            child: Image.network(
+                              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS6WxxtNWu-pe7SITKq-XfESZtqU3w6TFdfBAZnMnoCg&s",
+                              loadingBuilder: (context, child, progress) {
+                                return progress == null
+                                    ? child
+                                    : LinearProgressIndicator(
+                                        backgroundColor: Colors.black12,
+                                      );
+                              },
+                              fit: BoxFit.fill,
+                              semanticLabel: "SPECIALTY COOKIES",
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            elevation: 15,
                           ),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  childAspectRatio: 3 / 3,
-                                  crossAxisSpacing: 10,
-                                  mainAxisSpacing: 10),
                         ),
                       ),
-                    ),
-                  )
-                ],
+                      Padding(
+                        padding: EdgeInsets.only(left: 5.0, bottom: 5.0),
+                        child: GestureDetector(
+                          child: Text(
+                            "CAKES & PASTRIES" == "CAKES & PASTRIES"
+                                ? "CAKES"
+                                : "SPECIALTY COOKIES",
+                            style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              backgroundColor: Colors.black54,
+                            ),
+                          ),
+                          onTap: () {},
+                        ),
+                      ),
+                    ],
+                  ),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 3 / 3,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                  ),
+                ),
               ),
             ),
           ],

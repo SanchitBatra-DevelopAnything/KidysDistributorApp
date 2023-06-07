@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:kidys_distributor/providers/auth.dart';
 import 'package:kidys_distributor/providers/categories_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -42,6 +43,8 @@ class _CategoriesState extends State<Categories> {
   @override
   Widget build(BuildContext context) {
     var categoriesData = Provider.of<CategoriesProvider>(context).categories;
+    var loggedInDistributor =
+        Provider.of<AuthProvider>(context).loggedInDistributor;
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color(0xFFDD0E1C),
@@ -82,22 +85,25 @@ class _CategoriesState extends State<Categories> {
             SizedBox(height: 25.0),
             Padding(
               padding: EdgeInsets.only(left: 40.0),
-              child: Row(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    "",
+                    "WELCOME ${loggedInDistributor}",
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 25.0,
+                      fontSize: 15.0,
                     ),
                   ),
                   SizedBox(width: 10.0),
                   Text(
-                    'CATEGORIES',
+                    "KIDY'S CATEGORIES",
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 25.0,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30.0,
                     ),
                   ),
                 ],

@@ -14,7 +14,7 @@ class CategoriesProvider with ChangeNotifier {
 
   Future<void> fetchCategoriesFromDB() async {
     const url =
-        "https://muskan-admin-app-default-rtdb.firebaseio.com/onlyCategories.json";
+        "https://kidysadminapp-default-rtdb.firebaseio.com/Categories.json";
     try {
       final response = await http.get(Uri.parse(url));
       final List<Category> loadedCategories = [];
@@ -22,7 +22,7 @@ class CategoriesProvider with ChangeNotifier {
       extractedData.forEach((categoryId, categoryData) {
         loadedCategories.add(Category(
             id: categoryId,
-            imageUrl: categoryData['imageUrl'],
+            imageUrl: categoryData['imgUrl'],
             categoryName: categoryData['categoryName']));
       });
       print("fetched category data  = ");

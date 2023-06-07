@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:kidys_distributor/categories.dart';
 import 'package:kidys_distributor/home.dart';
 import 'package:kidys_distributor/login.dart';
 import 'package:kidys_distributor/providers/auth.dart';
@@ -58,6 +59,7 @@ class MaterialAppWithInitialRoute extends StatelessWidget {
         '/termsAndConditions': (context) => TermsAndConditionsPage(),
         '/signup': (context) => SignUpForm(),
         '/login': (context) => LoginPage(),
+        '/categories': (context) => Categories(),
       },
       debugShowCheckedModeBanner: false,
     );

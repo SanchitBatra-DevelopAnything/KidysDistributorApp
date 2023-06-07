@@ -66,15 +66,15 @@ class _CategoriesState extends State<Categories> {
                   Container(
                     width: 125.0,
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         IconButton(
-                          icon: Icon(Icons.work),
+                          icon: Icon(Icons.money),
                           color: Colors.black,
                           onPressed: () {},
                         ),
                         IconButton(
-                          icon: Icon(Icons.shopping_cart_checkout),
+                          icon: Icon(Icons.shopping_cart),
                           color: Colors.black,
                           onPressed: () {},
                         ),
@@ -84,34 +84,49 @@ class _CategoriesState extends State<Categories> {
                 ],
               ),
             ),
-            SizedBox(height: 25.0),
+            SizedBox(height: 5.0),
             Padding(
-              padding: EdgeInsets.only(left: 40.0),
+              padding: EdgeInsets.only(left: 25.0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text(
-                    "WELCOME ${loggedInDistributor}",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15.0,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        "WELCOME ${loggedInDistributor}",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15.0,
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(width: 10.0),
-                  Text(
-                    "KIDY'S CATEGORIES",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30.0,
-                    ),
+                  SizedBox(height: 10.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        "KIDY'S CATEGORIES",
+                        style: TextStyle(
+                          color: Colors.black,
+                          shadows: [
+                            Shadow(
+                              color: Colors.black,
+                              offset: Offset(2, 2),
+                              blurRadius: 1,
+                            ),
+                          ],
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30.0,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 40.0),
+            SizedBox(height: 2.0),
             Expanded(
               child: Container(
                 decoration: BoxDecoration(

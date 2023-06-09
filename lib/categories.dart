@@ -49,18 +49,18 @@ class _CategoriesState extends State<Categories> {
         Provider.of<AuthProvider>(context).loggedInDistributor;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color(0xFFFFFFFF),
+        backgroundColor: Color(0xFF552018),
         body: Column(
           children: <Widget>[
             Container(
               padding: EdgeInsets.all(10.0),
-              color: Color(0xffFFFFFF),
+              color: Color(0xff552018),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   IconButton(
                     icon: Icon(Icons.arrow_back_ios),
-                    color: Colors.black,
+                    color: Colors.white,
                     onPressed: () {},
                   ),
                   Container(
@@ -70,12 +70,12 @@ class _CategoriesState extends State<Categories> {
                       children: <Widget>[
                         IconButton(
                           icon: Icon(Icons.money),
-                          color: Colors.black,
+                          color: Colors.white,
                           onPressed: () {},
                         ),
                         IconButton(
                           icon: Icon(Icons.shopping_cart),
-                          color: Colors.black,
+                          color: Colors.white,
                           onPressed: () {},
                         ),
                       ],
@@ -95,7 +95,7 @@ class _CategoriesState extends State<Categories> {
                       Text(
                         "WELCOME ${loggedInDistributor}",
                         style: TextStyle(
-                          color: Colors.black,
+                          color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 15.0,
                         ),
@@ -109,7 +109,7 @@ class _CategoriesState extends State<Categories> {
                       Text(
                         "KIDY'S CATEGORIES",
                         style: TextStyle(
-                          color: Colors.black,
+                          color: Colors.white,
                           shadows: [
                             Shadow(
                               color: Colors.black,
@@ -126,7 +126,7 @@ class _CategoriesState extends State<Categories> {
                 ],
               ),
             ),
-            SizedBox(height: 2.0),
+            SizedBox(height: 20.0),
             Expanded(
               child: Container(
                 decoration: BoxDecoration(

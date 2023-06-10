@@ -103,7 +103,7 @@ class _CategoriesState extends State<Categories> {
                     ],
                   ),
                   SizedBox(height: 10.0),
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
@@ -219,7 +219,8 @@ class _CategoriesState extends State<Categories> {
                             ),
                           ],
                         ),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 1,
                           childAspectRatio: 3 / 2,
                           crossAxisSpacing: 1,

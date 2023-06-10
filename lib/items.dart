@@ -38,6 +38,7 @@ class _ItemsState extends State<Items> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    var items = Provider.of<CategoriesProvider>(context).items;
+    return Scaffold();
   }
 }

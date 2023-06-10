@@ -10,6 +10,8 @@ import 'package:kidys_distributor/signUp.dart';
 import 'package:kidys_distributor/termsAndConditions.dart';
 import 'package:provider/provider.dart';
 
+import 'items.dart';
+
 Future<void> main() async {
   runApp(const MyApp());
 }
@@ -62,6 +64,7 @@ class MaterialAppWithInitialRoute extends StatelessWidget {
         '/signup': (context) => SignUpForm(),
         '/login': (context) => LoginPage(),
         '/categories': (context) => Categories(),
+        '/items': (context) => Items(),
       },
       debugShowCheckedModeBanner: false,
     );

@@ -42,6 +42,15 @@ class _CategoriesState extends State<Categories> {
     super.dispose();
   }
 
+  moveToItems(String categoryId, String categoryName) {
+    Provider.of<CategoriesProvider>(context, listen: false).activeCategoryKey =
+        categoryId;
+    Provider.of<CategoriesProvider>(context, listen: false).activeCategoryName =
+        categoryName;
+
+    Navigator.of(context).pushNamed('/items');
+  }
+
   @override
   Widget build(BuildContext context) {
     var categoriesData = Provider.of<CategoriesProvider>(context).categories;
@@ -149,7 +158,10 @@ class _CategoriesState extends State<Categories> {
                           alignment: AlignmentDirectional.bottomStart,
                           children: [
                             GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                moveToItems(categoriesData[i].id,
+                                    categoriesData[i].categoryName);
+                              },
                               child: SizedBox(
                                 height: 400,
                                 width: double.infinity,

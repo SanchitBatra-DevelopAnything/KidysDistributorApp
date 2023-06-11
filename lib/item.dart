@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kidys_distributor/itemDetail.dart';
 import 'package:kidys_distributor/providers/cart.dart';
 import 'package:kidys_distributor/providers/categories_provider.dart';
 import 'package:provider/provider.dart';
@@ -55,9 +56,10 @@ class _ItemState extends State<Item> {
             flex: 5,
             child: GestureDetector(
               onTap: () {
-                Navigator.of(context).pushNamed('/item-detail', arguments: {
-                  'imgPath': widget.imgPath,
-                });
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => ItemDetail(imgUrl: widget.imgPath)));
               },
               child: Container(
                 width: double.infinity,

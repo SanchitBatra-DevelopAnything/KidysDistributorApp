@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kidys_distributor/providers/cart.dart';
 import 'package:provider/provider.dart';
 
-typedef void CountButtonClickCallBack(double count);
+typedef void CountButtonClickCallBack(dynamic count);
 
 class CountButtonView extends StatefulWidget {
   final String itemId;
@@ -21,7 +21,7 @@ class CountButtonView extends StatefulWidget {
 }
 
 class _CountButtonViewState extends State<CountButtonView> {
-  double quantity = 0;
+  dynamic quantity = 0;
 
   @override
   void initState() {
@@ -29,7 +29,7 @@ class _CountButtonViewState extends State<CountButtonView> {
     super.initState();
   }
 
-  void updateCount(double addValue) {
+  void updateCount(dynamic addValue) {
     if (quantity + addValue <= 0) {
       setState(() {
         quantity = 0;

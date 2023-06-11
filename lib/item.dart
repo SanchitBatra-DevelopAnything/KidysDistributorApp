@@ -31,8 +31,10 @@ class _ItemState extends State<Item> {
   @override
   Widget build(BuildContext context) {
     final cartProviderObject = Provider.of<CartProvider>(context);
-    _isInCart = false;
-    _isInCart ? _quantity = 1 : _quantity = 0;
+    _isInCart = cartProviderObject.checkInCart(widget.itemId);
+    _isInCart
+        ? _quantity = cartProviderObject.getQuantity(widget.itemId)
+        : _quantity = 0;
     var parentCategory =
         Provider.of<CategoriesProvider>(context).activeCategoryName;
     return Container(
@@ -151,7 +153,24 @@ class _ItemState extends State<Item> {
                   : CountButtonView(
                       itemId: widget.itemId,
                       parentCategory: parentCategory,
-                      onChange: (value) => {},
+                      onChange: (count) => {
+                        if (count == 0)
+                          {
+                            cartProviderObject.removeItem(widget.itemId),
+                            setState(() => {_isInCart = false})
+                          }
+                        else if (count > 0)
+                          {
+                            cartProviderObject.addItem(
+                              widget.itemId,
+                              widget.price,
+                              count,
+                              widget.itemName.toLowerCase(),
+                              widget.imgPath,
+                              parentCategory,
+                            )
+                          }
+                      },
                     ),
             ),
           ),

@@ -5,11 +5,11 @@ import 'package:http/http.dart' as http;
 class CartItem {
   final String id;
   final String title;
-  final double quantity;
+  final dynamic quantity;
   final String price;
   final String imageUrl;
   final String parentCategoryType;
-  final double totalPrice;
+  final dynamic totalPrice;
 
   CartItem(
       {required this.id,
@@ -55,7 +55,7 @@ class CartProvider with ChangeNotifier {
     return _items!.containsKey(itemId);
   }
 
-  double getQuantity(String itemId) {
+  dynamic getQuantity(String itemId) {
     if (checkInCart(itemId)) {
       CartItem? item = _items![itemId];
       return item!.quantity;
@@ -107,7 +107,7 @@ class CartProvider with ChangeNotifier {
     return double.parse(p);
   }
 
-  void addItem(String itemId, String price, double quantity, String title,
+  void addItem(String itemId, dynamic price, dynamic quantity, String title,
       String imgPath, String parentCategory) {
     print("request to add : " + title + " with price : " + price);
 
@@ -117,7 +117,7 @@ class CartProvider with ChangeNotifier {
           itemId,
           (existingCartItem) => CartItem(
               id: existingCartItem.id,
-              totalPrice: getPriceFromString(existingCartItem.price) * quantity,
+              totalPrice: existingCartItem.price * quantity,
               title: existingCartItem.title,
               imageUrl: existingCartItem.imageUrl,
               parentCategoryType: existingCartItem.parentCategoryType,
@@ -128,13 +128,14 @@ class CartProvider with ChangeNotifier {
           itemId,
           () => CartItem(
               id: itemId + "-CART",
-              totalPrice: getPriceFromString(price) * quantity,
+              totalPrice: price * quantity,
               price: price,
               title: title,
               quantity: quantity,
               imageUrl: imgPath,
               parentCategoryType: parentCategory));
     }
+    print("Formin list");
     formCartList();
     notifyListeners();
   }

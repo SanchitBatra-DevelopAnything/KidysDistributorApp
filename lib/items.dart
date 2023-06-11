@@ -58,7 +58,7 @@ class _ItemsState extends State<Items> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                         gradient: LinearGradient(
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
@@ -92,7 +92,7 @@ class _ItemsState extends State<Items> {
                                   _isSearching = true;
                                 });
                               },
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
                               controller: searchItemController,
                               onChanged: (text) {
@@ -113,7 +113,7 @@ class _ItemsState extends State<Items> {
                             onPressed: () {
                               //moveToCart(context);
                             },
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.shopping_cart,
                               color: Colors.white,
                             ),
@@ -126,12 +126,12 @@ class _ItemsState extends State<Items> {
                   Flexible(
                     flex: 5,
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       child: GridView.builder(
                           itemCount: items.length,
                           primary: false,
                           gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
+                              const SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
                                   childAspectRatio: 0.6,
                                   crossAxisSpacing: 10,

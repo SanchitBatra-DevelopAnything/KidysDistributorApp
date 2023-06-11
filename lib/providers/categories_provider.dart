@@ -51,7 +51,7 @@ class CategoriesProvider with ChangeNotifier {
   Future<void> loadItemsForActiveCategory() async {
     var url = "https://kidysadminapp-default-rtdb.firebaseio.com/Categories/" +
         activeCategoryKey +
-        ".json";
+        "/items.json";
     try {
       final response = await http.get(Uri.parse(url));
       final List<Item> loadedItems = [];

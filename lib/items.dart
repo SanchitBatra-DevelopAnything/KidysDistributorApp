@@ -130,9 +130,9 @@ class _ItemsState extends State<Items> {
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
-                                  childAspectRatio: 0.8,
+                                  childAspectRatio: 0.6,
                                   crossAxisSpacing: 10,
-                                  mainAxisSpacing: 15),
+                                  mainAxisSpacing: 10),
                           itemBuilder: (context, index) => Item(
                                 imgPath: items[index].imgUrl,
                                 price: items[index].delhi_ncr_price.toString(),

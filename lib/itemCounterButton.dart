@@ -61,7 +61,7 @@ class _CountButtonViewState extends State<CountButtonView> {
       child: Center(
         child: Container(
           decoration: BoxDecoration(
-              color: Colors.red,
+              color: Color(0xffdd0e1c),
               border: Border.all(color: Colors.white, width: 1.0),
               borderRadius: BorderRadius.circular(22.0)),
           child: Row(

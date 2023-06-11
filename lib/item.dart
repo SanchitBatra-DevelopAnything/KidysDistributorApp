@@ -34,129 +34,112 @@ class _ItemState extends State<Item> {
     _isInCart ? _quantity = 1 : _quantity = 0;
     var parentCategory =
         Provider.of<CategoriesProvider>(context).activeCategoryName;
-    return Padding(
-        padding: EdgeInsets.only(top: 15, left: 5, bottom: 5, right: 5),
-        child: GestureDetector(
-            onTap: () {},
-            child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.2),
-                      spreadRadius: 3.0,
-                      blurRadius: 5.0,
-                    )
-                  ],
-                  color: Color.fromRGBO(51, 51, 51, 0.8),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.2),
+            spreadRadius: 3.0,
+            blurRadius: 5.0,
+          )
+        ],
+        color: Colors.white,
+      ),
+      child: Column(
+        children: [
+          Expanded(
+            flex: 5,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).pushNamed('/item-detail', arguments: {
+                  'imgPath': widget.imgPath,
+                });
+              },
+              child: Hero(
+                tag: widget.imgPath,
+                child: Image.network(
+                  widget.imgPath,
+                  fit: BoxFit.fill,
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;
+                    } else {
+                      return Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.red,
+                          strokeWidth: 5,
+                        ),
+                      );
+                    }
+                  },
                 ),
-                child: Column(
-                  children: [
-                    Flexible(
-                      flex: 5,
-                      fit: FlexFit.tight,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.of(context)
-                              .pushNamed('/item-detail', arguments: {
-                            'imgPath': widget.imgPath,
-                          });
-                        },
-                        child: Hero(
-                          tag: widget.imgPath,
-                          child: Image.network(
-                            widget.imgPath,
-                            fit: BoxFit.fill,
-                            loadingBuilder: (context, child, loadingProgress) {
-                              if (loadingProgress == null) {
-                                return child;
-                              } else {
-                                return Center(
-                                  child: CircularProgressIndicator(
-                                      color: Colors.red, strokeWidth: 5),
-                                );
-                              }
-                            },
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              "Rs. " + widget.price,
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              widget.itemName.toLowerCase(),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+          ),
+          Divider(),
+          Expanded(
+            flex: 3,
+            child: Center(
+              child: !_isInCart
+                  ? Container(
+                      height: 50,
+                      child: CupertinoButton(
+                        padding: EdgeInsets.all(5),
+                        child: Container(
+                          alignment: Alignment.center,
+                          width: double.infinity - 100,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFdd0e1c),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            "+ Add",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
+                        onPressed: () {
+                          // Add to cart functionality
+                        },
                       ),
-                    ),
-                    Flexible(
-                      flex: 1,
-                      child: Text(
-                        "Rs. " + widget.price,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16),
-                      ),
-                    ),
-                    Flexible(
-                      flex: 2,
-                      child: Padding(
-                        padding: EdgeInsets.all(5),
-                        child: Text(
-                          widget.itemName.toLowerCase(),
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16),
-                        ),
-                      ),
-                    ),
-                    Flexible(child: Divider(), flex: 1),
-                    Flexible(
-                      flex: 2,
-                      child: Center(
-                          child: !_isInCart
-                              ? CupertinoButton(
-                                  child: Text("Add to cart",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                      )),
-                                  color: Colors.red,
-                                  onPressed: () {
-                                    // cartProviderObject.addItem(
-                                    //   widget.itemId,
-                                    //   widget.price,
-                                    //   1,
-                                    //   widget.itemName.toString(),
-                                    //   widget.imgPath,
-                                    //   parentCategory,
-                                    // );
-                                    // setState(() {
-                                    //   _isInCart = true;
-                                    // });
-                                  },
-                                )
-                              : CountButtonView(
-                                  itemId: widget.itemId,
-                                  parentCategory: parentCategory,
-                                  onChange: (value) => {},
-                                  // onChange: (count) => {
-                                  //       if (count == 0)
-                                  //         {
-                                  //           cartProviderObject
-                                  //               .removeItem(widget.itemId),
-                                  //           setState(() => {_isInCart = false})
-                                  //         }
-                                  //       else if (count > 0)
-                                  //         {
-                                  //           cartProviderObject.addItem(
-                                  //             widget.itemId,
-                                  //             widget.price,
-                                  //             count,
-                                  //             widget.itemName,
-                                  //             widget.imgPath,
-                                  //             parentCategory,
-                                  //           )
-                                  //         }
-                                  //     }
-                                )),
                     )
-                  ],
-                ))));
+                  : CountButtonView(
+                      itemId: widget.itemId,
+                      parentCategory: parentCategory,
+                      onChange: (value) => {},
+                    ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

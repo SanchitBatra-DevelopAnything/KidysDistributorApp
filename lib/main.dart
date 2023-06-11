@@ -5,6 +5,7 @@ import 'package:kidys_distributor/categories.dart';
 import 'package:kidys_distributor/home.dart';
 import 'package:kidys_distributor/login.dart';
 import 'package:kidys_distributor/providers/auth.dart';
+import 'package:kidys_distributor/providers/cart.dart';
 import 'package:kidys_distributor/providers/categories_provider.dart';
 import 'package:kidys_distributor/signUp.dart';
 import 'package:kidys_distributor/termsAndConditions.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(providers: [
       ChangeNotifierProvider(create: (context) => AuthProvider()),
       ChangeNotifierProvider(create: (context) => CategoriesProvider()),
+      ChangeNotifierProvider(create: (context) => CartProvider()),
     ], child: MaterialAppWithInitialRoute());
   }
 }

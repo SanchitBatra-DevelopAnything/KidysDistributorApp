@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kidys_distributor/providers/cart.dart';
 import 'package:kidys_distributor/providers/categories_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +30,7 @@ class _ItemState extends State<Item> {
 
   @override
   Widget build(BuildContext context) {
-    //final cartProviderObject = Provider.of<CartProvider>(context);
+    final cartProviderObject = Provider.of<CartProvider>(context);
     _isInCart = false;
     _isInCart ? _quantity = 1 : _quantity = 0;
     var parentCategory =
@@ -56,23 +57,26 @@ class _ItemState extends State<Item> {
                   'imgPath': widget.imgPath,
                 });
               },
-              child: Hero(
-                tag: widget.imgPath,
-                child: Image.network(
-                  widget.imgPath,
-                  fit: BoxFit.fill,
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) {
-                      return child;
-                    } else {
-                      return Center(
-                        child: CircularProgressIndicator(
-                          color: Colors.red,
-                          strokeWidth: 5,
-                        ),
-                      );
-                    }
-                  },
+              child: Container(
+                width: double.infinity,
+                child: Hero(
+                  tag: widget.imgPath,
+                  child: Image.network(
+                    widget.imgPath,
+                    fit: BoxFit.cover,
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child;
+                      } else {
+                        return Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.red,
+                            strokeWidth: 5,
+                          ),
+                        );
+                      }
+                    },
+                  ),
                 ),
               ),
             ),
@@ -117,17 +121,30 @@ class _ItemState extends State<Item> {
                             color: Color(0xFFdd0e1c),
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          child: Text(
-                            "+ Add",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                          child: const Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              "+ Add",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
                         onPressed: () {
                           // Add to cart functionality
+                          cartProviderObject.addItem(
+                              widget.itemId,
+                              widget.price,
+                              1,
+                              widget.itemName,
+                              widget.imgPath,
+                              parentCategory);
+                          setState(() {
+                            _isInCart = true;
+                          });
                         },
                       ),
                     )

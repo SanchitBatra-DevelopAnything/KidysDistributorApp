@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:kidys_distributor/providers/auth.dart';
+import 'package:kidys_distributor/providers/cart.dart';
 import 'package:kidys_distributor/providers/categories_provider.dart';
 import 'package:provider/provider.dart';
 
+import 'cartBadge.dart';
 import 'item.dart';
 
 class Items extends StatefulWidget {
@@ -101,10 +103,11 @@ class _ItemsState extends State<Items> {
                         ),
                       ),
                       Flexible(
-                        child: Consumer<AuthProvider>(
-                          builder: (_, cart, ch) => Badge(
-                            child: ch,
-                            textColor: Color(0XFFDD0E1C),
+                        child: Consumer<CartProvider>(
+                          builder: (_, cart, ch) => CartBadge(
+                            value: cart.itemCount.toString(),
+                            color: Colors.red,
+                            child: ch!,
                           ),
                           child: IconButton(
                             onPressed: () {

@@ -7,7 +7,6 @@ class CartItem {
   final String title;
   final double quantity;
   final String price;
-  final String parentSubcategoryType;
   final String imageUrl;
   final String parentCategoryType;
   final double totalPrice;
@@ -17,7 +16,6 @@ class CartItem {
       required this.title,
       required this.imageUrl,
       required this.parentCategoryType,
-      required this.parentSubcategoryType,
       required this.quantity,
       required this.totalPrice,
       required this.price});
@@ -27,7 +25,6 @@ class CartItem {
         'title': this.title,
         'quantity': this.quantity,
         'price': this.price,
-        'parentSubcategoryType': this.parentSubcategoryType,
         'imageUrl': this.imageUrl,
         'parentCategoryType': this.parentCategoryType,
         'totalPrice': this.totalPrice
@@ -98,7 +95,6 @@ class CartProvider with ChangeNotifier {
           totalPrice: value.totalPrice,
           imageUrl: value.imageUrl,
           parentCategoryType: value.parentCategoryType,
-          parentSubcategoryType: value.parentSubcategoryType,
           price: value.price,
           quantity: value.quantity,
           title: value.title));
@@ -112,7 +108,7 @@ class CartProvider with ChangeNotifier {
   }
 
   void addItem(String itemId, String price, double quantity, String title,
-      String imgPath, String parentCategory, String parentSubcategory) {
+      String imgPath, String parentCategory) {
     print("request to add : " + title + " with price : " + price);
 
     if (_items!.containsKey(itemId)) {
@@ -125,7 +121,6 @@ class CartProvider with ChangeNotifier {
               title: existingCartItem.title,
               imageUrl: existingCartItem.imageUrl,
               parentCategoryType: existingCartItem.parentCategoryType,
-              parentSubcategoryType: existingCartItem.parentSubcategoryType,
               price: existingCartItem.price,
               quantity: quantity));
     } else {
@@ -138,7 +133,6 @@ class CartProvider with ChangeNotifier {
               title: title,
               quantity: quantity,
               imageUrl: imgPath,
-              parentSubcategoryType: parentSubcategory,
               parentCategoryType: parentCategory));
     }
     formCartList();
@@ -220,13 +214,13 @@ class CartProvider with ChangeNotifier {
         //     title: cartItem['title'],
         //     totalPrice: cartItem['totalPrice']));
         addItem(
-            cartItem['id'],
-            cartItem['price'],
-            cartItem['quantity'],
-            cartItem['title'],
-            cartItem['imageUrl'],
-            cartItem['parentCategoryType'],
-            cartItem['parentSubcategoryType']);
+          cartItem['id'],
+          cartItem['price'],
+          cartItem['quantity'],
+          cartItem['title'],
+          cartItem['imageUrl'],
+          cartItem['parentCategoryType'],
+        );
       });
     } catch (error) {
       print("ERROR IS");

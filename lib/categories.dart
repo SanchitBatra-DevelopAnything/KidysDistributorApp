@@ -3,8 +3,11 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:kidys_distributor/providers/auth.dart';
+import 'package:kidys_distributor/providers/cart.dart';
 import 'package:kidys_distributor/providers/categories_provider.dart';
 import 'package:provider/provider.dart';
+
+import 'cartBadge.dart';
 
 class Categories extends StatefulWidget {
   const Categories({Key? key}) : super(key: key);
@@ -82,10 +85,22 @@ class _CategoriesState extends State<Categories> {
                           color: Colors.white,
                           onPressed: () {},
                         ),
-                        IconButton(
-                          icon: Icon(Icons.shopping_cart),
-                          color: Colors.white,
-                          onPressed: () {},
+                        Consumer<CartProvider>(
+                          builder: (_, cart, ch) => CartBadge(
+                            value: cart.itemCount.toString(),
+                            color: Colors.red,
+                            child: ch!,
+                          ),
+                          child: IconButton(
+                            onPressed: () {
+                              //moveToCart(context);
+                            },
+                            icon: Icon(
+                              Icons.shopping_cart,
+                              color: Colors.white,
+                            ),
+                            iconSize: 30,
+                          ),
                         ),
                       ],
                     ),

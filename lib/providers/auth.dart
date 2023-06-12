@@ -11,6 +11,7 @@ class AuthProvider with ChangeNotifier {
 
   String loggedInDistributor = "";
   String loggedInArea = "";
+  String activePriceList = "";
 
   String dbURL = "https://kidysadminapp-default-rtdb.firebaseio.com/";
 
@@ -87,13 +88,14 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> setLoggedInDistributorAndArea(
-      String distributorName, String area) async {
+      String distributorName, String area, String priceList) async {
     // final SharedPreferences sharedPreferences =
     //     await SharedPreferences.getInstance();
     // sharedPreferences.setString("loggedInRetailer", retailerName);
     // sharedPreferences.setString("loggedInShop", shopName);
     this.loggedInDistributor = distributorName;
     this.loggedInArea = area;
+    this.activePriceList = priceList;
     notifyListeners();
   }
 }

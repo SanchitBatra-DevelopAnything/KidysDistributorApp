@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:kidys_distributor/providers/auth.dart';
 import 'package:kidys_distributor/providers/cart.dart';
 import 'package:kidys_distributor/providers/categories_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'cartBadge.dart';
+import './models/item.dart';
 import 'item.dart';
 
 class Items extends StatefulWidget {
@@ -43,6 +45,21 @@ class _ItemsState extends State<Items> {
 
   void onSearch(String text) {
     Provider.of<CategoriesProvider>(context, listen: false).filterItems(text);
+  }
+
+  getPrice(Item item) {
+    var price_list = Provider.of<AuthProvider>(context).activePriceList;
+    if (price_list.toString().contains("delhi_ncr")) {
+      return item.delhi_ncr_price;
+    } else if (price_list.toString().contains("super_stockist")) {
+      return item.super_stockist_price;
+    } else if (price_list.toString().contains("modern")) {
+      return item.modern_trade_price;
+    } else if (price_list.toString().contains("out_station")) {
+      return item.out_station_price;
+    } else if (price_list.toString().contains("western")) {
+      return item.western_price;
+    }
   }
 
   @override
@@ -144,10 +161,9 @@ class _ItemsState extends State<Items> {
                                     childAspectRatio: 0.6,
                                     crossAxisSpacing: 10,
                                     mainAxisSpacing: 10),
-                            itemBuilder: (context, index) => Item(
+                            itemBuilder: (context, index) => ItemCard(
                                   imgPath: items[index].imgUrl,
-                                  price:
-                                      items[index].delhi_ncr_price.toString(),
+                                  price: getPrice(items[index]).toString(),
                                   itemId: items[index].id,
                                   itemName: items[index].itemName,
                                 )),

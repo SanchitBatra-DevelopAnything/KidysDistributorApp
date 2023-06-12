@@ -7,8 +7,8 @@ import 'package:provider/provider.dart';
 
 import 'itemCounterButton.dart';
 
-class Item extends StatefulWidget {
-  const Item(
+class ItemCard extends StatefulWidget {
+  const ItemCard(
       {Key? key,
       required this.imgPath,
       required this.price,
@@ -21,11 +21,13 @@ class Item extends StatefulWidget {
   final String itemName;
   final String itemId;
 
+  get delhi_ncr_price => null;
+
   @override
-  _ItemState createState() => _ItemState();
+  _ItemCardState createState() => _ItemCardState();
 }
 
-class _ItemState extends State<Item> {
+class _ItemCardState extends State<ItemCard> {
   var _isInCart = false;
   var _quantity = 0;
 

@@ -4,14 +4,21 @@ import 'package:flutter/material.dart';
 
 class ItemDetail extends StatelessWidget {
   final String imgUrl;
+  final String itemName;
 
-  const ItemDetail({Key? key, required this.imgUrl}) : super(key: key);
+  const ItemDetail({Key? key, required this.imgUrl, required this.itemName})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
+        title: Text(
+          itemName.toUpperCase(),
+          style: TextStyle(
+              fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+        ),
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(

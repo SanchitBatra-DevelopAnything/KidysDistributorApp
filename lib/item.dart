@@ -59,7 +59,10 @@ class _ItemState extends State<Item> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (_) => ItemDetail(imgUrl: widget.imgPath)));
+                        builder: (_) => ItemDetail(
+                              imgUrl: widget.imgPath,
+                              itemName: widget.itemName,
+                            )));
               },
               child: Container(
                 width: double.infinity,

@@ -91,17 +91,6 @@ class _ItemState extends State<Item> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              "Rs. " + widget.price,
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
               widget.itemName.toLowerCase(),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
@@ -113,71 +102,90 @@ class _ItemState extends State<Item> {
             ),
           ),
           Divider(),
-          Expanded(
-            flex: 3,
-            child: Center(
-              child: !_isInCart
-                  ? Container(
-                      height: 50,
-                      child: CupertinoButton(
-                        padding: EdgeInsets.all(5),
-                        child: Container(
-                          alignment: Alignment.center,
-                          width: double.infinity - 100,
-                          decoration: BoxDecoration(
-                            color: Color(0xFFdd0e1c),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: const Align(
-                            alignment: Alignment.center,
-                            child: Text(
-                              "+ Add",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                flex: 5,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Rs. " + widget.price,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 5,
+                child: Center(
+                  child: !_isInCart
+                      ? Container(
+                          height: 50,
+                          child: CupertinoButton(
+                            padding: EdgeInsets.all(5),
+                            child: Container(
+                              alignment: Alignment.center,
+                              width: double.infinity - 100,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFdd0e1c),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: const Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "+ Add",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                               ),
                             ),
+                            onPressed: () {
+                              // Add to cart functionality
+                              cartProviderObject.addItem(
+                                  widget.itemId,
+                                  widget.price,
+                                  1,
+                                  widget.itemName,
+                                  widget.imgPath,
+                                  parentCategory);
+                              setState(() {
+                                _isInCart = true;
+                              });
+                            },
                           ),
+                        )
+                      : CountButtonView(
+                          itemId: widget.itemId,
+                          parentCategory: parentCategory,
+                          onChange: (count) => {
+                            if (count == 0)
+                              {
+                                cartProviderObject.removeItem(widget.itemId),
+                                setState(() => {_isInCart = false})
+                              }
+                            else if (count > 0)
+                              {
+                                cartProviderObject.addItem(
+                                  widget.itemId,
+                                  widget.price,
+                                  count,
+                                  widget.itemName.toLowerCase(),
+                                  widget.imgPath,
+                                  parentCategory,
+                                )
+                              }
+                          },
                         ),
-                        onPressed: () {
-                          // Add to cart functionality
-                          cartProviderObject.addItem(
-                              widget.itemId,
-                              widget.price,
-                              1,
-                              widget.itemName,
-                              widget.imgPath,
-                              parentCategory);
-                          setState(() {
-                            _isInCart = true;
-                          });
-                        },
-                      ),
-                    )
-                  : CountButtonView(
-                      itemId: widget.itemId,
-                      parentCategory: parentCategory,
-                      onChange: (count) => {
-                        if (count == 0)
-                          {
-                            cartProviderObject.removeItem(widget.itemId),
-                            setState(() => {_isInCart = false})
-                          }
-                        else if (count > 0)
-                          {
-                            cartProviderObject.addItem(
-                              widget.itemId,
-                              widget.price,
-                              count,
-                              widget.itemName.toLowerCase(),
-                              widget.imgPath,
-                              parentCategory,
-                            )
-                          }
-                      },
-                    ),
-            ),
+                ),
+              ),
+            ],
           ),
         ],
       ),

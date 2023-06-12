@@ -56,7 +56,7 @@ class _CountButtonViewState extends State<CountButtonView> {
     });
     print("RECEIVED COUNT IN BASKET = " + count.toString());
     return SizedBox(
-      width: 120.0,
+      width: double.infinity - 100,
       height: 50.0,
       child: Center(
         child: Container(

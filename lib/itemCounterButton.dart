@@ -61,7 +61,7 @@ class _CountButtonViewState extends State<CountButtonView> {
       child: Center(
         child: Container(
           decoration: BoxDecoration(
-              color: Color(0xffdd0e1c),
+              color: Color(0xffffffff),
               border: Border.all(color: Colors.white, width: 1.0),
               borderRadius: BorderRadius.circular(22.0)),
           child: Row(
@@ -76,7 +76,7 @@ class _CountButtonViewState extends State<CountButtonView> {
                   },
                   child: Container(
                       decoration: BoxDecoration(
-                          color: Colors.black,
+                          color: Colors.white,
                           borderRadius: BorderRadius.circular(22.0)),
                       width: quantity < 100 ? 40 : 32,
                       child: Center(
@@ -85,7 +85,7 @@ class _CountButtonViewState extends State<CountButtonView> {
                         style: TextStyle(
                             fontSize: 18.0,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                            color: Color.fromARGB(255, 4, 102, 7),
                             decoration: TextDecoration.none),
                       )))),
               Container(
@@ -95,7 +95,7 @@ class _CountButtonViewState extends State<CountButtonView> {
                   style: TextStyle(
                       fontSize: quantity < 100 ? 18.0 : 15.0,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: Color.fromARGB(255, 4, 102, 7),
                       decoration: TextDecoration.none),
                 )),
               ),
@@ -109,7 +109,7 @@ class _CountButtonViewState extends State<CountButtonView> {
                   child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(22.0),
-                          color: Colors.black),
+                          color: Colors.white),
                       width: quantity < 100 ? 40 : 32,
                       child: Center(
                           child: Text(
@@ -117,7 +117,7 @@ class _CountButtonViewState extends State<CountButtonView> {
                         style: TextStyle(
                             fontSize: quantity < 100 ? 18.0 : 15.0,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                            color: Color.fromARGB(255, 4, 102, 7),
                             decoration: TextDecoration.none),
                       )))),
             ],

@@ -131,7 +131,7 @@ class _ItemState extends State<Item> {
                               alignment: Alignment.center,
                               width: double.infinity - 100,
                               decoration: BoxDecoration(
-                                color: Color(0xFFdd0e1c),
+                                color: Color(0xFFFFFFFF),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: const Align(
@@ -139,7 +139,7 @@ class _ItemState extends State<Item> {
                                 child: Text(
                                   "+ Add",
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: Color.fromARGB(255, 4, 102, 7),
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                   ),

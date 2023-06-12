@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 class CategoriesProvider with ChangeNotifier {
   List<Category> _categories = [];
   List<Item> _items = [];
+  List<Item> _filteredItems = [];
 
   List<Category> get categories {
     return [..._categories];
@@ -18,6 +19,10 @@ class CategoriesProvider with ChangeNotifier {
 
   List<Item> get items {
     return [..._items];
+  }
+
+  List<Item> get filteredItems {
+    return [..._filteredItems];
   }
 
   String activeCategoryName = "";
@@ -68,10 +73,30 @@ class CategoriesProvider with ChangeNotifier {
             out_station_price: ItemData['out_station_price']));
       });
       _items = loadedItems;
+      _filteredItems = [..._items];
       notifyListeners();
     } catch (error) {
       print("ITEMS FETCH FAILED!");
       throw error;
     }
+  }
+
+  void filterItems(String searchFor) {
+    if (searchFor == '') {
+      _filteredItems = [..._items];
+      notifyListeners();
+      return;
+    }
+    _filteredItems = [];
+    _filteredItems = [
+      ..._items
+          .where((item) => item.itemName
+              .toString()
+              .toLowerCase()
+              .contains(searchFor.toLowerCase()))
+          .toList()
+    ];
+
+    notifyListeners();
   }
 }

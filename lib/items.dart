@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:kidys_distributor/providers/auth.dart';
 import 'package:kidys_distributor/providers/cart.dart';
 import 'package:kidys_distributor/providers/categories_provider.dart';
 import 'package:provider/provider.dart';
@@ -42,9 +41,13 @@ class _ItemsState extends State<Items> {
     super.didChangeDependencies();
   }
 
+  void onSearch(String text) {
+    Provider.of<CategoriesProvider>(context, listen: false).filterItems(text);
+  }
+
   @override
   Widget build(BuildContext context) {
-    var items = Provider.of<CategoriesProvider>(context).items;
+    var items = Provider.of<CategoriesProvider>(context).filteredItems;
     return SafeArea(
       child: GestureDetector(
         onTap: () {
@@ -67,7 +70,7 @@ class _ItemsState extends State<Items> {
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
                               colors: [Color(0XFFFFFFFF), Color(0xffFFFFFF)])),
-                      height: 100,
+                      height: 80,
                       padding: EdgeInsets.all(10),
                       child: Row(children: [
                         Flexible(
@@ -91,6 +94,7 @@ class _ItemsState extends State<Items> {
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                               child: CupertinoSearchTextField(
+                                autocorrect: false,
                                 onTap: () {
                                   setState(() {
                                     _isSearching = true;
@@ -100,7 +104,7 @@ class _ItemsState extends State<Items> {
                                     fontSize: 18, fontWeight: FontWeight.bold),
                                 controller: searchItemController,
                                 onChanged: (text) {
-                                  //onSearch(text);
+                                  onSearch(text);
                                 },
                               ),
                             ),

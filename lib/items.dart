@@ -66,7 +66,7 @@ class _ItemsState extends State<Items> {
                           gradient: LinearGradient(
                               begin: Alignment.topLeft,
                               end: Alignment.bottomRight,
-                              colors: [Color(0XFF552018), Color(0xff552018)])),
+                              colors: [Color(0XFFFFFFFF), Color(0xffFFFFFF)])),
                       height: 100,
                       padding: EdgeInsets.all(10),
                       child: Row(children: [
@@ -74,7 +74,7 @@ class _ItemsState extends State<Items> {
                           flex: 1,
                           child: IconButton(
                             icon: Icon(Icons.arrow_back_ios_new),
-                            color: Colors.white,
+                            color: Colors.black,
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
@@ -119,7 +119,7 @@ class _ItemsState extends State<Items> {
                               },
                               icon: const Icon(
                                 Icons.shopping_cart,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                               iconSize: 30,
                             ),

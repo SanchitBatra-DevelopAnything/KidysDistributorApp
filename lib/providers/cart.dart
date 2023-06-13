@@ -6,7 +6,7 @@ class CartItem {
   final String id;
   final String title;
   final dynamic quantity;
-  final String price;
+  final dynamic price;
   final String imageUrl;
   final String parentCategoryType;
   final dynamic totalPrice;

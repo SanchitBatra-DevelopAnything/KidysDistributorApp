@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kidys_distributor/cartItemView.dart';
+import 'package:kidys_distributor/providers/cart.dart';
+import 'package:provider/provider.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -11,6 +14,10 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
+    final cartProviderObject = Provider.of<CartProvider>(context);
+    final cartItemsList = cartProviderObject.itemList;
+    // var totalOrderPrice = cartProviderObject.getTotalOrderPrice();
+    var totalOrderPrice = "545";
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color.fromARGB(255, 235, 229, 229),
@@ -99,16 +106,16 @@ class _CartScreenState extends State<CartScreen> {
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
                                   color: Color.fromARGB(255, 235, 229, 229)),
-                              child: Icon(
+                              child: const Icon(
                                 Icons.alarm,
                                 size: 35,
                                 color: Colors.black,
                               )),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
-                        Column(
+                        const Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
@@ -127,18 +134,31 @@ class _CartScreenState extends State<CartScreen> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        "Total : Rs.547",
+                        "Total : Rs.${totalOrderPrice}",
                         style: TextStyle(
                             color: Colors.black54, fontWeight: FontWeight.bold),
                       ),
                     ),
-                    Divider(
-                      color: Color(0XFFDD0E1C),
-                    )
                   ],
                 ),
               ),
-            )
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Color.fromARGB(255, 235, 229, 229)),
+                  child: ListView.builder(
+                    itemBuilder: (context, index) =>
+                        CartItemView(cartItem: cartItemsList[index]),
+                    itemExtent: 100,
+                    itemCount: cartItemsList.length,
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

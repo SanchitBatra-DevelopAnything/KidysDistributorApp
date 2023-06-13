@@ -45,6 +45,10 @@ class _CategoriesState extends State<Categories> {
     super.dispose();
   }
 
+  moveToCart(BuildContext context) {
+    Navigator.of(context).pushNamed("/cart");
+  }
+
   moveToItems(String categoryId, String categoryName) {
     Provider.of<CategoriesProvider>(context, listen: false).activeCategoryKey =
         categoryId;
@@ -93,7 +97,7 @@ class _CategoriesState extends State<Categories> {
                           ),
                           child: IconButton(
                             onPressed: () {
-                              //moveToCart(context);
+                              moveToCart(context);
                             },
                             icon: Icon(
                               Icons.shopping_cart,

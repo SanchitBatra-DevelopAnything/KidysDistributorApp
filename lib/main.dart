@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:kidys_distributor/cartScreen.dart';
 import 'package:kidys_distributor/categories.dart';
 import 'package:kidys_distributor/home.dart';
 import 'package:kidys_distributor/login.dart';
@@ -67,6 +68,7 @@ class MaterialAppWithInitialRoute extends StatelessWidget {
         '/login': (context) => LoginPage(),
         '/categories': (context) => Categories(),
         '/items': (context) => Items(),
+        '/cart': (context) => CartScreen(),
       },
       debugShowCheckedModeBanner: false,
     );

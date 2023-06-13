@@ -88,6 +88,8 @@ class _CartScreenState extends State<CartScreen> {
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
@@ -122,10 +124,17 @@ class _CartScreenState extends State<CartScreen> {
                         ),
                       ],
                     ),
-                    Divider(
-                      color: Color(0xffdd0e1c),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Total : Rs.547",
+                        style: TextStyle(
+                            color: Colors.black54, fontWeight: FontWeight.bold),
+                      ),
                     ),
-                    Text("CARD")
+                    Divider(
+                      color: Color(0XFFDD0E1C),
+                    )
                   ],
                 ),
               ),

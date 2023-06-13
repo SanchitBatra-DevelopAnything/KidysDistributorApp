@@ -163,7 +163,7 @@ class _ItemsState extends State<Items> {
                                     mainAxisSpacing: 10),
                             itemBuilder: (context, index) => ItemCard(
                                   imgPath: items[index].imgUrl,
-                                  price: getPrice(items[index]).toString(),
+                                  price: getPrice(items[index]),
                                   itemId: items[index].id,
                                   itemName: items[index].itemName,
                                 )),

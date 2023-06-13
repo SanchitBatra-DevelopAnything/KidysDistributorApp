@@ -21,8 +21,6 @@ class ItemCard extends StatefulWidget {
   final String itemName;
   final String itemId;
 
-  get delhi_ncr_price => null;
-
   @override
   _ItemCardState createState() => _ItemCardState();
 }
@@ -112,7 +110,7 @@ class _ItemCardState extends State<ItemCard> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    "Rs. " + widget.price,
+                    "Rs. " + widget.price.toString(),
                     style: TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
@@ -150,6 +148,7 @@ class _ItemCardState extends State<ItemCard> {
                             ),
                             onPressed: () {
                               // Add to cart functionality
+                              print("started add");
                               cartProviderObject.addItem(
                                   widget.itemId,
                                   widget.price,

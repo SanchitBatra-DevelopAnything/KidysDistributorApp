@@ -5,11 +5,11 @@ import 'package:http/http.dart' as http;
 class CartItem {
   final String id;
   final String title;
-  final dynamic quantity;
-  final dynamic price;
+  final num quantity;
+  final num price;
   final String imageUrl;
   final String parentCategoryType;
-  final dynamic totalPrice;
+  final num totalPrice;
 
   CartItem(
       {required this.id,
@@ -70,10 +70,9 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  double getTotalOrderPrice() {
+  num getTotalOrderPrice() {
     double totalPrice = 0;
     _itemList.forEach((element) {
-      print(element.totalPrice);
       totalPrice += element.totalPrice;
     });
     return totalPrice;
@@ -99,20 +98,24 @@ class CartProvider with ChangeNotifier {
           quantity: value.quantity,
           title: value.title));
     });
+    print("LIST OF CART BECOMES = ");
+    _itemList.forEach((ci) => print(
+        "${ci.id} , has quantity ${ci.quantity} , title ${ci.title} ,Total =  ${ci.totalPrice}"));
     notifyListeners();
   }
 
-  double getPriceFromString(String price) {
-    var p = price.substring(3);
-    return double.parse(p);
-  }
+  // double getPriceFromString(String price) {
+  //   var p = price.substring(3);
+  //   return double.parse(p);
+  // }
 
-  void addItem(String itemId, dynamic price, dynamic quantity, String title,
+  void addItem(String itemId, num price, num quantity, String title,
       String imgPath, String parentCategory) {
-    print("request to add : " + title + " with price : " + price);
-
+    print(
+        "REQUEST TO ADD ${title} with price ${price.toString()} and quantity ${quantity} , making total = ${(price * quantity).toString()}");
     if (_items!.containsKey(itemId)) {
       //change quantity..
+      print("Found update quantity = ${quantity}");
       _items!.update(
           itemId,
           (existingCartItem) => CartItem(
@@ -131,13 +134,15 @@ class CartProvider with ChangeNotifier {
               totalPrice: price * quantity,
               price: price,
               title: title,
-              quantity: quantity,
+              quantity: 1,
               imageUrl: imgPath,
               parentCategoryType: parentCategory));
     }
     print("Formin list");
     formCartList();
     notifyListeners();
+
+    print("ADDED ITEM");
   }
 
   // Future<void> PlaceShopOrder(

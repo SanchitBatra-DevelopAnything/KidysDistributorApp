@@ -17,7 +17,7 @@ class _CartScreenState extends State<CartScreen> {
     final cartProviderObject = Provider.of<CartProvider>(context);
     final cartItemsList = cartProviderObject.itemList;
     // var totalOrderPrice = cartProviderObject.getTotalOrderPrice();
-    var totalOrderPrice = "545";
+    var totalOrderPrice = cartProviderObject.getTotalOrderPrice();
     return SafeArea(
       child: Scaffold(
         backgroundColor: Color.fromARGB(255, 235, 229, 229),

@@ -36,6 +36,8 @@ class CartProvider with ChangeNotifier {
 
   List<CartItem> _itemList = [];
 
+  String dispatchDateSelected = "";
+
   Map<String, CartItem> get items {
     return {..._items!};
   }
@@ -62,6 +64,11 @@ class CartProvider with ChangeNotifier {
     } else {
       return 0;
     }
+  }
+
+  void setDispatchDate(String date) {
+    dispatchDateSelected = date;
+    notifyListeners();
   }
 
   void clearCart() {

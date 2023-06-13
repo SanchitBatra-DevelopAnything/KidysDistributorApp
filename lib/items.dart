@@ -22,7 +22,6 @@ class _ItemsState extends State<Items> {
   var _isLoading = false;
   var _isFirstTime = true;
   var _isSearching = false;
-  var _noItems = false;
 
   @override
   void didChangeDependencies() {

@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_set_literal
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kidys_distributor/itemDetail.dart';

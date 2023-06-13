@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kidys_distributor/cartItemView.dart';
@@ -11,6 +13,39 @@ class CartScreen extends StatefulWidget {
   _CartScreenState createState() => _CartScreenState();
 }
 
+openDatePicker(BuildContext context) async {
+  final DateTime? selectedDate = await showDatePicker(
+    builder: (BuildContext context, Widget? child) {
+      return Theme(
+        data: ThemeData.light().copyWith(
+            primaryColor: const Color(0XFFDD0E1C),
+            colorScheme: const ColorScheme.light(
+              primary: Color(0xffdd0e1c),
+            )),
+        child: child!,
+      );
+    },
+    context: context,
+    initialDate: DateTime.now(),
+    firstDate: DateTime.now(),
+    lastDate: DateTime.now().add(const Duration(days: 7)),
+  );
+
+  if (selectedDate != null) {
+    onDateSelected(selectedDate, context);
+  }
+}
+
+onDateSelected(DateTime date, BuildContext context) {
+  var day = date.toString().split(" ")[0].split("-")[2];
+  var month = date.toString().split(" ")[0].split("-")[1];
+  var year = date.toString().split(" ")[0].split("-")[0];
+
+  print("${day}-${month}-${year}");
+  Provider.of<CartProvider>(context, listen: false)
+      .setDispatchDate("${day}-${month}-${year}");
+}
+
 class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
@@ -18,9 +53,10 @@ class _CartScreenState extends State<CartScreen> {
     final cartItemsList = cartProviderObject.itemList;
     // var totalOrderPrice = cartProviderObject.getTotalOrderPrice();
     var totalOrderPrice = cartProviderObject.getTotalOrderPrice();
+    var dispatchDate = cartProviderObject.dispatchDateSelected;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color.fromARGB(255, 235, 229, 229),
+        backgroundColor: const Color.fromARGB(255, 235, 229, 229),
         body: Column(
           children: [
             Container(
@@ -36,16 +72,16 @@ class _CartScreenState extends State<CartScreen> {
                         onTap: () {
                           Navigator.of(context).pop();
                         },
-                        child: Icon(
+                        child: const Icon(
                           Icons.arrow_back,
                           color: Colors.black,
                           size: 28,
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
-                      Text(
+                      const Text(
                         "Checkout",
                         style: TextStyle(
                             color: Colors.black,
@@ -54,25 +90,25 @@ class _CartScreenState extends State<CartScreen> {
                       ),
                     ]),
                     CupertinoButton(
-                      child: Text(
+                      child: const Text(
                         "Place Order",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                       onPressed: () {},
-                      color: Color(0xffdd0e1c),
+                      color: const Color(0xffdd0e1c),
                     ),
                   ],
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
+                child: const Padding(
+                  padding: EdgeInsets.all(10.0),
                   child: Text(
                     "Discounts will be applied on actual dispatched quantities , if applicable.",
                     style: TextStyle(
@@ -82,64 +118,84 @@ class _CartScreenState extends State<CartScreen> {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(color: Colors.white),
-                    color: Color.fromARGB(255, 241, 157, 163)),
+                    color: const Color.fromARGB(255, 241, 157, 163)),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.white),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: Color.fromARGB(255, 235, 229, 229)),
-                              child: const Icon(
-                                Icons.alarm,
-                                size: 35,
-                                color: Colors.black,
-                              )),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Select Dispatch Details",
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              "Click here",
-                              style: TextStyle(color: Colors.black54),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "Total : Rs.${totalOrderPrice}",
-                        style: TextStyle(
-                            color: Colors.black54, fontWeight: FontWeight.bold),
+              child: GestureDetector(
+                onTap: () {
+                  openDatePicker(context);
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    color: dispatchDate == ""
+                                        ? const Color.fromARGB(
+                                            255, 235, 229, 229)
+                                        : Colors.green),
+                                child: dispatchDate == ""
+                                    ? const Icon(
+                                        Icons.alarm,
+                                        size: 35,
+                                        color: Colors.black,
+                                      )
+                                    : const Icon(
+                                        color: Colors.white,
+                                        size: 35,
+                                        Icons.done)),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "Select Dispatch Details",
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
+                              ),
+                              dispatchDate == ""
+                                  ? const Text(
+                                      "Click Here!",
+                                      style: TextStyle(color: Colors.black54),
+                                    )
+                                  : Text(
+                                      "Dispatch Date : ${dispatchDate}",
+                                      style: const TextStyle(
+                                          color: Colors.black54),
+                                    ),
+                            ],
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "Total : Rs.${totalOrderPrice}",
+                          style: const TextStyle(
+                              color: Colors.black54,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -149,7 +205,7 @@ class _CartScreenState extends State<CartScreen> {
                 child: Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: Color.fromARGB(255, 235, 229, 229)),
+                      color: const Color.fromARGB(255, 235, 229, 229)),
                   child: ListView.builder(
                     itemBuilder: (context, index) =>
                         CartItemView(cartItem: cartItemsList[index]),

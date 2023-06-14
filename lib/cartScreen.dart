@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kidys_distributor/PlatformDialog.dart';
 import 'package:kidys_distributor/cartItemView.dart';
 import 'package:kidys_distributor/providers/cart.dart';
 import 'package:provider/provider.dart';
@@ -13,40 +14,53 @@ class CartScreen extends StatefulWidget {
   _CartScreenState createState() => _CartScreenState();
 }
 
-openDatePicker(BuildContext context) async {
-  final DateTime? selectedDate = await showDatePicker(
-    builder: (BuildContext context, Widget? child) {
-      return Theme(
-        data: ThemeData.light().copyWith(
-            primaryColor: const Color(0XFFDD0E1C),
-            colorScheme: const ColorScheme.light(
-              primary: Color(0xffdd0e1c),
-            )),
-        child: child!,
-      );
-    },
-    context: context,
-    initialDate: DateTime.now(),
-    firstDate: DateTime.now(),
-    lastDate: DateTime.now().add(const Duration(days: 7)),
-  );
-
-  if (selectedDate != null) {
-    onDateSelected(selectedDate, context);
-  }
-}
-
-onDateSelected(DateTime date, BuildContext context) {
-  var day = date.toString().split(" ")[0].split("-")[2];
-  var month = date.toString().split(" ")[0].split("-")[1];
-  var year = date.toString().split(" ")[0].split("-")[0];
-
-  print("${day}-${month}-${year}");
-  Provider.of<CartProvider>(context, listen: false)
-      .setDispatchDate("${day}-${month}-${year}");
-}
-
 class _CartScreenState extends State<CartScreen> {
+  bool isLoading = false;
+
+  openDatePicker(BuildContext context) async {
+    final DateTime? selectedDate = await showDatePicker(
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+              primaryColor: const Color(0XFFDD0E1C),
+              colorScheme: const ColorScheme.light(
+                primary: Color(0xffdd0e1c),
+              )),
+          child: child!,
+        );
+      },
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(),
+      lastDate: DateTime.now().add(const Duration(days: 7)),
+    );
+
+    if (selectedDate != null) {
+      onDateSelected(selectedDate, context);
+    }
+  }
+
+  onDateSelected(DateTime date, BuildContext context) {
+    var day = date.toString().split(" ")[0].split("-")[2];
+    var month = date.toString().split(" ")[0].split("-")[1];
+    var year = date.toString().split(" ")[0].split("-")[0];
+
+    print("${day}-${month}-${year}");
+    Provider.of<CartProvider>(context, listen: false)
+        .setDispatchDate("${day}-${month}-${year}");
+  }
+
+  placeOrder(BuildContext context, String dispatchDate) {
+    if (dispatchDate == "") {
+      showDialog(
+          context: context,
+          builder: (context) => const PlatformDialog(
+              title: "Select Dispatch Details",
+              content:
+                  "Please make sure you've selected dispatch details before placing the order"));
+    } else {}
+  }
+
   @override
   Widget build(BuildContext context) {
     final cartProviderObject = Provider.of<CartProvider>(context);
@@ -94,7 +108,9 @@ class _CartScreenState extends State<CartScreen> {
                         "Place Order",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        placeOrder(context, dispatchDate);
+                      },
                       color: const Color(0xffdd0e1c),
                     ),
                   ],

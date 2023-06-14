@@ -58,7 +58,10 @@ class _CartScreenState extends State<CartScreen> {
               title: "Select Dispatch Details",
               content:
                   "Please make sure you've selected dispatch details before placing the order"));
-    } else {}
+    } else {
+      Navigator.pushNamedAndRemoveUntil(
+          context, "/orderPlaced", (route) => false);
+    }
   }
 
   @override

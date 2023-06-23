@@ -45,16 +45,36 @@ class ItemDetail extends StatelessWidget {
             ),
           ),
           // Profile image with hero animation
-          Center(
-            child: Hero(
-              tag: imgUrl,
-              child: Image.network(
-                imgUrl,
-                fit: BoxFit.cover,
-                height: 400,
-                width: double.infinity,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                child: Hero(
+                  tag: imgUrl,
+                  child: Image.network(
+                    imgUrl,
+                    fit: BoxFit.cover,
+                    height: 400,
+                    width: double.infinity,
+                  ),
+                ),
               ),
-            ),
+              SizedBox(
+                height: 20,
+              ),
+              SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "DETAILS HERE BABABABABAB HAHASDHJKAHDKJAHSKDJHAKSDHALKJHDIUAHDLIASD , Ingredients : PAPAYA DKJAHSDJKHAJKDFHAJKFHGKJAGFJKAGFJKAGSFJKAGJKFAJKFHKJAHFKJAHFKJHAJKFGHAJKGHFAJKHGFKJAHFKJAHSFKJAHKJFHAF , pOORA LOREN IPSUM DAAALDUNGA YAHIN PE TERE!",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18),
+                  ),
+                ),
+              )
+            ],
           ),
         ],
       ),

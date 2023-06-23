@@ -33,8 +33,8 @@ class AuthProvider with ChangeNotifier {
         .toList();
   }
 
-  Future<void> distributorSignUp(
-      String distributorName, String area, String GSTNumber) async {
+  Future<void> distributorSignUp(String distributorName, String area,
+      String GSTNumber, String contactNumber) async {
     //send http post here.
     const url =
         "https://kidysadminapp-default-rtdb.firebaseio.com/DistributorNotifications.json";
@@ -42,7 +42,8 @@ class AuthProvider with ChangeNotifier {
         body: json.encode({
           'distributorName': distributorName,
           'area': area,
-          'GST': GSTNumber
+          'GST': GSTNumber,
+          'contact': contactNumber
         }));
   }
 

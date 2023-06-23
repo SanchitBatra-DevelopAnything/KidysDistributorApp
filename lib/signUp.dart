@@ -19,6 +19,7 @@ class SignUpForm extends StatefulWidget {
 class _SignUpFormState extends State<SignUpForm> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController GSTController = TextEditingController();
+  TextEditingController contactController = TextEditingController();
   final FocusScopeNode _focusScopeNode = FocusScopeNode();
   String? selectedArea;
   bool _isFirstTime = true;
@@ -39,7 +40,8 @@ class _SignUpFormState extends State<SignUpForm> {
     await Provider.of<AuthProvider>(context, listen: false).distributorSignUp(
         usernameController.text.trim().toString().toUpperCase(),
         selectedArea.toString().trim().toUpperCase(),
-        GSTController.text.trim());
+        GSTController.text.trim(),
+        contactController.text.trim());
 
     setState(() {
       showAlertDialog(context);
@@ -112,6 +114,14 @@ class _SignUpFormState extends State<SignUpForm> {
                       labelText: "YOUR NAME",
                       controller: usernameController,
                       type: TextInputType.text,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    PlatformTextField(
+                      labelText: "CONTACT NUMBER",
+                      controller: contactController,
+                      type: TextInputType.number,
                     ),
                     const SizedBox(
                       height: 20,

@@ -5,8 +5,13 @@ import 'package:flutter/material.dart';
 class ItemDetail extends StatelessWidget {
   final String imgUrl;
   final String itemName;
+  final String itemDetails;
 
-  const ItemDetail({Key? key, required this.imgUrl, required this.itemName})
+  const ItemDetail(
+      {Key? key,
+      required this.imgUrl,
+      required this.itemName,
+      required this.itemDetails})
       : super(key: key);
 
   @override
@@ -66,7 +71,7 @@ class ItemDetail extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    "DETAILS HERE BABABABABAB HAHASDHJKAHDKJAHSKDJHAKSDHALKJHDIUAHDLIASD , Ingredients : PAPAYA DKJAHSDJKHAJKDFHAJKFHGKJAGFJKAGFJKAGSFJKAGJKFAJKFHKJAHFKJAHFKJHAJKFGHAJKGHFAJKHGFKJAHFKJAHSFKJAHKJFHAF , pOORA LOREN IPSUM DAAALDUNGA YAHIN PE TERE!",
+                    itemDetails,
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,

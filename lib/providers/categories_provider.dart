@@ -70,6 +70,9 @@ class CategoriesProvider with ChangeNotifier {
             modern_trade_price: ItemData['modern_trade_price'],
             super_stockist_price: ItemData['super_stockist_price'],
             delhi_ncr_price: ItemData['delhi_ncr_price'],
+            details: (ItemData['details'] == null || ItemData['details'] == '')
+                ? "NO DETAILS PROVIDED"
+                : ItemData['details'],
             out_station_price: ItemData['out_station_price']));
       });
       _items = loadedItems;

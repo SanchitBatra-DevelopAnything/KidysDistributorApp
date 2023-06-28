@@ -15,6 +15,7 @@ class ItemCard extends StatefulWidget {
       required this.imgPath,
       required this.price,
       required this.itemName,
+      required this.itemDetails,
       required this.itemId})
       : super(key: key);
 
@@ -22,6 +23,7 @@ class ItemCard extends StatefulWidget {
   final dynamic price;
   final String itemName;
   final String itemId;
+  final String itemDetails;
 
   @override
   _ItemCardState createState() => _ItemCardState();
@@ -64,6 +66,7 @@ class _ItemCardState extends State<ItemCard> {
                         builder: (_) => ItemDetail(
                               imgUrl: widget.imgPath,
                               itemName: widget.itemName,
+                              itemDetails: widget.itemDetails,
                             )));
               },
               child: Container(

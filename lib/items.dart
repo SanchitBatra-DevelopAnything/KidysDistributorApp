@@ -165,6 +165,7 @@ class _ItemsState extends State<Items> {
                                   price: getPrice(items[index]),
                                   itemId: items[index].id,
                                   itemName: items[index].itemName,
+                                  itemDetails: items[index].details,
                                 )),
                       ),
                     )

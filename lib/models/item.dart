@@ -7,6 +7,7 @@ class Item {
   dynamic out_station_price;
   dynamic super_stockist_price;
   dynamic western_price;
+  dynamic details;
 
   Item(
       {required this.delhi_ncr_price,
@@ -16,5 +17,6 @@ class Item {
       required this.modern_trade_price,
       required this.out_station_price,
       required this.super_stockist_price,
+      required this.details,
       required this.western_price});
 }

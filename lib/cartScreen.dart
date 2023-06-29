@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 import 'package:kidys_distributor/PlatformDialog.dart';
 import 'package:kidys_distributor/cartItemView.dart';
@@ -17,6 +18,7 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   bool isLoading = false;
+  bool isPlacingOrder = false;
 
   openDatePicker(BuildContext context) async {
     final DateTime? selectedDate = await showDatePicker(
@@ -61,7 +63,7 @@ class _CartScreenState extends State<CartScreen> {
                   "Please make sure you've selected dispatch details before placing the order"));
     } else {
       setState(() {
-        isLoading = true;
+        isPlacingOrder = true;
       });
       final cartObject = Provider.of<CartProvider>(context, listen: false);
       final distributor =
@@ -124,16 +126,21 @@ class _CartScreenState extends State<CartScreen> {
                             fontWeight: FontWeight.bold),
                       ),
                     ]),
-                    CupertinoButton(
-                      child: const Text(
-                        "Place Order",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      onPressed: () {
-                        placeOrder(context, dispatchDate);
-                      },
-                      color: const Color(0xffdd0e1c),
-                    ),
+                    !isPlacingOrder
+                        ? CupertinoButton(
+                            child: const Text(
+                              "Place Order",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            onPressed: () {
+                              placeOrder(context, dispatchDate);
+                            },
+                            color: const Color(0xffdd0e1c),
+                          )
+                        : SpinKitPulse(
+                            color: Color(0xffDD0E1C),
+                            size: 50.0,
+                          ),
                   ],
                 ),
               ),

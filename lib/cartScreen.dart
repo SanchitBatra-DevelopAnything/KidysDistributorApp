@@ -76,9 +76,7 @@ class _CartScreenState extends State<CartScreen> {
       await Provider.of<CartProvider>(context, listen: false)
           .PlaceDistributorOrder(area, distributor, time);
       cartObject.clearCart();
-      // setState(() {
-      //   isLoading = false;
-      // });
+      cartObject.resetDispatchDate();
       Navigator.pushNamedAndRemoveUntil(
           context, "/orderPlaced", (route) => false);
     }

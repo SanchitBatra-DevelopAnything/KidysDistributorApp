@@ -73,6 +73,11 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void resetDispatchDate() {
+    dispatchDateSelected = "";
+    notifyListeners();
+  }
+
   void clearCart() {
     _items = {};
     _itemList = [];

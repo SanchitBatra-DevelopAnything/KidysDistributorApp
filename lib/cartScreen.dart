@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:kidys_distributor/PlatformDialog.dart';
 import 'package:kidys_distributor/cartItemView.dart';
+import 'package:kidys_distributor/models/distributor.dart';
+import 'package:kidys_distributor/providers/auth.dart';
 import 'package:kidys_distributor/providers/cart.dart';
 import 'package:provider/provider.dart';
 
@@ -48,7 +51,7 @@ class _CartScreenState extends State<CartScreen> {
         .setDispatchDate("${day}-${month}-${year}");
   }
 
-  placeOrder(BuildContext context, String dispatchDate) {
+  placeOrder(BuildContext context, String dispatchDate) async {
     if (dispatchDate == "") {
       showDialog(
           context: context,
@@ -57,6 +60,25 @@ class _CartScreenState extends State<CartScreen> {
               content:
                   "Please make sure you've selected dispatch details before placing the order"));
     } else {
+      setState(() {
+        isLoading = true;
+      });
+      final cartObject = Provider.of<CartProvider>(context, listen: false);
+      final distributor =
+          Provider.of<AuthProvider>(context, listen: false).loggedInDistributor;
+      final area =
+          Provider.of<AuthProvider>(context, listen: false).loggedInArea;
+      final timeArrayComponent =
+          DateFormat.yMEd().add_jms().format(DateTime.now()).split(" ");
+      final time = timeArrayComponent[timeArrayComponent.length - 2] +
+          " " +
+          timeArrayComponent[timeArrayComponent.length - 1];
+      await Provider.of<CartProvider>(context, listen: false)
+          .PlaceDistributorOrder(area, distributor, time);
+      cartObject.clearCart();
+      // setState(() {
+      //   isLoading = false;
+      // });
       Navigator.pushNamedAndRemoveUntil(
           context, "/orderPlaced", (route) => false);
     }

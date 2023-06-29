@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import '../models/distributorOrderItem.dart';
+
 class CartItem {
   final String id;
   final String title;
@@ -152,25 +154,37 @@ class CartProvider with ChangeNotifier {
     print("ADDED ITEM");
   }
 
-  // Future<void> PlaceShopOrder(
-  //     String shopAddress, String loggedInRetailer, String time) async {
-  //   var todaysDate = DateTime.now();
-  //   var year = todaysDate.year.toString();
-  //   var month = todaysDate.month.toString();
-  //   var day = todaysDate.day.toString();
-  //   var date = day + month + year;
+  Future<void> PlaceDistributorOrder(
+      String area, String loggedInDistributor, String time) async {
+    var todaysDate = DateTime.now();
+    var year = todaysDate.year.toString();
+    var month = todaysDate.month.toString();
+    var day = todaysDate.day.toString();
+    var date = day + month + year;
+    var url =
+        "https://kidysadminapp-default-rtdb.firebaseio.com/activeDistributorOrders/${area}/${loggedInDistributor}.json";
+    try {
+      await http.post(Uri.parse(url),
+          body: json.encode({
+            "area": area,
+            "orderedBy": loggedInDistributor,
+            "orderTime": time,
+            "orderDate": date,
+            "items": formOrderItemList(),
+            "totalPrice": getTotalOrderPrice(),
+          }));
+    } catch (error) {
+      print("ERROR IS");
+      print(error);
+      throw error;
+    }
+  }
+
+  // Future<void> deleteCartOnDB(String retailer, String shop) async {
   //   var url =
-  //       "https://muskan-admin-app-default-rtdb.firebaseio.com/activeShopOrders.json";
+  //       "https://muskan-admin-app-default-rtdb.firebaseio.com/cart/${shop}/${retailer}.json";
   //   try {
-  //     await http.post(Uri.parse(url),
-  //         body: json.encode({
-  //           "shopAddress": shopAddress,
-  //           "orderedBy": loggedInRetailer,
-  //           "orderTime": time,
-  //           "orderDate": date,
-  //           "items": formOrderItemList(),
-  //           "totalPrice": getTotalOrderPrice(),
-  //         }));
+  //     await http.delete(Uri.parse(url));
   //   } catch (error) {
   //     print("ERROR IS");
   //     print(error);
@@ -178,89 +192,77 @@ class CartProvider with ChangeNotifier {
   //   }
   // }
 
-  Future<void> deleteCartOnDB(String retailer, String shop) async {
-    var url =
-        "https://muskan-admin-app-default-rtdb.firebaseio.com/cart/${shop}/${retailer}.json";
-    try {
-      await http.delete(Uri.parse(url));
-    } catch (error) {
-      print("ERROR IS");
-      print(error);
-      throw error;
-    }
-  }
+  // Future<void> saveCart(String retailer, String shop) async {
+  //   var url =
+  //       "https://muskan-admin-app-default-rtdb.firebaseio.com/cart/${shop}/${retailer}.json";
+  //   try {
+  //     await http.put(Uri.parse(url),
+  //         body: json.encode({"items": formSaveCartList()}));
+  //   } catch (error) {
+  //     print("ERROR IS");
+  //     print(error);
+  //     throw error;
+  //   }
+  // }
 
-  Future<void> saveCart(String retailer, String shop) async {
-    var url =
-        "https://muskan-admin-app-default-rtdb.firebaseio.com/cart/${shop}/${retailer}.json";
-    try {
-      await http.put(Uri.parse(url),
-          body: json.encode({"items": formSaveCartList()}));
-    } catch (error) {
-      print("ERROR IS");
-      print(error);
-      throw error;
-    }
-  }
+  // Future<void> fetchCartFromDB(String retailer, String shop) async {
+  //   var url =
+  //       "https://muskan-admin-app-default-rtdb.firebaseio.com/cart/${shop}/${retailer}/items.json";
+  //   try {
+  //     final response = await http.get(Uri.parse(url));
+  //     if (response == null) {
+  //       return;
+  //     }
+  //     // final List<CartItem> loadedItems = [];
+  //     final extractedData = json.decode(response.body) as List<dynamic>;
+  //     if (extractedData == null) {
+  //       return;
+  //     }
+  //     extractedData.forEach((cartItem) {
+  //       // loadedItems.add(CartItem(
+  //       //     id: cartItem['id'],
+  //       //     imageUrl: cartItem['imageUrl'],
+  //       //     parentCategoryType: cartItem['parentCategoryType'],
+  //       //     parentSubcategoryType: cartItem['parentSubcategoryType'],
+  //       //     price: cartItem['price'],
+  //       //     quantity: cartItem['quantity'],
+  //       //     title: cartItem['title'],
+  //       //     totalPrice: cartItem['totalPrice']));
+  //       addItem(
+  //         cartItem['id'],
+  //         cartItem['price'],
+  //         cartItem['quantity'],
+  //         cartItem['title'],
+  //         cartItem['imageUrl'],
+  //         cartItem['parentCategoryType'],
+  //       );
+  //     });
+  //   } catch (error) {
+  //     print("ERROR IS");
+  //     print(error);
+  //     throw error;
+  //   }
+  // }
 
-  Future<void> fetchCartFromDB(String retailer, String shop) async {
-    var url =
-        "https://muskan-admin-app-default-rtdb.firebaseio.com/cart/${shop}/${retailer}/items.json";
-    try {
-      final response = await http.get(Uri.parse(url));
-      if (response == null) {
-        return;
-      }
-      // final List<CartItem> loadedItems = [];
-      final extractedData = json.decode(response.body) as List<dynamic>;
-      if (extractedData == null) {
-        return;
-      }
-      extractedData.forEach((cartItem) {
-        // loadedItems.add(CartItem(
-        //     id: cartItem['id'],
-        //     imageUrl: cartItem['imageUrl'],
-        //     parentCategoryType: cartItem['parentCategoryType'],
-        //     parentSubcategoryType: cartItem['parentSubcategoryType'],
-        //     price: cartItem['price'],
-        //     quantity: cartItem['quantity'],
-        //     title: cartItem['title'],
-        //     totalPrice: cartItem['totalPrice']));
-        addItem(
-          cartItem['id'],
-          cartItem['price'],
-          cartItem['quantity'],
-          cartItem['title'],
-          cartItem['imageUrl'],
-          cartItem['parentCategoryType'],
-        );
-      });
-    } catch (error) {
-      print("ERROR IS");
-      print(error);
-      throw error;
-    }
-  }
-
-  formSaveCartList() {
-    var items = [];
-    itemList.forEach((cartItem) {
-      items.add(cartItem.toJson());
-    });
-    return items;
-  }
-
-  // formOrderItemList() {
+  // formSaveCartList() {
   //   var items = [];
-  //   _itemList.forEach((cartItem) {
-  //     items.add(RegularShopOrderItem(
-  //             item: cartItem.title,
-  //             imageUrl: cartItem.imageUrl,
-  //             CategoryName: cartItem.parentCategoryType,
-  //             quantity: cartItem.quantity,
-  //             price: cartItem.totalPrice)
-  //         .toJson());
+  //   itemList.forEach((cartItem) {
+  //     items.add(cartItem.toJson());
   //   });
   //   return items;
   // }
+
+  formOrderItemList() {
+    var items = [];
+    _itemList.forEach((cartItem) {
+      items.add(DistributorOrderItem(
+              item: cartItem.title,
+              imageUrl: cartItem.imageUrl,
+              CategoryName: cartItem.parentCategoryType,
+              quantity: cartItem.quantity,
+              price: cartItem.totalPrice)
+          .toJson());
+    });
+    return items;
+  }
 }

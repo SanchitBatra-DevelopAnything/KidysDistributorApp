@@ -175,6 +175,7 @@ class CartProvider with ChangeNotifier {
             "orderedBy": loggedInDistributor,
             "orderTime": time,
             "orderDate": date,
+            "dispatchDate": dispatchDateSelected,
             "items": formOrderItemList(),
             "totalPrice": getTotalOrderPrice(),
           }));

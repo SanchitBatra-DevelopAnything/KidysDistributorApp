@@ -55,9 +55,9 @@ class OrderProvider with ChangeNotifier {
 
   Future<void> getAcceptedOrders(
       String loggedInDistributor, String loggedInArea) async {
-    // var params = 'orderBy="\$key"?limitToFirst=50';
+    var params = "orderBy=\"\$key\"&limitToFirst=50";
     var url =
-        "https://kidysadminapp-default-rtdb.firebaseio.com/processedDistributorOrders/${loggedInArea}/${loggedInDistributor}.json";
+        "https://kidysadminapp-default-rtdb.firebaseio.com/processedDistributorOrders/${loggedInArea}/${loggedInDistributor}.json?${params}";
     try {
       final response = await http.get(Uri.parse(url));
       if (response == 'null' || response == null) {

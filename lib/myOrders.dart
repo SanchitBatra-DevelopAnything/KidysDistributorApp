@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kidys_distributor/myOrderCard.dart';
+import 'package:kidys_distributor/providers/auth.dart';
+import 'package:provider/provider.dart';
 
 class MyOrders extends StatefulWidget {
   const MyOrders({Key? key}) : super(key: key);
@@ -9,6 +11,26 @@ class MyOrders extends StatefulWidget {
 }
 
 class _MyOrdersState extends State<MyOrders> {
+  var isFirstTime = true;
+  var isLoading = false;
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    if (isFirstTime) {
+      var loggedInDistributor =
+          Provider.of<AuthProvider>(context, listen: false).loggedInDistributor;
+      var loggedInArea =
+          Provider.of<AuthProvider>(context, listen: false).loggedInArea;
+
+      setState(() {
+        isLoading = true;
+      });
+    }
+    isFirstTime = false;
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

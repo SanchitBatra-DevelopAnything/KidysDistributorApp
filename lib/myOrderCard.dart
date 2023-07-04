@@ -79,27 +79,27 @@ class OrderCard extends StatelessWidget {
               child: ListTile(
                 title: this.status == "Accepted"
                     ? Text(
-                        "Total : Rs.587",
+                        "Total : Rs.${this.order_total}",
                         style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             decoration: TextDecoration.lineThrough),
                       )
                     : Text(
-                        "Total Estimate : Rs.587",
+                        "Estimated Total : Rs.${this.order_total}",
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                 subtitle: this.status == "Accepted"
                     ? Text(
-                        "Dispatched Total : Rs.520",
+                        "Dispatched Total : Rs.${this.dispatchedTotal}",
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: Colors.black),
                       )
                     : Text(
-                        "Total might change based on items we dispatch.",
+                        "(This might change based on items we dispatch.)",
                         style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,

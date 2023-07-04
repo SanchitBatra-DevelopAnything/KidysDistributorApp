@@ -1,15 +1,15 @@
 class AcceptedOrder {
-  String status = "Accepted";
-  String area;
-  String id;
-  String orderDate;
-  String orderKey;
-  String orderTime;
-  String orderedBy;
-  num totalDispatchPrice;
-  String dispatchDate;
-  num totalPrice;
-  List<dynamic> items;
+  String? status;
+  String? area;
+  String? id;
+  String? orderDate;
+  String? orderKey;
+  String? orderTime;
+  String? orderedBy;
+  num? totalDispatchPrice;
+  String? dispatchDate;
+  num? totalPrice;
+  List<dynamic>? items;
 
   AcceptedOrder(
       {required this.status,

@@ -1,18 +1,18 @@
 class PendingOrder {
-  String status = "Pending";
-  String area;
-  String orderId;
-  String dispatchDate;
-  List<dynamic> items;
-  String orderDate;
-  String orderTime;
-  String orderedBy;
-  num totalPrice;
+  String? status;
+  String? area;
+  String? id;
+  String? dispatchDate;
+  List<dynamic>? items;
+  String? orderDate;
+  String? orderTime;
+  String? orderedBy;
+  num? totalPrice;
 
   PendingOrder(
       {required this.area,
       required this.dispatchDate,
-      required this.orderId,
+      required this.id,
       required this.items,
       required this.status,
       required this.orderDate,

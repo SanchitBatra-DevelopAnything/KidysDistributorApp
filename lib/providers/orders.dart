@@ -32,7 +32,7 @@ class OrderProvider with ChangeNotifier {
         loadedPendingOrders.add(PendingOrder(
           status: "Pending",
           area: orderData['area'],
-          orderId: orderId,
+          id: orderId,
           items: orderData['items'],
           dispatchDate: orderData['dispatchDate'],
           orderDate: orderData['orderDate'],
@@ -50,6 +50,7 @@ class OrderProvider with ChangeNotifier {
 
   Future<void> getAcceptedOrders(
       String loggedInDistributor, String loggedInArea) async {
+    // var params = 'orderBy="\$key"?limitToFirst=50';
     var url =
         "https://kidysadminapp-default-rtdb.firebaseio.com/processedDistributorOrders/${loggedInArea}/${loggedInDistributor}.json";
     try {

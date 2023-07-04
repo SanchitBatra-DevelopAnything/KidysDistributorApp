@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kidys_distributor/myOrderCard.dart';
 import 'package:kidys_distributor/providers/auth.dart';
+import 'package:kidys_distributor/providers/orders.dart';
 import 'package:provider/provider.dart';
 
 class MyOrders extends StatefulWidget {
@@ -26,6 +27,14 @@ class _MyOrdersState extends State<MyOrders> {
       setState(() {
         isLoading = true;
       });
+
+      Provider.of<OrderProvider>(context, listen: false)
+          .fetchAllOrdersList(loggedInDistributor, loggedInArea)
+          .then((_) => {
+                setState(() => {
+                      isLoading = false,
+                    })
+              });
     }
     isFirstTime = false;
     super.didChangeDependencies();
@@ -33,6 +42,7 @@ class _MyOrdersState extends State<MyOrders> {
 
   @override
   Widget build(BuildContext context) {
+    final allOrders = Provider.of<OrderProvider>(context).allOrders;
     return SafeArea(
         child: Scaffold(
             backgroundColor: Colors.white,
@@ -71,14 +81,20 @@ class _MyOrdersState extends State<MyOrders> {
               SizedBox(
                 height: 12,
               ),
-              OrderCard(
-                status: "Accepted",
-                dispatchOn: "7/6/23",
-              ),
-              OrderCard(
-                status: "Pending",
-                dispatchOn: "8/9/23",
-              )
+              Expanded(
+                  child: ListView.builder(
+                      itemCount: allOrders.length,
+                      itemBuilder: ((context, index) => OrderCard(
+                            status: allOrders[index].status,
+                            orderId: allOrders[index].id,
+                            placedOn: allOrders[index].orderTime,
+                            dispatchOn: allOrders[index].dispatchDate,
+                            order_total: allOrders[index].totalPrice,
+                            dispatchedTotal:
+                                allOrders[index].status == "Accepted"
+                                    ? allOrders[index].totalDispatchPrice
+                                    : 0,
+                          ))))
             ])));
   }
 }

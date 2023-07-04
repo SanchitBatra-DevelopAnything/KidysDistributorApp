@@ -135,7 +135,7 @@ class _ItemsState extends State<Items> {
                             ),
                             child: IconButton(
                               onPressed: () {
-                                //moveToCart(context);
+                                Navigator.of(context).pushNamed("/cart");
                               },
                               icon: const Icon(
                                 Icons.shopping_cart,

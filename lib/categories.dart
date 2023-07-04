@@ -85,7 +85,7 @@ class _CategoriesState extends State<Categories> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         IconButton(
-                          icon: Icon(Icons.money),
+                          icon: Icon(Icons.assignment),
                           color: Colors.white,
                           iconSize: 30,
                           onPressed: () {

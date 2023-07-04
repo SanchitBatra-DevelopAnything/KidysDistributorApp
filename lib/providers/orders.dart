@@ -27,8 +27,13 @@ class OrderProvider with ChangeNotifier {
         return;
       }
       final List<PendingOrder> loadedPendingOrders = [];
+      if (json.decode(response.body) == null) {
+        _pendingOrders = [];
+        return;
+      }
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       extractedData.forEach((orderId, orderData) {
+        print(orderData);
         loadedPendingOrders.add(PendingOrder(
           status: "Pending",
           area: orderData['area'],
@@ -60,6 +65,10 @@ class OrderProvider with ChangeNotifier {
         return;
       }
       final List<AcceptedOrder> loadedAcceptedOrders = [];
+      if (json.decode(response.body) == null) {
+        _acceptedOrders = [];
+        return;
+      }
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       extractedData.forEach((orderId, orderData) {
         loadedAcceptedOrders.add(AcceptedOrder(

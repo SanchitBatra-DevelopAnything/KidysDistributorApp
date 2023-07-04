@@ -87,7 +87,10 @@ class _CategoriesState extends State<Categories> {
                         IconButton(
                           icon: Icon(Icons.money),
                           color: Colors.white,
-                          onPressed: () {},
+                          iconSize: 30,
+                          onPressed: () {
+                            Navigator.of(context).pushNamed('/myOrders');
+                          },
                         ),
                         Consumer<CartProvider>(
                           builder: (_, cart, ch) => CartBadge(

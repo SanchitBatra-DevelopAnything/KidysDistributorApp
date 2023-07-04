@@ -5,6 +5,7 @@ import 'package:kidys_distributor/cartScreen.dart';
 import 'package:kidys_distributor/categories.dart';
 import 'package:kidys_distributor/home.dart';
 import 'package:kidys_distributor/login.dart';
+import 'package:kidys_distributor/myOrders.dart';
 import 'package:kidys_distributor/orderDone.dart';
 import 'package:kidys_distributor/providers/auth.dart';
 import 'package:kidys_distributor/providers/cart.dart';
@@ -71,6 +72,7 @@ class MaterialAppWithInitialRoute extends StatelessWidget {
         '/items': (context) => Items(),
         '/cart': (context) => CartScreen(),
         '/orderPlaced': (context) => OrderPlaced(),
+        '/myOrders': (context) => MyOrders(),
       },
       debugShowCheckedModeBanner: false,
     );

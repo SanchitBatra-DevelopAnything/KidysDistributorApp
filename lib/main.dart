@@ -16,6 +16,7 @@ import 'package:kidys_distributor/termsAndConditions.dart';
 import 'package:provider/provider.dart';
 
 import 'items.dart';
+import 'orderSummary.dart';
 
 Future<void> main() async {
   runApp(const MyApp());
@@ -75,6 +76,7 @@ class MaterialAppWithInitialRoute extends StatelessWidget {
         '/cart': (context) => CartScreen(),
         '/orderPlaced': (context) => OrderPlaced(),
         '/myOrders': (context) => MyOrders(),
+        '/orderSummary': (context) => OrderSummary(),
       },
       debugShowCheckedModeBanner: false,
     );

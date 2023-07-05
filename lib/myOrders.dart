@@ -89,16 +89,22 @@ class _MyOrdersState extends State<MyOrders> {
                         )
                       : ListView.builder(
                           itemCount: allOrders.length,
-                          itemBuilder: ((context, index) => OrderCard(
-                                status: allOrders[index].status,
-                                orderId: allOrders[index].id,
-                                placedOn: allOrders[index].orderTime,
-                                dispatchOn: allOrders[index].dispatchDate,
-                                order_total: allOrders[index].totalPrice,
-                                dispatchedTotal:
-                                    allOrders[index].status == "Accepted"
-                                        ? allOrders[index].totalDispatchPrice
-                                        : 0,
+                          itemBuilder: ((context, index) => GestureDetector(
+                                onTap: () => {
+                                  Navigator.of(context)
+                                      .pushNamed('/orderSummary'),
+                                },
+                                child: OrderCard(
+                                  status: allOrders[index].status,
+                                  orderId: allOrders[index].id,
+                                  placedOn: allOrders[index].orderTime,
+                                  dispatchOn: allOrders[index].dispatchDate,
+                                  order_total: allOrders[index].totalPrice,
+                                  dispatchedTotal:
+                                      allOrders[index].status == "Accepted"
+                                          ? allOrders[index].totalDispatchPrice
+                                          : 0,
+                                ),
                               ))))
             ])));
   }

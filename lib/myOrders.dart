@@ -91,6 +91,10 @@ class _MyOrdersState extends State<MyOrders> {
                           itemCount: allOrders.length,
                           itemBuilder: ((context, index) => GestureDetector(
                                 onTap: () => {
+                                  Provider.of<OrderProvider>(context,
+                                          listen: false)
+                                      .setSelectedOrderForDetail(
+                                          allOrders[index]),
                                   Navigator.of(context)
                                       .pushNamed('/orderSummary'),
                                 },

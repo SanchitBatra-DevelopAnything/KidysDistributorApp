@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:kidys_distributor/providers/orders.dart';
+import 'package:provider/provider.dart';
 
 class OrderSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final selectedOrder = Provider.of<OrderProvider>(context, listen: false)
+        .selectedOrderForDetail;
     return SafeArea(
       child: Scaffold(
         body: Column(
           children: [
             Container(
-              height: 70.0,
+              height: 65.0,
               color: Colors.white,
               padding: EdgeInsets.only(left: 12.0),
               child: Row(
                 children: [
                   IconButton(
                     icon: Icon(Icons.arrow_back),
-                    iconSize: 28,
                     onPressed: () {
                       Navigator.pop(context);
                     },
@@ -43,7 +46,9 @@ class OrderSummary extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "Order Summary",
+                                    selectedOrder.status == "Accepted"
+                                        ? "Order Summary"
+                                        : "Order Details",
                                     style: TextStyle(
                                       fontSize: 20.0,
                                       fontWeight: FontWeight.bold,
@@ -53,7 +58,7 @@ class OrderSummary extends StatelessWidget {
                                     height: 2,
                                   ),
                                   Text(
-                                    "10 items in this order",
+                                    "${selectedOrder.items.length} items in this order",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Color(0xffdd0e1c)),
@@ -62,74 +67,93 @@ class OrderSummary extends StatelessWidget {
                               ),
                             ),
                             ListTile(
-                              title: Text('Item 1'),
-                              subtitle: Text('Description of Item 1'),
-                              trailing: Text('\$10.00'),
-                            ),
-                            ListTile(
-                              title: Text('Item 2'),
-                              subtitle: Text('Description of Item 2'),
-                              trailing: Text('\$15.00'),
+                              title: Text(
+                                'Honey Almond Biscuits x 2',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              subtitle: Text('You ordered: 4'),
+                              trailing: Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    'Rs.400',
+                                    style: TextStyle(
+                                      decoration: TextDecoration.lineThrough,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Rs.300',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
                       ),
                     ),
                     SizedBox(height: 8.0),
-                    Container(
-                      color: Colors.white,
-                      child: Card(
-                        elevation: 0.0,
-                        margin: EdgeInsets.zero,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.all(16.0),
-                              child: Text(
-                                'Bill Details',
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                    selectedOrder.status == "Accepted"
+                        ? Container(
+                            color: Colors.white,
+                            child: Card(
+                              elevation: 0.0,
+                              margin: EdgeInsets.zero,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.all(16.0),
+                                    child: Text(
+                                      'Bill Details',
+                                      style: TextStyle(
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                  ListTile(
+                                    title: Text('Order Total'),
+                                    trailing: Text('\Rs.250.00'),
+                                  ),
+                                  ListTile(
+                                    title: Text('Dispatched Total'),
+                                    trailing: Text('\Rs.220,00'),
+                                  ),
+                                  ListTile(
+                                    title: Text('Discount',
+                                        style: TextStyle(
+                                            color: Color(0xff008800))),
+                                    trailing: Text(
+                                      '\-Rs.2,00',
+                                      style:
+                                          TextStyle(color: Color(0xff008800)),
+                                    ),
+                                  ),
+                                  ListTile(
+                                    title: Text(
+                                      'Sub Total',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    trailing: Text(
+                                      '\Rs.228.50',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            ListTile(
-                              title: Text('Order Total'),
-                              trailing: Text('\Rs.250.00'),
-                            ),
-                            ListTile(
-                              title: Text('Dispatched Total'),
-                              trailing: Text('\Rs.220,00'),
-                            ),
-                            ListTile(
-                              title: Text('Discount',
-                                  style: TextStyle(
-                                      color: Color.fromARGB(255, 4, 102, 7))),
-                              trailing: Text(
-                                '\-Rs.2,00',
-                                style: TextStyle(
-                                    color: Color.fromARGB(255, 4, 102, 7)),
-                              ),
-                            ),
-                            ListTile(
-                              title: Text(
-                                'Sub Total',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              trailing: Text(
-                                '\Rs.228.50',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                          )
+                        : Container(),
                     SizedBox(height: 8.0),
                     Container(
                       color: Colors.white,
@@ -151,15 +175,15 @@ class OrderSummary extends StatelessWidget {
                             ),
                             ListTile(
                               title: Text('Order id'),
-                              subtitle: Text('k123-988uiytrrettss'),
+                              subtitle: Text('${selectedOrder.id}'),
                             ),
                             ListTile(
                               title: Text('Order placed'),
-                              subtitle: Text('4/3/2023 5:19PM'),
+                              subtitle: Text('${selectedOrder.orderTime}'),
                             ),
                             ListTile(
                               title: Text('Requested dispatch date'),
-                              subtitle: Text('4/4/2023'),
+                              subtitle: Text('${selectedOrder.dispatchDate}'),
                             ),
                           ],
                         ),

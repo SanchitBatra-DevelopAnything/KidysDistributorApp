@@ -10,10 +10,16 @@ class OrderProvider with ChangeNotifier {
   List<PendingOrder> _pendingOrders = [];
   List<AcceptedOrder> _acceptedOrders = [];
 
+  dynamic selectedOrderForDetail;
+
   List<dynamic> _allOrders = [];
 
   List<dynamic> get allOrders {
     return [..._allOrders];
+  }
+
+  setSelectedOrderForDetail(dynamic order) {
+    selectedOrderForDetail = order;
   }
 
   Future<void> getPendingOrders(

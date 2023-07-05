@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kidys_distributor/providers/orders.dart';
+import 'package:provider/provider.dart';
 
 class OrderCard extends StatelessWidget {
   final String? status;

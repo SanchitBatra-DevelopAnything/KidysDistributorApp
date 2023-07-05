@@ -66,31 +66,37 @@ class OrderSummary extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            ListTile(
-                              title: Text(
-                                'Honey Almond Biscuits x 2',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
+                            ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: 10,
+                              itemBuilder: (BuildContext context, int index) =>
+                                  ListTile(
+                                title: Text(
+                                  'Choco Crunchie Cookies x 3',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
-                              ),
-                              subtitle: Text('You ordered: 4'),
-                              trailing: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    'Rs.400',
-                                    style: TextStyle(
-                                      decoration: TextDecoration.lineThrough,
-                                      color: Colors.red,
+                                subtitle: Text('You ordered: 4'),
+                                trailing: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      'Rs.400',
+                                      style: TextStyle(
+                                        decoration: TextDecoration.lineThrough,
+                                        color: Colors.red,
+                                      ),
                                     ),
-                                  ),
-                                  Text(
-                                    'Rs.300',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
+                                    Text(
+                                      'Rs.300',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ],

@@ -8,13 +8,14 @@ class OrderSummary extends StatelessWidget {
         body: Column(
           children: [
             Container(
-              height: 80.0,
+              height: 70.0,
               color: Colors.white,
               padding: EdgeInsets.only(left: 12.0),
               child: Row(
                 children: [
                   IconButton(
                     icon: Icon(Icons.arrow_back),
+                    iconSize: 28,
                     onPressed: () {
                       Navigator.pop(context);
                     },
@@ -55,7 +56,7 @@ class OrderSummary extends StatelessWidget {
                                     "10 items in this order",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        color: Color.fromARGB(255, 4, 102, 7)),
+                                        color: Color(0xffdd0e1c)),
                                   )
                                 ],
                               ),
@@ -103,10 +104,12 @@ class OrderSummary extends StatelessWidget {
                             ),
                             ListTile(
                               title: Text('Discount',
-                                  style: TextStyle(color: Color(0xffdd0e1c))),
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 4, 102, 7))),
                               trailing: Text(
                                 '\-Rs.2,00',
-                                style: TextStyle(color: Color(0xffdd0e1c)),
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 4, 102, 7)),
                               ),
                             ),
                             ListTile(

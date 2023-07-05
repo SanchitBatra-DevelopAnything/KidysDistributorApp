@@ -10,7 +10,7 @@ class OrderSummary extends StatelessWidget {
             Container(
               height: 80.0,
               color: Colors.white,
-              padding: EdgeInsets.only(left: 16.0),
+              padding: EdgeInsets.only(left: 12.0),
               child: Row(
                 children: [
                   IconButton(
@@ -38,12 +38,26 @@ class OrderSummary extends StatelessWidget {
                           children: [
                             Padding(
                               padding: EdgeInsets.all(16.0),
-                              child: Text(
-                                "Order Summary",
-                                style: TextStyle(
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Order Summary",
+                                    style: TextStyle(
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 2,
+                                  ),
+                                  Text(
+                                    "10 items in this order",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromARGB(255, 4, 102, 7)),
+                                  )
+                                ],
                               ),
                             ),
                             ListTile(
@@ -74,7 +88,7 @@ class OrderSummary extends StatelessWidget {
                               child: Text(
                                 'Bill Details',
                                 style: TextStyle(
-                                  fontSize: 15.0,
+                                  fontSize: 18.0,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -125,7 +139,7 @@ class OrderSummary extends StatelessWidget {
                             Padding(
                               padding: EdgeInsets.all(16.0),
                               child: Text(
-                                'Box 3',
+                                'Order Details',
                                 style: TextStyle(
                                   fontSize: 18.0,
                                   fontWeight: FontWeight.bold,
@@ -133,12 +147,16 @@ class OrderSummary extends StatelessWidget {
                               ),
                             ),
                             ListTile(
-                              title: Text('Shipping Address'),
-                              subtitle: Text('123 Main St, City, State'),
+                              title: Text('Order id'),
+                              subtitle: Text('k123-988uiytrrettss'),
                             ),
                             ListTile(
-                              title: Text('Payment Method'),
-                              subtitle: Text('Credit Card'),
+                              title: Text('Order placed'),
+                              subtitle: Text('4/3/2023 5:19PM'),
+                            ),
+                            ListTile(
+                              title: Text('Requested dispatch date'),
+                              subtitle: Text('4/4/2023'),
                             ),
                           ],
                         ),

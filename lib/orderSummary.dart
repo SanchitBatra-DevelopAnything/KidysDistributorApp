@@ -7,6 +7,7 @@ class OrderSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     final selectedOrder = Provider.of<OrderProvider>(context, listen: false)
         .selectedOrderForDetail;
+    print(selectedOrder.items[0]);
     return SafeArea(
       child: Scaffold(
         body: Column(
@@ -69,16 +70,21 @@ class OrderSummary extends StatelessWidget {
                             ListView.builder(
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
-                              itemCount: 10,
+                              itemCount: selectedOrder.items.length,
                               itemBuilder: (BuildContext context, int index) =>
                                   ListTile(
                                 title: Text(
-                                  'Choco Crunchie Cookies x 3',
+                                  selectedOrder.status == "Accepted"
+                                      ? "${selectedOrder.items[index]['Item']} x ${selectedOrder.items[index]['DispatchedQuantity']}"
+                                      : "hello x 3}",
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                subtitle: Text('You ordered: 4'),
+                                subtitle: selectedOrder.status == "Accepted"
+                                    ? Text(
+                                        'You ordered: ${selectedOrder.items[index]['OrderedQuantity']}')
+                                    : Container(),
                                 trailing: Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [

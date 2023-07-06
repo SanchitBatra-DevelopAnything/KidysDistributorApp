@@ -73,37 +73,58 @@ class OrderSummary extends StatelessWidget {
                               itemCount: selectedOrder.items.length,
                               itemBuilder: (BuildContext context, int index) =>
                                   ListTile(
-                                title: Text(
-                                  selectedOrder.status == "Accepted"
-                                      ? "${selectedOrder.items[index]['Item']} x ${selectedOrder.items[index]['DispatchedQuantity']}"
-                                      : "hello x 3}",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                subtitle: selectedOrder.status == "Accepted"
-                                    ? Text(
-                                        'You ordered: ${selectedOrder.items[index]['OrderedQuantity']}')
-                                    : Container(),
-                                trailing: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    Text(
-                                      'Rs.400',
-                                      style: TextStyle(
-                                        decoration: TextDecoration.lineThrough,
-                                        color: Colors.red,
+                                      // dense: true,
+                                      title: Text(
+                                        selectedOrder.status == "Accepted"
+                                            ? "${selectedOrder.items[index]['item']} x ${selectedOrder.items[index]['dispatchedQuantity']}"
+                                            : "${selectedOrder.items[index]['item']} x ${selectedOrder.items[index]['quantity']}",
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
-                                    ),
-                                    Text(
-                                      'Rs.300',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                                      subtitle: selectedOrder.status ==
+                                              "Accepted"
+                                          ? Text(
+                                              'You ordered: ${selectedOrder.items[index]['orderedQuantity']}')
+                                          : Text(""),
+                                      trailing: selectedOrder.status ==
+                                              "Accepted"
+                                          ? selectedOrder.items[index]
+                                                      ['orderedQuantity'] !=
+                                                  selectedOrder.items[index]
+                                                      ['dispatchedQuantity']
+                                              ? Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      "Rs.${selectedOrder.items[index]['dispatchedPrice']}",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.bold),
+                                                    ),
+                                                    Text(
+                                                      'Rs.${selectedOrder.items[index]['orderedPrice']}',
+                                                      style: TextStyle(
+                                                        decoration:
+                                                            TextDecoration
+                                                                .lineThrough,
+                                                        color: Colors.red,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )
+                                              : Text(
+                                                  "Rs.${selectedOrder.items[index]['dispatchedPrice']}",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                )
+                                          : Text(
+                                              "Rs.${selectedOrder.items[index]['price']}",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            )),
                             ),
                           ],
                         ),

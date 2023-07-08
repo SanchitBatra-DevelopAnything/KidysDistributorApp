@@ -143,7 +143,7 @@ class OrderSummary extends StatelessWidget {
                                   Padding(
                                     padding: EdgeInsets.all(16.0),
                                     child: Text(
-                                      'Bill Details',
+                                      'Bill Details (GST incl.)',
                                       style: TextStyle(
                                         fontSize: 18.0,
                                         fontWeight: FontWeight.bold,
@@ -152,18 +152,20 @@ class OrderSummary extends StatelessWidget {
                                   ),
                                   ListTile(
                                     title: Text('Order Total'),
-                                    trailing: Text('\Rs.250.00'),
+                                    trailing:
+                                        Text('Rs.${selectedOrder.totalPrice}'),
                                   ),
                                   ListTile(
-                                    title: Text('Dispatched Total'),
-                                    trailing: Text('\Rs.220,00'),
+                                    title: Text('Dispatch Price'),
+                                    trailing: Text(
+                                        'Rs.${selectedOrder.totalDispatchPrice}'),
                                   ),
                                   ListTile(
                                     title: Text('Discount',
                                         style: TextStyle(
                                             color: Color(0xff008800))),
                                     trailing: Text(
-                                      '\-Rs.2,00',
+                                      '\-Rs.20.00',
                                       style:
                                           TextStyle(color: Color(0xff008800)),
                                     ),
@@ -176,7 +178,7 @@ class OrderSummary extends StatelessWidget {
                                       ),
                                     ),
                                     trailing: Text(
-                                      '\Rs.228.50',
+                                      'Rs.500(dummy)',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                       ),

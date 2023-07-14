@@ -68,6 +68,8 @@ class _CartScreenState extends State<CartScreen> {
       final cartObject = Provider.of<CartProvider>(context, listen: false);
       final distributor =
           Provider.of<AuthProvider>(context, listen: false).loggedInDistributor;
+      final priceList =
+          Provider.of<AuthProvider>(context, listen: false).activePriceList;
       final area =
           Provider.of<AuthProvider>(context, listen: false).loggedInArea;
       final timeArrayComponent =
@@ -76,7 +78,7 @@ class _CartScreenState extends State<CartScreen> {
           " " +
           timeArrayComponent[timeArrayComponent.length - 1];
       await Provider.of<CartProvider>(context, listen: false)
-          .PlaceDistributorOrder(area, distributor, time);
+          .PlaceDistributorOrder(area, distributor, time, priceList);
       cartObject.clearCart();
       cartObject.resetDispatchDate();
       Navigator.pushNamedAndRemoveUntil(

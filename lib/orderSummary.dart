@@ -165,7 +165,7 @@ class OrderSummary extends StatelessWidget {
                                         style: TextStyle(
                                             color: Color(0xff008800))),
                                     trailing: Text(
-                                      '\-Rs.20.00',
+                                      'Rs.${selectedOrder.discount}',
                                       style:
                                           TextStyle(color: Color(0xff008800)),
                                     ),
@@ -178,7 +178,7 @@ class OrderSummary extends StatelessWidget {
                                       ),
                                     ),
                                     trailing: Text(
-                                      'Rs.500(dummy)',
+                                      'Rs.${selectedOrder.subTotal}',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                       ),

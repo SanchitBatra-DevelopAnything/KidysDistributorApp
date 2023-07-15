@@ -82,6 +82,8 @@ class OrderProvider with ChangeNotifier {
           area: orderData['area'],
           id: orderId,
           items: orderData['items'],
+          discount: orderData['discount'],
+          subTotal: orderData['subTotal'],
           dispatchDate: orderData['dispatchDate'],
           orderDate: orderData['orderDate'],
           orderTime: orderData['orderTime'],

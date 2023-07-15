@@ -104,9 +104,9 @@ class _MyOrdersState extends State<MyOrders> {
                                   placedOn: allOrders[index].orderTime,
                                   dispatchOn: allOrders[index].dispatchDate,
                                   order_total: allOrders[index].totalPrice,
-                                  dispatchedTotal:
+                                  subTotal:
                                       allOrders[index].status == "Accepted"
-                                          ? allOrders[index].totalDispatchPrice
+                                          ? allOrders[index].subTotal
                                           : 0,
                                 ),
                               ))))

@@ -8,7 +8,7 @@ class OrderCard extends StatelessWidget {
   final String? dispatchOn;
   final String? orderId;
   final num? order_total;
-  final num? dispatchedTotal;
+  final num? subTotal;
 
   const OrderCard(
       {Key? key,
@@ -17,7 +17,7 @@ class OrderCard extends StatelessWidget {
       String? this.dispatchOn,
       String? this.orderId,
       num? this.order_total,
-      num? this.dispatchedTotal})
+      num? this.subTotal})
       : super(key: key);
 
   @override
@@ -94,7 +94,7 @@ class OrderCard extends StatelessWidget {
                       ),
                 subtitle: this.status == "Accepted"
                     ? Text(
-                        "Dispatched Total : Rs.${this.dispatchedTotal}",
+                        "Dispatched Total : Rs.${this.subTotal}",
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,

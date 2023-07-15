@@ -7,6 +7,8 @@ class AcceptedOrder {
   String? orderTime;
   String? orderedBy;
   num? totalDispatchPrice;
+  num? discount;
+  num? subTotal;
   String? dispatchDate;
   num? totalPrice;
   List<dynamic>? items;
@@ -20,6 +22,8 @@ class AcceptedOrder {
       required this.totalDispatchPrice,
       required this.totalPrice,
       required this.orderedBy,
+      required this.discount,
+      required this.subTotal,
       required this.dispatchDate,
       required this.orderKey,
       required this.items});

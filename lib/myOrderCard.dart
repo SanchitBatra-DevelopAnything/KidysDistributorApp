@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:kidys_distributor/providers/orders.dart';
 import 'package:provider/provider.dart';
 
@@ -53,10 +54,9 @@ class OrderCard extends StatelessWidget {
                           color: Color.fromARGB(255, 46, 126, 50),
                           size: 25,
                         )
-                      : Icon(
-                          Icons.watch_later,
-                          color: Color.fromARGB(255, 247, 114, 5),
-                          size: 25,
+                      : SpinKitPulse(
+                          size: 35,
+                          color: Color.fromARGB(255, 253, 169, 43),
                         ),
                 ],
               ),

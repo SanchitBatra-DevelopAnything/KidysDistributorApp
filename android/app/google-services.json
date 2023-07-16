@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "547907905586",
+    "firebase_url": "https://kidysadminapp-default-rtdb.firebaseio.com",
+    "project_id": "kidysadminapp",
+    "storage_bucket": "kidysadminapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:547907905586:android:6103e8031499ccc271342b",
+        "android_client_info": {
+          "package_name": "com.production.kidys_distributor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "547907905586-brvl32pnmb1kmg140ccl58pfn0lp90k2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWRkX8Vrx8Nog_HUDw66XU7z-2vOjndcY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "547907905586-brvl32pnmb1kmg140ccl58pfn0lp90k2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

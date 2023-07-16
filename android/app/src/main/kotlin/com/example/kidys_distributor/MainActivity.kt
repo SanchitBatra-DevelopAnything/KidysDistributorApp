@@ -1,4 +1,4 @@
-package com.example.kidys_distributor
+package com.production.kidys_distributor
 
 import io.flutter.embedding.android.FlutterActivity
 

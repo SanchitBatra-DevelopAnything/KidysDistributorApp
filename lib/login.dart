@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import 'PlatformDialog.dart';
 import 'PlatformTextField.dart';
+import 'providers/notificationManager.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -49,12 +50,15 @@ class _LoginPageState extends State<LoginPage> {
     super.didChangeDependencies();
   }
 
-  void startLoginProcess(BuildContext context) {
+  void startLoginProcess(BuildContext context) async {
+    setState(() {
+      isLoading = true;
+    });
     var isPresent = false;
     var attachedPriceList = "";
     var distributors =
         Provider.of<AuthProvider>(context, listen: false).distributors;
-    distributors.forEach((distributor) {
+    distributors.forEach((distributor) async {
       if (usernameController.text.trim().toLowerCase() ==
               distributor.distributorName.toLowerCase() &&
           selectedArea.toString().toLowerCase() ==
@@ -73,6 +77,16 @@ class _LoginPageState extends State<LoginPage> {
                 usernameController.text.toUpperCase(),
                 selectedArea!,
                 attachedPriceList);
+
+        var platform = Theme.of(context).platform == TargetPlatform.iOS
+            ? "Apple"
+            : "Android";
+
+        await Provider.of<NotificationProvider>(context, listen: false)
+            .getDeviceTokenToSendNotification(
+                usernameController.text.trim().toString().toUpperCase(),
+                selectedArea.toString().trim().toUpperCase(),
+                platform);
 
         Navigator.of(context).pushReplacementNamed('/categories');
       } else {

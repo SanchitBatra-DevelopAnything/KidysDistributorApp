@@ -5,6 +5,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:kidys_distributor/PlatformDialog.dart';
 import 'package:kidys_distributor/PlatformTextField.dart';
 import 'package:kidys_distributor/providers/auth.dart';
+import 'package:kidys_distributor/providers/notificationManager.dart';
 import 'package:provider/provider.dart';
 
 import 'bottomSheetModal.dart';
@@ -42,6 +43,15 @@ class _SignUpFormState extends State<SignUpForm> {
         selectedArea.toString().trim().toUpperCase(),
         GSTController.text.trim(),
         contactController.text.trim());
+
+    var platform =
+        Theme.of(context).platform == TargetPlatform.iOS ? "Apple" : "Android";
+
+    await Provider.of<NotificationProvider>(context, listen: false)
+        .getDeviceTokenToSendNotification(
+            usernameController.text.trim().toString().toUpperCase(),
+            selectedArea.toString().trim().toUpperCase(),
+            platform);
 
     setState(() {
       showAlertDialog(context);

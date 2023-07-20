@@ -50,6 +50,13 @@ class _SignUpFormState extends State<SignUpForm> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    Provider.of<AuthProvider>(context, listen: false).setupPushNotifications();
+    super.initState();
+  }
+
+  @override
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     if (_isFirstTime) {

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:kidys_distributor/models/area.dart';
@@ -14,6 +15,19 @@ class AuthProvider with ChangeNotifier {
   String activePriceList = "";
 
   String dbURL = "https://kidysadminapp-default-rtdb.firebaseio.com/";
+
+  String? _deviceToken;
+
+  String? get deviceToken {
+    return _deviceToken;
+  }
+
+  void setupPushNotifications() async {
+    final fcm = FirebaseMessaging.instance;
+    await fcm.requestPermission();
+    _deviceToken = await fcm.getToken();
+    notifyListeners();
+  }
 
   List<Area> get areas {
     return [..._areas];
@@ -43,7 +57,8 @@ class AuthProvider with ChangeNotifier {
           'distributorName': distributorName,
           'area': area,
           'GST': GSTNumber,
-          'contact': contactNumber
+          'contact': contactNumber,
+          'deviceToken': deviceToken == null ? "" : deviceToken,
         }));
   }
 

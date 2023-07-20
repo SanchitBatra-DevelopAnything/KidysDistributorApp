@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "882194810811",
+    "project_id": "kidys-distributor-app",
+    "storage_bucket": "kidys-distributor-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:882194810811:android:190fb2120f78b7a268a69e",
+        "android_client_info": {
+          "package_name": "com.example.kidys_distributor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "882194810811-6gurtjb4fiiign01j0qbn9vsiqb2o7j0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDgSlOaL25PxE2NtXrIvMpIBCohA_1aFs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "882194810811-6gurtjb4fiiign01j0qbn9vsiqb2o7j0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "882194810811-gerp1fg8gmlqpaqreih8m17llfludgki.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.production.kidysDistributor"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

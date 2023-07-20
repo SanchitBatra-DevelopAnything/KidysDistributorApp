@@ -30,7 +30,7 @@ class CategoriesProvider with ChangeNotifier {
 
   Future<void> fetchCategoriesFromDB() async {
     const url =
-        "https://kidysadminapp-default-rtdb.firebaseio.com/Categories.json";
+        "https://kidysadminapp-default-rtdb.firebaseio.com/onlyCategories.json";
     try {
       final response = await http.get(Uri.parse(url));
       final List<Category> loadedCategories = [];

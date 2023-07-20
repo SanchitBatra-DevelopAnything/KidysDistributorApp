@@ -52,7 +52,8 @@ class _SignUpFormState extends State<SignUpForm> {
   @override
   void initState() {
     // TODO: implement initState
-    Provider.of<AuthProvider>(context, listen: false).setupPushNotifications();
+    Future.delayed(const Duration(seconds: 2), () => {});
+
     super.initState();
   }
 
@@ -61,6 +62,8 @@ class _SignUpFormState extends State<SignUpForm> {
     // TODO: implement didChangeDependencies
     if (_isFirstTime) {
       Provider.of<AuthProvider>(context, listen: false).fetchAreasFromDB();
+      Provider.of<AuthProvider>(context, listen: false)
+          .setupPushNotifications();
     }
     _isFirstTime = false; //never run the above if again.
     super.didChangeDependencies();
@@ -113,7 +116,23 @@ class _SignUpFormState extends State<SignUpForm> {
                             "Create your profile to become our distributor!",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                            ))
+                            )),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.warning,
+                              color: Color(0xffdd0e1c),
+                              size: 15,
+                            ),
+                            const Text("Make sure notifications are turned on!",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xffdd0e1c))),
+                          ],
+                        ),
                       ],
                     ),
                     const SizedBox(height: 20),

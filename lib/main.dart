@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:kidys_distributor/cartScreen.dart';
 import 'package:kidys_distributor/categories.dart';
@@ -19,6 +20,8 @@ import 'items.dart';
 import 'orderSummary.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 

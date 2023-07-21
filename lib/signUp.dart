@@ -54,6 +54,7 @@ class _SignUpFormState extends State<SignUpForm> {
     // TODO: implement didChangeDependencies
     if (_isFirstTime) {
       Provider.of<AuthProvider>(context, listen: false).fetchAreasFromDB();
+      Provider.of<AuthProvider>(context, listen: false).setupNotifications();
     }
     _isFirstTime = false; //never run the above if again.
     super.didChangeDependencies();

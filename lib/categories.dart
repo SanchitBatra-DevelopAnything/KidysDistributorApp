@@ -31,8 +31,20 @@ class _CategoriesState extends State<Categories> {
       Provider.of<CategoriesProvider>(context, listen: false)
           .fetchCategoriesFromDB()
           .then((value) => setState(() {
-                print("FETCH COMPLETE!");
-                _isLoading = false;
+                var distributor =
+                    Provider.of<AuthProvider>(context, listen: false)
+                        .loggedInDistributor;
+
+                var area = Provider.of<AuthProvider>(context, listen: false)
+                    .loggedInArea;
+                Provider.of<CartProvider>(context, listen: false)
+                    .fetchCartFromDB(distributor, area)
+                    .then((_) => {
+                          print("FETCH COMPLETE!"),
+                          setState(() {
+                            _isLoading = false;
+                          })
+                        });
               }));
     }
     _isFirstTime = false; //never run the above if again.

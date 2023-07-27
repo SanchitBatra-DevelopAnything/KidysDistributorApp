@@ -19,6 +19,7 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   bool isLoading = false;
   bool isPlacingOrder = false;
+  bool _isSavingCart = false;
 
   openDatePicker(BuildContext context) async {
     final DateTime? selectedDate = await showDatePicker(
@@ -86,182 +87,236 @@ class _CartScreenState extends State<CartScreen> {
     }
   }
 
+  saveCart(
+      AuthProvider authProviderObject, CartProvider cartProviderObject) async {
+    await cartProviderObject.saveCart(authProviderObject.loggedInDistributor,
+        authProviderObject.loggedInArea);
+  }
+
+  deleteCart(
+      AuthProvider authProviderObject, CartProvider cartProviderObject) async {
+    await cartProviderObject.deleteCartOnDB(
+        authProviderObject.loggedInDistributor,
+        authProviderObject.loggedInDistributor);
+  }
+
   @override
   Widget build(BuildContext context) {
     final cartProviderObject = Provider.of<CartProvider>(context);
+    final authProviderObject = Provider.of<AuthProvider>(context);
     final cartItemsList = cartProviderObject.itemList;
     // var totalOrderPrice = cartProviderObject.getTotalOrderPrice();
     var totalOrderPrice = cartProviderObject.getTotalOrderPrice();
     var dispatchDate = cartProviderObject.dispatchDateSelected;
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: const Color.fromARGB(255, 235, 229, 229),
-        body: Column(
-          children: [
-            Container(
-              height: 75,
-              color: Colors.white,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Icon(
-                          Icons.arrow_back,
-                          color: Colors.black,
-                          size: 28,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      const Text(
-                        "Checkout",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ]),
-                    !isPlacingOrder
-                        ? CupertinoButton(
-                            child: const Text(
-                              "Place Order",
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            onPressed: () {
-                              placeOrder(context, dispatchDate);
-                            },
-                            color: const Color(0xffdd0e1c),
-                          )
-                        : SpinKitPulse(
-                            color: Color(0xffDD0E1C),
-                            size: 50.0,
-                          ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                child: const Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Text(
-                    "Discounts will be applied on actual dispatched quantities , if applicable.",
-                    style: TextStyle(
-                        color: Color(0xffdd0e1c), fontWeight: FontWeight.bold),
-                  ),
-                ),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Colors.white),
-                    color: const Color.fromARGB(255, 241, 157, 163)),
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GestureDetector(
-                onTap: () {
-                  openDatePicker(context);
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+
+    return WillPopScope(
+      onWillPop: () async {
+        setState(() {
+          _isSavingCart = true;
+        });
+        await saveCart(authProviderObject, cartProviderObject);
+        setState(() {
+          _isSavingCart = false;
+        });
+        return true;
+      },
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: const Color.fromARGB(255, 235, 229, 229),
+          body: Column(
+            children: [
+              Container(
+                height: 75,
+                color: Colors.white,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    color: dispatchDate == ""
-                                        ? const Color.fromARGB(
-                                            255, 235, 229, 229)
-                                        : Colors.green),
-                                child: dispatchDate == ""
-                                    ? const Icon(
-                                        Icons.alarm,
-                                        size: 35,
-                                        color: Colors.black,
-                                      )
-                                    : const Icon(
-                                        color: Colors.white,
-                                        size: 35,
-                                        Icons.done)),
+                      Row(children: [
+                        GestureDetector(
+                          onTap: () async {
+                            if (cartItemsList.length == 0) {
+                              setState(() {
+                                _isSavingCart = true;
+                              });
+                              await deleteCart(
+                                  authProviderObject, cartProviderObject);
+                              setState(() {
+                                _isSavingCart = false;
+                              });
+                              Navigator.of(context).pop();
+                            } else {
+                              setState(() {
+                                _isSavingCart = true;
+                              });
+                              await saveCart(
+                                  authProviderObject, cartProviderObject);
+                              setState(() {
+                                _isSavingCart = false;
+                              });
+                              Navigator.of(context).pop();
+                            }
+                          },
+                          child: const Icon(
+                            Icons.arrow_back,
+                            color: Colors.black,
+                            size: 28,
                           ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                "Select Dispatch Details",
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold),
-                              ),
-                              dispatchDate == ""
-                                  ? const Text(
-                                      "Click Here!",
-                                      style: TextStyle(color: Colors.black54),
-                                    )
-                                  : Text(
-                                      "Dispatch Date : ${dispatchDate}",
-                                      style: const TextStyle(
-                                          color: Colors.black54),
-                                    ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "Total : Rs.${totalOrderPrice}",
-                          style: const TextStyle(
-                              color: Colors.black54,
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        const Text(
+                          "Checkout",
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
                               fontWeight: FontWeight.bold),
                         ),
-                      ),
+                      ]),
+                      !isPlacingOrder
+                          ? CupertinoButton(
+                              child: const Text(
+                                "Place Order",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              onPressed: () {
+                                placeOrder(context, dispatchDate);
+                              },
+                              color: const Color(0xffdd0e1c),
+                            )
+                          : SpinKitPulse(
+                              color: Color(0xffDD0E1C),
+                              size: 50.0,
+                            ),
                     ],
                   ),
                 ),
               ),
-            ),
-            Expanded(
-              child: Padding(
+              const SizedBox(
+                height: 10,
+              ),
+              Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
+                  child: const Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Text(
+                      "Discounts will be applied on actual dispatched quantities , if applicable.",
+                      style: TextStyle(
+                          color: Color(0xffdd0e1c),
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: const Color.fromARGB(255, 235, 229, 229)),
-                  child: ListView.builder(
-                    itemBuilder: (context, index) =>
-                        CartItemView(cartItem: cartItemsList[index]),
-                    itemExtent: 100,
-                    itemCount: cartItemsList.length,
+                      border: Border.all(color: Colors.white),
+                      color: const Color.fromARGB(255, 241, 157, 163)),
+                ),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: GestureDetector(
+                  onTap: () {
+                    openDatePicker(context);
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: dispatchDate == ""
+                                          ? const Color.fromARGB(
+                                              255, 235, 229, 229)
+                                          : Colors.green),
+                                  child: dispatchDate == ""
+                                      ? const Icon(
+                                          Icons.alarm,
+                                          size: 35,
+                                          color: Colors.black,
+                                        )
+                                      : const Icon(
+                                          color: Colors.white,
+                                          size: 35,
+                                          Icons.done)),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "Select Dispatch Details",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                dispatchDate == ""
+                                    ? const Text(
+                                        "Click Here!",
+                                        style: TextStyle(color: Colors.black54),
+                                      )
+                                    : Text(
+                                        "Dispatch Date : \${dispatchDate}",
+                                        style: const TextStyle(
+                                            color: Colors.black54),
+                                      ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "Total : Rs.${totalOrderPrice}",
+                            style: const TextStyle(
+                                color: Colors.black54,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+              _isSavingCart
+                  ? SpinKitPulse(
+                      color: Color(0xffDD0E1C),
+                      size: 50.0,
+                    )
+                  : Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: const Color.fromARGB(255, 235, 229, 229)),
+                          child: ListView.builder(
+                            itemBuilder: (context, index) =>
+                                CartItemView(cartItem: cartItemsList[index]),
+                            itemExtent: 100,
+                            itemCount: cartItemsList.length,
+                          ),
+                        ),
+                      ),
+                    ),
+            ],
+          ),
         ),
       ),
     );

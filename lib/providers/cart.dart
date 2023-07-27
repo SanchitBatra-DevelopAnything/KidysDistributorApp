@@ -187,77 +187,78 @@ class CartProvider with ChangeNotifier {
     }
   }
 
-  // Future<void> deleteCartOnDB(String retailer, String shop) async {
-  //   var url =
-  //       "https://muskan-admin-app-default-rtdb.firebaseio.com/cart/${shop}/${retailer}.json";
-  //   try {
-  //     await http.delete(Uri.parse(url));
-  //   } catch (error) {
-  //     print("ERROR IS");
-  //     print(error);
-  //     throw error;
-  //   }
-  // }
+  Future<void> deleteCartOnDB(String distributor, String area) async {
+    var url =
+        "https://kidysadminapp-default-rtdb.firebaseio.com/cart/${area}/${distributor}.json";
+    try {
+      await http.delete(Uri.parse(url));
+    } catch (error) {
+      print("ERROR IS");
+      print(error);
+      throw error;
+    }
+  }
 
-  // Future<void> saveCart(String retailer, String shop) async {
-  //   var url =
-  //       "https://muskan-admin-app-default-rtdb.firebaseio.com/cart/${shop}/${retailer}.json";
-  //   try {
-  //     await http.put(Uri.parse(url),
-  //         body: json.encode({"items": formSaveCartList()}));
-  //   } catch (error) {
-  //     print("ERROR IS");
-  //     print(error);
-  //     throw error;
-  //   }
-  // }
+  Future<void> saveCart(String distributor, String area) async {
+    var url =
+        "https://kidysadminapp-default-rtdb.firebaseio.com/cart/${area}/${distributor}.json";
+    try {
+      await http.put(Uri.parse(url),
+          body: json.encode({"items": formSaveCartList()}));
+    } catch (error) {
+      print("ERROR IS");
+      print(error);
+      throw error;
+    }
+  }
 
-  // Future<void> fetchCartFromDB(String retailer, String shop) async {
-  //   var url =
-  //       "https://muskan-admin-app-default-rtdb.firebaseio.com/cart/${shop}/${retailer}/items.json";
-  //   try {
-  //     final response = await http.get(Uri.parse(url));
-  //     if (response == null) {
-  //       return;
-  //     }
-  //     // final List<CartItem> loadedItems = [];
-  //     final extractedData = json.decode(response.body) as List<dynamic>;
-  //     if (extractedData == null) {
-  //       return;
-  //     }
-  //     extractedData.forEach((cartItem) {
-  //       // loadedItems.add(CartItem(
-  //       //     id: cartItem['id'],
-  //       //     imageUrl: cartItem['imageUrl'],
-  //       //     parentCategoryType: cartItem['parentCategoryType'],
-  //       //     parentSubcategoryType: cartItem['parentSubcategoryType'],
-  //       //     price: cartItem['price'],
-  //       //     quantity: cartItem['quantity'],
-  //       //     title: cartItem['title'],
-  //       //     totalPrice: cartItem['totalPrice']));
-  //       addItem(
-  //         cartItem['id'],
-  //         cartItem['price'],
-  //         cartItem['quantity'],
-  //         cartItem['title'],
-  //         cartItem['imageUrl'],
-  //         cartItem['parentCategoryType'],
-  //       );
-  //     });
-  //   } catch (error) {
-  //     print("ERROR IS");
-  //     print(error);
-  //     throw error;
-  //   }
-  // }
+  Future<void> fetchCartFromDB(String distributor, String area) async {
+    var url =
+        "https://kidysadminapp-default-rtdb.firebaseio.com/cart/${area}/${distributor}/items.json";
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.body == 'null') {
+        print("NULLL AAGYI DB WALE CART");
+        return;
+      }
+      // final List<CartItem> loadedItems = [];
+      final extractedData = json.decode(response.body) as List<dynamic>;
+      if (extractedData == null) {
+        return;
+      }
+      extractedData.forEach((cartItem) {
+        // loadedItems.add(CartItem(
+        //     id: cartItem['id'],
+        //     imageUrl: cartItem['imageUrl'],
+        //     parentCategoryType: cartItem['parentCategoryType'],
+        //     parentSubcategoryType: cartItem['parentSubcategoryType'],
+        //     price: cartItem['price'],
+        //     quantity: cartItem['quantity'],
+        //     title: cartItem['title'],
+        //     totalPrice: cartItem['totalPrice']));
+        addItem(
+          cartItem['id'],
+          cartItem['price'],
+          cartItem['quantity'],
+          cartItem['title'],
+          cartItem['imageUrl'],
+          cartItem['parentCategoryType'],
+        );
+      });
+    } catch (error) {
+      print("ERROR IS");
+      print(error);
+      throw error;
+    }
+  }
 
-  // formSaveCartList() {
-  //   var items = [];
-  //   itemList.forEach((cartItem) {
-  //     items.add(cartItem.toJson());
-  //   });
-  //   return items;
-  // }
+  formSaveCartList() {
+    var items = [];
+    itemList.forEach((cartItem) {
+      items.add(cartItem.toJson());
+    });
+    return items;
+  }
 
   formOrderItemList() {
     var items = [];

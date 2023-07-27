@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:kidys_distributor/providers/auth.dart';
@@ -238,20 +239,16 @@ class _CategoriesState extends State<Categories> {
                                     children: [
                                       Container(
                                         width: double.infinity,
-                                        child: Image.network(
-                                          categoriesData[i].imageUrl,
-                                          loadingBuilder:
-                                              (context, child, progress) {
-                                            return progress == null
-                                                ? child
-                                                : LinearProgressIndicator(
-                                                    backgroundColor:
-                                                        Colors.black12,
-                                                  );
-                                          },
+                                        child: CachedNetworkImage(
+                                          imageUrl: categoriesData[i].imageUrl,
                                           fit: BoxFit.fitWidth,
-                                          semanticLabel:
-                                              categoriesData[i].categoryName,
+                                          progressIndicatorBuilder: (context,
+                                                  url, downloadProgress) =>
+                                              SpinKitPulse(
+                                            color: Color(0xffdd0e1c),
+                                          ),
+                                          errorWidget: (context, url, error) =>
+                                              Icon(Icons.error),
                                         ),
                                       ),
                                       Positioned.fill(

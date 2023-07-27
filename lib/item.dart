@@ -1,7 +1,9 @@
 // ignore_for_file: unnecessary_set_literal
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:kidys_distributor/itemDetail.dart';
 import 'package:kidys_distributor/providers/cart.dart';
 import 'package:kidys_distributor/providers/categories_provider.dart';
@@ -72,24 +74,16 @@ class _ItemCardState extends State<ItemCard> {
               child: Container(
                 width: double.infinity,
                 child: Hero(
-                  tag: widget.imgPath,
-                  child: Image.network(
-                    widget.imgPath,
-                    fit: BoxFit.cover,
-                    loadingBuilder: (context, child, loadingProgress) {
-                      if (loadingProgress == null) {
-                        return child;
-                      } else {
-                        return Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.red,
-                            strokeWidth: 5,
-                          ),
-                        );
-                      }
-                    },
-                  ),
-                ),
+                    tag: widget.imgPath,
+                    child: CachedNetworkImage(
+                      imageUrl: widget.imgPath,
+                      fit: BoxFit.cover,
+                      progressIndicatorBuilder:
+                          (context, url, downloadProgress) => SpinKitPulse(
+                        color: Color(0xffdd0e1c),
+                      ),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    )),
               ),
             ),
           ),

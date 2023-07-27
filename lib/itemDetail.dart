@@ -1,6 +1,8 @@
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class ItemDetail extends StatelessWidget {
   final String imgUrl;
@@ -37,11 +39,16 @@ class ItemDetail extends StatelessWidget {
       body: Stack(
         children: [
           // Background image with blur effect
-          Image.network(
-            imgUrl,
+          CachedNetworkImage(
+            imageUrl: imgUrl,
             fit: BoxFit.cover,
             height: double.infinity,
             width: double.infinity,
+            progressIndicatorBuilder: (context, url, downloadProgress) =>
+                SpinKitPulse(
+              color: Color(0xffdd0e1c),
+            ),
+            errorWidget: (context, url, error) => Icon(Icons.error),
           ),
           BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
@@ -56,26 +63,34 @@ class ItemDetail extends StatelessWidget {
               Container(
                 child: Hero(
                   tag: imgUrl,
-                  child: Image.network(
-                    imgUrl,
-                    fit: BoxFit.cover,
-                    height: 400,
+                  child: CachedNetworkImage(
                     width: double.infinity,
+                    height: 400,
+                    imageUrl: imgUrl,
+                    fit: BoxFit.cover,
+                    progressIndicatorBuilder:
+                        (context, url, downloadProgress) => SpinKitPulse(
+                      color: Color(0xffdd0e1c),
+                    ),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
                   ),
                 ),
               ),
               SizedBox(
                 height: 20,
               ),
-              SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    itemDetails,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
+              Container(
+                color: Colors.black,
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      itemDetails,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18),
+                    ),
                   ),
                 ),
               )

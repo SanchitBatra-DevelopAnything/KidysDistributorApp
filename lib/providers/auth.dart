@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:kidys_distributor/models/area.dart';
 import 'package:kidys_distributor/models/distributor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthProvider with ChangeNotifier {
   List<Area> _areas = [];
@@ -102,15 +103,31 @@ class AuthProvider with ChangeNotifier {
     }
   }
 
+  Future<void> loadLoggedInDistributorData() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    this.loggedInDistributor =
+        sharedPreferences.getString("loggedInDistributor").toString();
+    this.loggedInArea = sharedPreferences.getString("loggedInArea").toString();
+    this.activePriceList = sharedPreferences.getString("priceList").toString();
+    notifyListeners();
+  }
+
   Future<void> setLoggedInDistributorAndArea(
       String distributorName, String area, String priceList) async {
-    // final SharedPreferences sharedPreferences =
-    //     await SharedPreferences.getInstance();
-    // sharedPreferences.setString("loggedInRetailer", retailerName);
-    // sharedPreferences.setString("loggedInShop", shopName);
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+    sharedPreferences.setString("loggedInDistributor", distributorName);
+    sharedPreferences.setString("loggedInArea", area);
+    sharedPreferences.setString("priceList", priceList);
     this.loggedInDistributor = distributorName;
     this.loggedInArea = area;
     this.activePriceList = priceList;
     notifyListeners();
+  }
+
+  Future<void> logout() async {
+    SharedPreferences sp = await SharedPreferences.getInstance();
+    sp.clear();
   }
 }

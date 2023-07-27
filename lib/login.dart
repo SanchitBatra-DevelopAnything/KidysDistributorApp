@@ -92,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
   showAlertDialog(BuildContext context) {
     showDialog(
         context: context,
-        builder: (context) => const PlatformDialog(
+        builder: (context) => PlatformDialog(
             title: "Invalid Login!",
             content:
                 "It might be that you provided correct credentials , but admin has not approved you yet. Try logging in after some time , if already registered!"));

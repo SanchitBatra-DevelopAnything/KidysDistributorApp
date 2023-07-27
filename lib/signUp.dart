@@ -63,7 +63,7 @@ class _SignUpFormState extends State<SignUpForm> {
   showAlertDialog(BuildContext context) {
     showDialog(
         context: context,
-        builder: (context) => const PlatformDialog(
+        builder: (context) => PlatformDialog(
             title: "Signed Up!",
             content:
                 "Please wait for the notification approval before you login."));

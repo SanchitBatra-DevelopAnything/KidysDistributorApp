@@ -58,7 +58,7 @@ class _CartScreenState extends State<CartScreen> {
     if (dispatchDate == "") {
       showDialog(
           context: context,
-          builder: (context) => const PlatformDialog(
+          builder: (context) => PlatformDialog(
               title: "Select Dispatch Details",
               content:
                   "Please make sure you've selected dispatch details before placing the order"));

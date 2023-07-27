@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 class PlatformDialog extends StatelessWidget {
   final String title;
   final String content;
-  const PlatformDialog({Key? key, required this.title, required this.content})
+  final void Function()? callBack;
+  PlatformDialog(
+      {Key? key, required this.title, required this.content, this.callBack})
       : super(key: key);
 
   @override
@@ -18,7 +20,11 @@ class PlatformDialog extends StatelessWidget {
                 child: CupertinoButton(
                   child: Text("OK"),
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    if (callBack == null) {
+                      Navigator.of(context).pop();
+                    } else {
+                      callBack!();
+                    }
                   },
                 ),
               ),
@@ -46,7 +52,11 @@ class PlatformDialog extends StatelessWidget {
                           color: Colors.white, fontWeight: FontWeight.bold))),
               ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    if (callBack == null) {
+                      Navigator.of(context).pop();
+                    } else {
+                      callBack!();
+                    }
                   },
                   style: ElevatedButton.styleFrom(primary: Color(0xffdd0e1c)),
                   child: Text("CANCEL",

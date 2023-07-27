@@ -7,6 +7,7 @@ import 'package:kidys_distributor/providers/cart.dart';
 import 'package:kidys_distributor/providers/categories_provider.dart';
 import 'package:provider/provider.dart';
 
+import 'PlatformDialog.dart';
 import 'cartBadge.dart';
 
 class Categories extends StatefulWidget {
@@ -28,24 +29,27 @@ class _CategoriesState extends State<Categories> {
       //   _isLoading = true;
       // });
 
-      Provider.of<CategoriesProvider>(context, listen: false)
-          .fetchCategoriesFromDB()
-          .then((value) => setState(() {
-                var distributor =
-                    Provider.of<AuthProvider>(context, listen: false)
-                        .loggedInDistributor;
+      doAuthStuff().then((_) => {
+            Provider.of<CategoriesProvider>(context, listen: false)
+                .fetchCategoriesFromDB()
+                .then((value) => setState(() {
+                      var distributor =
+                          Provider.of<AuthProvider>(context, listen: false)
+                              .loggedInDistributor;
 
-                var area = Provider.of<AuthProvider>(context, listen: false)
-                    .loggedInArea;
-                Provider.of<CartProvider>(context, listen: false)
-                    .fetchCartFromDB(distributor, area)
-                    .then((_) => {
-                          print("FETCH COMPLETE!"),
-                          setState(() {
-                            _isLoading = false;
-                          })
-                        });
-              }));
+                      var area =
+                          Provider.of<AuthProvider>(context, listen: false)
+                              .loggedInArea;
+                      Provider.of<CartProvider>(context, listen: false)
+                          .fetchCartFromDB(distributor, area)
+                          .then((_) => {
+                                print("FETCH COMPLETE!"),
+                                setState(() {
+                                  _isLoading = false;
+                                })
+                              });
+                    }))
+          });
     }
     _isFirstTime = false; //never run the above if again.
     super.didChangeDependencies();
@@ -55,6 +59,11 @@ class _CategoriesState extends State<Categories> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
+  }
+
+  Future<void> doAuthStuff() async {
+    var authObject = Provider.of<AuthProvider>(context, listen: false);
+    await authObject.loadLoggedInDistributorData();
   }
 
   moveToCart(BuildContext context) {
@@ -68,6 +77,23 @@ class _CategoriesState extends State<Categories> {
         categoryName;
 
     Navigator.of(context).pushNamed('/items');
+  }
+
+  showLogoutBox(BuildContext context) async {
+    showDialog(
+        context: context,
+        builder: (context) => PlatformDialog(
+            title: "LOGOUT?",
+            content: "By Clicking OK , you will be logged out",
+            callBack: logout));
+  }
+
+  Future<void> logout() async {
+    Provider.of<CartProvider>(context, listen: false)
+        .clearCart(); //taaki next login se mix na hon same phone me.
+    await Provider.of<AuthProvider>(context, listen: false).logout();
+
+    Navigator.of(context).pushNamedAndRemoveUntil('/', (route) => false);
   }
 
   @override
@@ -89,10 +115,12 @@ class _CategoriesState extends State<Categories> {
                   IconButton(
                     icon: Icon(Icons.arrow_back_ios),
                     color: Colors.white,
-                    onPressed: () {},
+                    onPressed: () {
+                      showLogoutBox(context);
+                    },
                   ),
                   Container(
-                    width: 125.0,
+                    width: 150.0,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[

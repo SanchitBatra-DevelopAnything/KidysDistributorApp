@@ -15,6 +15,7 @@ import 'package:kidys_distributor/providers/orders.dart';
 import 'package:kidys_distributor/signUp.dart';
 import 'package:kidys_distributor/termsAndConditions.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'items.dart';
 import 'orderSummary.dart';
@@ -52,36 +53,67 @@ class MyHttpOverrides extends HttpOverrides {
 class MaterialAppWithInitialRoute extends StatelessWidget {
   const MaterialAppWithInitialRoute({Key? key}) : super(key: key);
 
+  Future<String> getInitialRoute() async {
+    final SharedPreferences sp = await SharedPreferences.getInstance();
+    print("keyd");
+    print(sp.getKeys());
+    if (sp.containsKey('loggedInDistributor')) {
+      return '/categories';
+    }
+    return '/';
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => HomePage(),
-        '/termsAndConditions': (context) => TermsAndConditionsPage(),
-        '/signup': (context) => SignUpForm(),
-        '/login': (context) => LoginPage(),
-        '/categories': (context) => Categories(),
-        '/items': (context) => Items(),
-        '/cart': (context) => CartScreen(),
-        '/orderPlaced': (context) => OrderPlaced(),
-        '/myOrders': (context) => MyOrders(),
-        '/orderSummary': (context) => OrderSummary(),
-      },
-      debugShowCheckedModeBanner: false,
+    return FutureBuilder(
+      future: getInitialRoute(),
+      builder: ((context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasData) {
+            print(snapshot.data);
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'Kidys Distributor',
+              theme: ThemeData(primarySwatch: Colors.blue),
+              initialRoute: snapshot.data.toString(),
+              routes: {
+                '/': (context) => HomePage(),
+                '/termsAndConditions': (context) => TermsAndConditionsPage(),
+                '/signup': (context) => SignUpForm(),
+                '/login': (context) => LoginPage(),
+                '/categories': (context) => Categories(),
+                '/items': (context) => Items(),
+                '/cart': (context) => CartScreen(),
+                '/orderPlaced': (context) => OrderPlaced(),
+                '/myOrders': (context) => MyOrders(),
+                '/orderSummary': (context) => OrderSummary(),
+              },
+            );
+          } else {
+            print("idhar aaya");
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'Kidys Distributor',
+              theme: ThemeData(primarySwatch: Colors.blue),
+              initialRoute: '/',
+              routes: {
+                '/': (context) => HomePage(),
+                '/termsAndConditions': (context) => TermsAndConditionsPage(),
+                '/signup': (context) => SignUpForm(),
+                '/login': (context) => LoginPage(),
+                '/categories': (context) => Categories(),
+                '/items': (context) => Items(),
+                '/cart': (context) => CartScreen(),
+                '/orderPlaced': (context) => OrderPlaced(),
+                '/myOrders': (context) => MyOrders(),
+                '/orderSummary': (context) => OrderSummary(),
+              },
+            );
+          }
+        } else {
+          return CircularProgressIndicator();
+        }
+      }),
     );
   }
 }

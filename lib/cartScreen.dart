@@ -81,6 +81,7 @@ class _CartScreenState extends State<CartScreen> {
       await Provider.of<CartProvider>(context, listen: false)
           .PlaceDistributorOrder(area, distributor, time, priceList);
       cartObject.clearCart();
+      await cartObject.deleteCartOnDB(distributor, area);
       cartObject.resetDispatchDate();
       Navigator.pushNamedAndRemoveUntil(
           context, "/orderPlaced", (route) => false);
@@ -97,7 +98,7 @@ class _CartScreenState extends State<CartScreen> {
       AuthProvider authProviderObject, CartProvider cartProviderObject) async {
     await cartProviderObject.deleteCartOnDB(
         authProviderObject.loggedInDistributor,
-        authProviderObject.loggedInDistributor);
+        authProviderObject.loggedInArea);
   }
 
   @override

@@ -160,7 +160,7 @@ class CartProvider with ChangeNotifier {
   }
 
   Future<void> PlaceDistributorOrder(String area, String loggedInDistributor,
-      String time, String activePriceList) async {
+      String time, String activePriceList, String deviceToken) async {
     var todaysDate = DateTime.now();
     var year = todaysDate.year.toString();
     var month = todaysDate.month.toString();
@@ -178,6 +178,7 @@ class CartProvider with ChangeNotifier {
             "dispatchDate": dispatchDateSelected,
             "priceList": activePriceList,
             "items": formOrderItemList(),
+            "deviceToken": deviceToken,
             "totalPrice": getTotalOrderPrice(),
           }));
     } catch (error) {

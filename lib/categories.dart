@@ -29,28 +29,33 @@ class _CategoriesState extends State<Categories> {
       // setState(() {
       //   _isLoading = true;
       // });
+      Provider.of<AuthProvider>(context, listen: false)
+          .setupNotifications()
+          .then((_) => {
+                doAuthStuff().then((_) => {
+                      Provider.of<CategoriesProvider>(context, listen: false)
+                          .fetchCategoriesFromDB()
+                          .then((value) => setState(() {
+                                var distributor = Provider.of<AuthProvider>(
+                                        context,
+                                        listen: false)
+                                    .loggedInDistributor;
 
-      doAuthStuff().then((_) => {
-            Provider.of<CategoriesProvider>(context, listen: false)
-                .fetchCategoriesFromDB()
-                .then((value) => setState(() {
-                      var distributor =
-                          Provider.of<AuthProvider>(context, listen: false)
-                              .loggedInDistributor;
-
-                      var area =
-                          Provider.of<AuthProvider>(context, listen: false)
-                              .loggedInArea;
-                      Provider.of<CartProvider>(context, listen: false)
-                          .fetchCartFromDB(distributor, area)
-                          .then((_) => {
-                                print("FETCH COMPLETE!"),
-                                setState(() {
-                                  _isLoading = false;
-                                })
-                              });
-                    }))
-          });
+                                var area = Provider.of<AuthProvider>(context,
+                                        listen: false)
+                                    .loggedInArea;
+                                Provider.of<CartProvider>(context,
+                                        listen: false)
+                                    .fetchCartFromDB(distributor, area)
+                                    .then((_) => {
+                                          print("FETCH COMPLETE!"),
+                                          setState(() {
+                                            _isLoading = false;
+                                          })
+                                        });
+                              }))
+                    })
+              });
     }
     _isFirstTime = false; //never run the above if again.
     super.didChangeDependencies();

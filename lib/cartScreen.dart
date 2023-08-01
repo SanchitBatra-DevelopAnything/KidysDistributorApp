@@ -78,8 +78,10 @@ class _CartScreenState extends State<CartScreen> {
       final time = timeArrayComponent[timeArrayComponent.length - 2] +
           " " +
           timeArrayComponent[timeArrayComponent.length - 1];
+      String token =
+          Provider.of<AuthProvider>(context, listen: false).deviceToken!;
       await Provider.of<CartProvider>(context, listen: false)
-          .PlaceDistributorOrder(area, distributor, time, priceList);
+          .PlaceDistributorOrder(area, distributor, time, priceList, token);
       cartObject.clearCart();
       await cartObject.deleteCartOnDB(distributor, area);
       cartObject.resetDispatchDate();

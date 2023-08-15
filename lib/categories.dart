@@ -118,45 +118,49 @@ class _CategoriesState extends State<Categories> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.arrow_back_ios),
-                    color: Colors.white,
-                    onPressed: () {
-                      showLogoutBox(context);
-                    },
-                  ),
+                  loggedInDistributor != 'null'
+                      ? IconButton(
+                          icon: Icon(Icons.arrow_back_ios),
+                          color: Colors.white,
+                          onPressed: () {
+                            showLogoutBox(context);
+                          },
+                        )
+                      : Container(),
                   Container(
                     width: 150.0,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        IconButton(
-                          icon: Icon(Icons.assignment),
-                          color: Colors.white,
-                          iconSize: 30,
-                          onPressed: () {
-                            Navigator.of(context).pushNamed('/myOrders');
-                          },
-                        ),
-                        Consumer<CartProvider>(
-                          builder: (_, cart, ch) => CartBadge(
-                            value: cart.itemCount.toString(),
-                            color: Colors.red,
-                            child: ch!,
-                          ),
-                          child: IconButton(
-                            onPressed: () {
-                              moveToCart(context);
-                            },
-                            icon: Icon(
-                              Icons.shopping_cart,
-                              color: Colors.white,
-                            ),
-                            iconSize: 30,
-                          ),
-                        ),
-                      ],
-                    ),
+                    child: loggedInDistributor != 'null'
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              IconButton(
+                                icon: Icon(Icons.assignment),
+                                color: Colors.white,
+                                iconSize: 30,
+                                onPressed: () {
+                                  Navigator.of(context).pushNamed('/myOrders');
+                                },
+                              ),
+                              Consumer<CartProvider>(
+                                builder: (_, cart, ch) => CartBadge(
+                                  value: cart.itemCount.toString(),
+                                  color: Colors.red,
+                                  child: ch!,
+                                ),
+                                child: IconButton(
+                                  onPressed: () {
+                                    moveToCart(context);
+                                  },
+                                  icon: Icon(
+                                    Icons.shopping_cart,
+                                    color: Colors.white,
+                                  ),
+                                  iconSize: 30,
+                                ),
+                              ),
+                            ],
+                          )
+                        : Container(),
                   ),
                 ],
               ),
@@ -170,7 +174,9 @@ class _CategoriesState extends State<Categories> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        "WELCOME ${loggedInDistributor}",
+                        loggedInDistributor != 'null'
+                            ? "WELCOME ${loggedInDistributor}"
+                            : "WELCOME GUEST",
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,

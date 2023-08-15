@@ -64,6 +64,8 @@ class _ItemsState extends State<Items> {
   @override
   Widget build(BuildContext context) {
     var items = Provider.of<CategoriesProvider>(context).filteredItems;
+    var loggedInDistributor =
+        Provider.of<AuthProvider>(context).loggedInDistributor;
     return SafeArea(
       child: GestureDetector(
         onTap: () {
@@ -88,64 +90,75 @@ class _ItemsState extends State<Items> {
                               colors: [Color(0XFFFFFFFF), Color(0xffFFFFFF)])),
                       height: 80,
                       padding: EdgeInsets.all(10),
-                      child: Row(children: [
-                        Flexible(
-                          flex: 1,
-                          child: IconButton(
-                            icon: Icon(Icons.arrow_back_ios_new),
-                            color: Colors.black,
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                        ),
-                        Flexible(
-                          flex: 5,
-                          fit: FlexFit.tight,
-                          child: SizedBox(
-                            height: 45,
-                            child: Card(
-                              clipBehavior: Clip.antiAliasWithSaveLayer,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
+                      child: loggedInDistributor != 'null'
+                          ? Row(children: [
+                              Flexible(
+                                flex: 1,
+                                child: IconButton(
+                                  icon: Icon(Icons.arrow_back_ios_new),
+                                  color: Colors.black,
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
                               ),
-                              child: CupertinoSearchTextField(
-                                autocorrect: false,
-                                onTap: () {
-                                  setState(() {
-                                    _isSearching = true;
-                                  });
-                                },
-                                style: const TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
-                                controller: searchItemController,
-                                onChanged: (text) {
-                                  onSearch(text);
-                                },
+                              Flexible(
+                                flex: 5,
+                                fit: FlexFit.tight,
+                                child: SizedBox(
+                                  height: 45,
+                                  child: Card(
+                                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    child: CupertinoSearchTextField(
+                                      autocorrect: false,
+                                      onTap: () {
+                                        setState(() {
+                                          _isSearching = true;
+                                        });
+                                      },
+                                      style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold),
+                                      controller: searchItemController,
+                                      onChanged: (text) {
+                                        onSearch(text);
+                                      },
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
-                        Flexible(
-                          child: Consumer<CartProvider>(
-                            builder: (_, cart, ch) => CartBadge(
-                              value: cart.itemCount.toString(),
-                              color: Colors.red,
-                              child: ch!,
-                            ),
-                            child: IconButton(
-                              onPressed: () {
-                                Navigator.of(context).pushNamed("/cart");
-                              },
-                              icon: const Icon(
-                                Icons.shopping_cart,
+                              Flexible(
+                                child: Consumer<CartProvider>(
+                                  builder: (_, cart, ch) => CartBadge(
+                                    value: cart.itemCount.toString(),
+                                    color: Colors.red,
+                                    child: ch!,
+                                  ),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pushNamed("/cart");
+                                    },
+                                    icon: const Icon(
+                                      Icons.shopping_cart,
+                                      color: Colors.black,
+                                    ),
+                                    iconSize: 30,
+                                  ),
+                                ),
+                              )
+                            ])
+                          : Container(
+                              child: IconButton(
+                                icon: Icon(Icons.arrow_back_ios_new),
                                 color: Colors.black,
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
                               ),
-                              iconSize: 30,
                             ),
-                          ),
-                        )
-                      ]),
                     ),
                     Flexible(
                       flex: 5,

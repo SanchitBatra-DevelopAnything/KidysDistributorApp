@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:kidys_distributor/itemDetail.dart';
+import 'package:kidys_distributor/providers/auth.dart';
 import 'package:kidys_distributor/providers/cart.dart';
 import 'package:kidys_distributor/providers/categories_provider.dart';
 import 'package:provider/provider.dart';
@@ -38,6 +39,8 @@ class _ItemCardState extends State<ItemCard> {
   @override
   Widget build(BuildContext context) {
     final cartProviderObject = Provider.of<CartProvider>(context);
+    var loggedInDistributor =
+        Provider.of<AuthProvider>(context).loggedInDistributor;
     _isInCart = cartProviderObject.checkInCart(widget.itemId);
     _isInCart
         ? _quantity = cartProviderObject.getQuantity(widget.itemId)
@@ -101,92 +104,95 @@ class _ItemCardState extends State<ItemCard> {
             ),
           ),
           Divider(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                flex: 5,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Rs. " + widget.price.toString(),
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 5,
-                child: Center(
-                  child: !_isInCart
-                      ? Container(
-                          height: 50,
-                          child: CupertinoButton(
-                            padding: EdgeInsets.all(5),
-                            child: Container(
-                              alignment: Alignment.center,
-                              width: double.infinity - 100,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFFFFFFF),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: const Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  "+ Add",
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 4, 102, 7),
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            onPressed: () {
-                              // Add to cart functionality
-                              print("started add");
-                              cartProviderObject.addItem(
-                                  widget.itemId,
-                                  widget.price,
-                                  1,
-                                  widget.itemName,
-                                  widget.imgPath,
-                                  parentCategory);
-                              setState(() {
-                                _isInCart = true;
-                              });
-                            },
+          loggedInDistributor != 'null'
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      flex: 5,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "Rs. " + widget.price.toString(),
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
                           ),
-                        )
-                      : CountButtonView(
-                          itemId: widget.itemId,
-                          parentCategory: parentCategory,
-                          onChange: (count) => {
-                            if (count == 0)
-                              {
-                                cartProviderObject.removeItem(widget.itemId),
-                                setState(() => {_isInCart = false})
-                              }
-                            else if (count > 0)
-                              {
-                                cartProviderObject.addItem(
-                                  widget.itemId,
-                                  widget.price,
-                                  count,
-                                  widget.itemName.toLowerCase(),
-                                  widget.imgPath,
-                                  parentCategory,
-                                )
-                              }
-                          },
                         ),
-                ),
-              ),
-            ],
-          ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 5,
+                      child: Center(
+                        child: !_isInCart
+                            ? Container(
+                                height: 50,
+                                child: CupertinoButton(
+                                  padding: EdgeInsets.all(5),
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    width: double.infinity - 100,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFFFFFFFF),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: const Align(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        "+ Add",
+                                        style: TextStyle(
+                                          color: Color.fromARGB(255, 4, 102, 7),
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    // Add to cart functionality
+                                    print("started add");
+                                    cartProviderObject.addItem(
+                                        widget.itemId,
+                                        widget.price,
+                                        1,
+                                        widget.itemName,
+                                        widget.imgPath,
+                                        parentCategory);
+                                    setState(() {
+                                      _isInCart = true;
+                                    });
+                                  },
+                                ),
+                              )
+                            : CountButtonView(
+                                itemId: widget.itemId,
+                                parentCategory: parentCategory,
+                                onChange: (count) => {
+                                  if (count == 0)
+                                    {
+                                      cartProviderObject
+                                          .removeItem(widget.itemId),
+                                      setState(() => {_isInCart = false})
+                                    }
+                                  else if (count > 0)
+                                    {
+                                      cartProviderObject.addItem(
+                                        widget.itemId,
+                                        widget.price,
+                                        count,
+                                        widget.itemName.toLowerCase(),
+                                        widget.imgPath,
+                                        parentCategory,
+                                      )
+                                    }
+                                },
+                              ),
+                      ),
+                    ),
+                  ],
+                )
+              : Container(),
         ],
       ),
     );

@@ -4,6 +4,8 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:kidys_distributor/models/item.dart';
+import 'package:kidys_distributor/providers/auth.dart';
+import 'package:provider/provider.dart';
 
 import '../models/cataegory.dart';
 import 'package:http/http.dart' as http;

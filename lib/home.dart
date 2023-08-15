@@ -66,6 +66,22 @@ class _HomePageState extends State<HomePage> {
                     TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
               ),
             ),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              child: GestureDetector(
+                onTap: () =>
+                    {Navigator.of(context).pushReplacementNamed('/categories')},
+                child: Text(
+                  "Skip For Now",
+                  style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
+                ),
+              ),
+            )
           ],
         ),
       ),

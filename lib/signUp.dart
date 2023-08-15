@@ -130,7 +130,7 @@ class _SignUpFormState extends State<SignUpForm> {
                     PlatformTextField(
                       labelText: "GST NUMBER",
                       controller: GSTController,
-                      type: TextInputType.number,
+                      type: TextInputType.visiblePassword,
                     ),
                     const SizedBox(
                       height: 10,

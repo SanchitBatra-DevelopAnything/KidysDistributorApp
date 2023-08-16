@@ -19,16 +19,17 @@ class ItemDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
+      extendBodyBehindAppBar: false,
       appBar: AppBar(
         title: Text(
           itemName.toUpperCase(),
           style: TextStyle(
-              fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+              fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black),
         ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+        backgroundColor: Colors.white,
+        elevation: 1,
         leading: IconButton(
+          color: Colors.black,
           icon: Icon(Icons.close),
           onPressed: () {
             Navigator.pop(context);
@@ -36,67 +37,72 @@ class ItemDetail extends StatelessWidget {
           iconSize: 30,
         ),
       ),
-      body: Stack(
-        children: [
-          // Background image with blur effect
-          CachedNetworkImage(
-            imageUrl: imgUrl,
-            fit: BoxFit.cover,
-            height: double.infinity,
-            width: double.infinity,
-            progressIndicatorBuilder: (context, url, downloadProgress) =>
-                SpinKitPulse(
-              color: Color(0xffdd0e1c),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            // Background image with blur effect
+            // CachedNetworkImage(
+            //   imageUrl: imgUrl,
+            //   fit: BoxFit.cover,
+            //   height: double.infinity,
+            //   width: double.infinity,
+            //   progressIndicatorBuilder: (context, url, downloadProgress) =>
+            //       SpinKitPulse(
+            //     color: Color(0xffdd0e1c),
+            //   ),
+            //   errorWidget: (context, url, error) => Icon(Icons.error),
+            // ),
+            // BackdropFilter(
+            //   filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            //   child: Container(
+            //     color: Colors.black.withOpacity(0.5),
+            //   ),
+            // ),
+            // Profile image with hero animation
+
+            Container(
+              child: Hero(
+                tag: imgUrl,
+                child: CachedNetworkImage(
+                  width: double.infinity,
+                  height: 400,
+                  imageUrl: imgUrl,
+                  fit: BoxFit.cover,
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      SpinKitPulse(
+                    color: Color(0xffdd0e1c),
+                  ),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                ),
+              ),
             ),
-            errorWidget: (context, url, error) => Icon(Icons.error),
-          ),
-          BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-            child: Container(
-              color: Colors.black.withOpacity(0.5),
+            SizedBox(
+              height: 20,
             ),
-          ),
-          // Profile image with hero animation
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                child: Hero(
-                  tag: imgUrl,
-                  child: CachedNetworkImage(
-                    width: double.infinity,
-                    height: 400,
-                    imageUrl: imgUrl,
-                    fit: BoxFit.cover,
-                    progressIndicatorBuilder:
-                        (context, url, downloadProgress) => SpinKitPulse(
-                      color: Color(0xffdd0e1c),
+            SingleChildScrollView(
+              child: SafeArea(
+                child: Expanded(
+                  child: Container(
+                    color: Colors.transparent,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: SafeArea(
+                        child: Text(
+                          itemDetails,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15),
+                        ),
+                      ),
                     ),
-                    errorWidget: (context, url, error) => Icon(Icons.error),
                   ),
                 ),
               ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                color: Colors.black,
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      itemDetails,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18),
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

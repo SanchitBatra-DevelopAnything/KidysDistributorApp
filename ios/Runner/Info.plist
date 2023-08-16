@@ -54,5 +54,21 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>CFBundleIconFiles</key>
+	<array>
+    	<string>Icon-App-40x40@1x.png</string>
+    	<string>Icon-App-40x40@2x.png</string>
+    	<string>Icon-App-40x40@3x.png</string>
+    	<string>Icon-App-60x60@2x.png</string>
+    	<string>Icon-App-60x60@3x.png</string>
+    	<string>Icon-App-76x76@1x.png</string>
+    	<string>Icon-App-76x76@2x.png</string>
+    	<string>Icon-App-83.5x83.5@2x.png</string>
+    	<string>Icon-Small-40.png</string>
+    	<string>Icon-Small-40@2x.png</string>
+    	<string>Icon-Small.png</string>
+    	<string>Icon-Small@2x.png</string>
+    	<string>Icon-Small@3x.png</string>
+	</array>
 </dict>
 </plist>

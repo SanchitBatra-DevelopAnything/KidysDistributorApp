@@ -7,6 +7,7 @@ import 'package:kidys_distributor/categories.dart';
 import 'package:kidys_distributor/home.dart';
 import 'package:kidys_distributor/login.dart';
 import 'package:kidys_distributor/myOrders.dart';
+import 'package:kidys_distributor/myProfile.dart';
 import 'package:kidys_distributor/orderDone.dart';
 import 'package:kidys_distributor/providers/auth.dart';
 import 'package:kidys_distributor/providers/cart.dart';
@@ -87,6 +88,7 @@ class MaterialAppWithInitialRoute extends StatelessWidget {
                 '/orderPlaced': (context) => OrderPlaced(),
                 '/myOrders': (context) => MyOrders(),
                 '/orderSummary': (context) => OrderSummary(),
+                '/profile': (context) => MyProfile(),
               },
             );
           } else {

@@ -134,11 +134,11 @@ class _CategoriesState extends State<Categories> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               IconButton(
-                                icon: Icon(Icons.assignment),
+                                icon: Icon(Icons.account_circle),
                                 color: Colors.white,
                                 iconSize: 30,
                                 onPressed: () {
-                                  Navigator.of(context).pushNamed('/myOrders');
+                                  Navigator.of(context).pushNamed('/profile');
                                 },
                               ),
                               Consumer<CartProvider>(

@@ -14,6 +14,7 @@ class AuthProvider with ChangeNotifier {
   String loggedInDistributor = "";
   String loggedInArea = "";
   String activePriceList = "";
+  String activeDistributorKey = "";
 
   String dbURL = "https://kidysadminapp-default-rtdb.firebaseio.com/";
   String? _deviceToken = "";
@@ -110,24 +111,38 @@ class AuthProvider with ChangeNotifier {
         sharedPreferences.getString("loggedInDistributor").toString();
     this.loggedInArea = sharedPreferences.getString("loggedInArea").toString();
     this.activePriceList = sharedPreferences.getString("priceList").toString();
+    this.activeDistributorKey =
+        sharedPreferences.getString("distributorKey").toString();
     notifyListeners();
   }
 
-  Future<void> setLoggedInDistributorAndArea(
-      String distributorName, String area, String priceList) async {
+  Future<void> setLoggedInDistributorAndArea(String distributorName,
+      String area, String priceList, String distributorKey) async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
     sharedPreferences.setString("loggedInDistributor", distributorName);
     sharedPreferences.setString("loggedInArea", area);
     sharedPreferences.setString("priceList", priceList);
+    sharedPreferences.setString("distributorKey", distributorKey);
     this.loggedInDistributor = distributorName;
     this.loggedInArea = area;
     this.activePriceList = priceList;
+    this.activeDistributorKey = distributorKey;
     notifyListeners();
   }
 
   Future<void> logout() async {
     SharedPreferences sp = await SharedPreferences.getInstance();
     sp.clear();
+  }
+
+  Future<void> deleteAccount() async {
+    var url =
+        "https://kidysadminapp-default-rtdb.firebaseio.com/Distributors/${activeDistributorKey}.json";
+    try {
+      await http.delete(Uri.parse(url));
+    } catch (error) {
+      throw error;
+    }
   }
 }

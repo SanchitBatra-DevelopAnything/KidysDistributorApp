@@ -52,6 +52,7 @@ class _LoginPageState extends State<LoginPage> {
   void startLoginProcess(BuildContext context) {
     var isPresent = false;
     var attachedPriceList = "";
+    var distributorKey = "";
     var distributors =
         Provider.of<AuthProvider>(context, listen: false).distributors;
     distributors.forEach((distributor) {
@@ -61,6 +62,7 @@ class _LoginPageState extends State<LoginPage> {
               distributor.area.toLowerCase()) {
         isPresent = true;
         attachedPriceList = distributor.attached_price_list;
+        distributorKey = distributor.id;
       }
       if (isPresent) {
         if (mounted) {
@@ -72,7 +74,8 @@ class _LoginPageState extends State<LoginPage> {
             .setLoggedInDistributorAndArea(
                 usernameController.text.toUpperCase(),
                 selectedArea!,
-                attachedPriceList);
+                attachedPriceList,
+                distributorKey);
 
         Navigator.of(context).pushReplacementNamed('/categories');
       } else {

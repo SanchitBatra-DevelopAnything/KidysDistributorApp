@@ -104,7 +104,10 @@ class OrderProvider with ChangeNotifier {
       String loggedInDistributor, String loggedInArea) async {
     await this.getPendingOrders(loggedInDistributor, loggedInArea);
     await this.getAcceptedOrders(loggedInDistributor, loggedInArea);
-    _allOrders = [..._pendingOrders, ..._acceptedOrders];
+    _allOrders = [
+      ..._pendingOrders.reversed.toList(),
+      ..._acceptedOrders.reversed.toList()
+    ];
     notifyListeners();
   }
 }

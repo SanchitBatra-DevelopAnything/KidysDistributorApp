@@ -109,12 +109,12 @@ class _CategoriesState extends State<Categories> {
         Provider.of<AuthProvider>(context).loggedInDistributor;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color(0xFF552018),
+        backgroundColor: Colors.black,
         body: Column(
           children: <Widget>[
             Container(
               padding: EdgeInsets.all(10.0),
-              color: Color(0xff552018),
+              color: Colors.black,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -190,7 +190,7 @@ class _CategoriesState extends State<Categories> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        "KIDY'S CATEGORIES",
+                        "ODO BRANDS",
                         style: TextStyle(
                           color: Colors.white,
                           shadows: [

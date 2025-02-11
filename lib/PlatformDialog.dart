@@ -46,7 +46,7 @@ class PlatformDialog extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  style: ElevatedButton.styleFrom(primary: Color(0xffdd0e1c)),
+                  style: ElevatedButton.styleFrom(primary: Colors.black),
                   child: Text("CANCEL",
                       style: TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold))),
@@ -58,7 +58,7 @@ class PlatformDialog extends StatelessWidget {
                       callBack!();
                     }
                   },
-                  style: ElevatedButton.styleFrom(primary: Color(0xffdd0e1c)),
+                  style: ElevatedButton.styleFrom(primary: Colors.black),
                   child: Text("OK",
                       style: TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold)))

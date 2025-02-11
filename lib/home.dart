@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              "assets/logo.png",
+              "assets/odo.png",
               height: 250,
               width: double.infinity,
               fit: BoxFit.contain,
@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {
                 _showBottomSheet(context);
               },
-              color: Color(0xffdd0e1c),
+              color: Colors.black,
               child: Text(
                 "LOGIN",
                 style:
@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {
                 Navigator.pushReplacementNamed(context, '/signup');
               },
-              color: Color(0xffdd0e1c),
+              color: Colors.black,
               child: Text(
                 "SIGN UP",
                 style:

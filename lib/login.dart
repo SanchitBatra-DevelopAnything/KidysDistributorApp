@@ -17,7 +17,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController usernameController = TextEditingController();
+  TextEditingController contactController = TextEditingController();
   final FocusScopeNode _focusScopeNode = FocusScopeNode();
   String? selectedArea;
   bool _isFirstTime = true;
@@ -51,17 +51,15 @@ class _LoginPageState extends State<LoginPage> {
 
   void startLoginProcess(BuildContext context) {
     var isPresent = false;
-    var attachedPriceList = "";
     var distributorKey = "";
     var distributors =
         Provider.of<AuthProvider>(context, listen: false).distributors;
     distributors.forEach((distributor) {
-      if (usernameController.text.trim().toLowerCase() ==
-              distributor.distributorName.toLowerCase() &&
+      if (contactController.text.trim() ==
+              distributor.contact.trim() &&
           selectedArea.toString().toLowerCase() ==
               distributor.area.toLowerCase()) {
         isPresent = true;
-        attachedPriceList = distributor.attached_price_list;
         distributorKey = distributor.id;
       }
       if (isPresent) {
@@ -72,9 +70,10 @@ class _LoginPageState extends State<LoginPage> {
         }
         Provider.of<AuthProvider>(context, listen: false)
             .setLoggedInDistributorAndArea(
-                usernameController.text.toUpperCase(),
+                "name",
+                contactController.text.toUpperCase(),
                 selectedArea!,
-                attachedPriceList,
+                "normalPriceList",
                 distributorKey);
 
         Navigator.of(context).pushReplacementNamed('/categories');
@@ -126,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Image.asset(
-                          "assets/logo.png",
+                          "assets/odo.png",
                           height: MediaQuery.of(context).size.height * 0.2,
                           fit: BoxFit.contain,
                         ),
@@ -143,9 +142,9 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     SizedBox(height: 20),
                     PlatformTextField(
-                      labelText: "YOUR NAME",
-                      controller: usernameController,
-                      type: TextInputType.text,
+                      labelText: "LOGIN THROUGH MOBILE NUMBER",
+                      controller: contactController,
+                      type: TextInputType.number,
                     ),
                     SizedBox(
                       height: 20,

@@ -77,6 +77,7 @@ flutter:
     - assets/tnc.pdf
     - assets/order-done.gif
     - assets/orderDone.mp3
+    - assets/odo.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

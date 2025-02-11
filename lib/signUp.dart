@@ -18,6 +18,7 @@ class SignUpForm extends StatefulWidget {
 
 class _SignUpFormState extends State<SignUpForm> {
   TextEditingController usernameController = TextEditingController();
+  TextEditingController shopController = TextEditingController();
   TextEditingController GSTController = TextEditingController();
   TextEditingController contactController = TextEditingController();
   final FocusScopeNode _focusScopeNode = FocusScopeNode();
@@ -41,6 +42,7 @@ class _SignUpFormState extends State<SignUpForm> {
         usernameController.text.trim().toString().toUpperCase(),
         selectedArea.toString().trim().toUpperCase(),
         GSTController.text.trim(),
+        shopController.text.trim().toString().toUpperCase(),
         contactController.text.trim());
 
     setState(() {
@@ -94,7 +96,7 @@ class _SignUpFormState extends State<SignUpForm> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Image.asset(
-                          "assets/logo.png",
+                          "assets/odo.png",
                           height: MediaQuery.of(context).size.height * 0.2,
                           fit: BoxFit.contain,
                         ),
@@ -104,7 +106,7 @@ class _SignUpFormState extends State<SignUpForm> {
                               fontSize: 30, fontWeight: FontWeight.bold),
                         ),
                         const Text(
-                            "Create your profile to become our distributor!",
+                            "Create your profile to join ODO!",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                             ))
@@ -114,6 +116,14 @@ class _SignUpFormState extends State<SignUpForm> {
                     PlatformTextField(
                       labelText: "YOUR NAME",
                       controller: usernameController,
+                      type: TextInputType.text,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                     PlatformTextField(
+                      labelText: "YOUR SHOP",
+                      controller: shopController,
                       type: TextInputType.text,
                     ),
                     const SizedBox(
@@ -150,7 +160,7 @@ class _SignUpFormState extends State<SignUpForm> {
                           dropdownColor: Color(0XFFf5f5f5),
                           iconSize: 36,
                           icon: const Icon(Icons.arrow_drop_down,
-                              color: Color(0xffDD0E1C)),
+                              color: Colors.black),
                           value: selectedArea,
                           style: TextStyle(color: Colors.black),
                           onChanged: (value) => {
@@ -170,7 +180,7 @@ class _SignUpFormState extends State<SignUpForm> {
                                 onPressed: () {
                                   signUp(context);
                                 },
-                                color: Color(0XFFDD0E1C),
+                                color: Colors.black,
                                 child: Text(
                                   "Sign Up",
                                   style: TextStyle(

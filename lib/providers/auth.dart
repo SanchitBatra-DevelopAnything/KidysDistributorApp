@@ -16,7 +16,7 @@ class AuthProvider with ChangeNotifier {
   String activePriceList = "";
   String activeDistributorKey = "";
 
-  String dbURL = "https://kidysadminapp-default-rtdb.firebaseio.com/";
+  String dbURL = "https://odo-admin-app-default-rtdb.asia-southeast1.firebasedatabase.app/";
   String? _deviceToken = "";
 
   String? get deviceToken {
@@ -49,22 +49,23 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> distributorSignUp(String distributorName, String area,
-      String GSTNumber, String contactNumber) async {
+      String GSTNumber, String shop,String contactNumber) async {
     //send http post here.
     const url =
-        "https://kidysadminapp-default-rtdb.firebaseio.com/DistributorNotifications.json";
+        "https://odo-admin-app-default-rtdb.asia-southeast1.firebasedatabase.app/DistributorNotifications.json";
     await http.post(Uri.parse(url),
         body: json.encode({
-          'distributorName': distributorName,
+          'name': distributorName,
           'area': area,
           'GST': GSTNumber,
           'contact': contactNumber,
+          'shop' : shop,
           'deviceToken': _deviceToken,
         }));
   }
 
   Future<void> fetchAreasFromDB() async {
-    const url = "https://kidysadminapp-default-rtdb.firebaseio.com/Areas.json";
+    const url = "https://odo-admin-app-default-rtdb.asia-southeast1.firebasedatabase.app/Areas.json";
     try {
       final response = await http.get(Uri.parse(url));
       final List<Area> loadedAreas = [];
@@ -84,7 +85,7 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> fetchDistributorsFromDB() async {
     const url =
-        "https://kidysadminapp-default-rtdb.firebaseio.com/Distributors.json";
+        "https://odo-admin-app-default-rtdb.asia-southeast1.firebasedatabase.app/Distributors.json";
     try {
       final response = await http.get(Uri.parse(url));
       final List<Distributor> loadedDistributors = [];
@@ -93,8 +94,10 @@ class AuthProvider with ChangeNotifier {
         loadedDistributors.add(Distributor(
             id: distributorId,
             area: distributorData['area'],
-            distributorName: distributorData['distributorName'],
-            attached_price_list: distributorData['attachedPriceList'],
+            distributorName: distributorData['name'],
+            shop: distributorData['shop'],
+            contact: distributorData['contact'].toString(),
+            attached_price_list : "normal-price-list",
             GSTNumber: distributorData['GST']));
       });
       _distributors = loadedDistributors;
@@ -116,13 +119,14 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> setLoggedInDistributorAndArea(String distributorName,
+  Future<void> setLoggedInDistributorAndArea(String distributorName,String contact,
       String area, String priceList, String distributorKey) async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
     sharedPreferences.setString("loggedInDistributor", distributorName);
     sharedPreferences.setString("loggedInArea", area);
     sharedPreferences.setString("priceList", priceList);
+    sharedPreferences.setString("contact" , contact);
     sharedPreferences.setString("distributorKey", distributorKey);
     this.loggedInDistributor = distributorName;
     this.loggedInArea = area;
@@ -138,7 +142,7 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> deleteAccount() async {
     var url =
-        "https://kidysadminapp-default-rtdb.firebaseio.com/Distributors/${activeDistributorKey}.json";
+        "https://odo-admin-app-default-rtdb.asia-southeast1.firebasedatabase.app/${activeDistributorKey}.json";
     try {
       await http.delete(Uri.parse(url));
     } catch (error) {

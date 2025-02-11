@@ -50,7 +50,7 @@ class PlatformTextField extends StatelessWidget {
                     Icon(Icons.person_outline_rounded, color: Colors.black54),
                 labelStyle: TextStyle(color: Colors.black54),
                 focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(width: 2, color: Color(0XFFdd0e1c)),
+                  borderSide: BorderSide(width: 2, color: Colors.black),
                 )),
             controller: controller,
           );

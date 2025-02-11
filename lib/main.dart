@@ -74,7 +74,7 @@ class MaterialAppWithInitialRoute extends StatelessWidget {
             print(snapshot.data);
             return MaterialApp(
               debugShowCheckedModeBanner: false,
-              title: 'Kidys Distributor',
+              title: 'ODO',
               theme: ThemeData(primarySwatch: Colors.blue),
               initialRoute: snapshot.data.toString(),
               routes: {

@@ -74,7 +74,7 @@ class _BottomSheetModalState extends State<BottomSheetModal> {
             ListTile(
               leading: Radio(
                 value: true,
-                activeColor: Color(0xffdd0e1c),
+                activeColor: Colors.black,
                 groupValue: termsAccepted,
                 onChanged: (value) {
                   setState(() {
@@ -119,7 +119,7 @@ class _BottomSheetModalState extends State<BottomSheetModal> {
                 CupertinoButton(
                   child: Text(
                     'Accept',
-                    style: TextStyle(color: Color(0xffdd0e1c)),
+                    style: TextStyle(color: Colors.black),
                   ),
                   onPressed: termsAccepted
                       ? () {
@@ -134,7 +134,7 @@ class _BottomSheetModalState extends State<BottomSheetModal> {
                 CupertinoButton(
                   child: Text(
                     'Exit',
-                    style: TextStyle(color: Color(0xffdd0e1c)),
+                    style: TextStyle(color: Colors.black),
                   ),
                   onPressed: () {
                     // Handle exit button press

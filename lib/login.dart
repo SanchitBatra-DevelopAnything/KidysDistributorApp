@@ -68,13 +68,13 @@ class _LoginPageState extends State<LoginPage> {
             _invalidLogin = false;
           });
         }
-        Provider.of<AuthProvider>(context, listen: false)
-            .setLoggedInDistributorAndArea(
-                "name",
-                contactController.text.toUpperCase(),
-                selectedArea!,
-                "normalPriceList",
-                distributorKey);
+        // Provider.of<AuthProvider>(context, listen: false)
+        //     .setLoggedInDistributorAndArea(
+        //         "name",
+        //         contactController.text.toUpperCase(),
+        //         selectedArea!,
+        //         "normalPriceList",
+        //         distributorKey);
 
         Navigator.of(context).pushReplacementNamed('/categories');
       } else {
@@ -142,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     SizedBox(height: 20),
                     PlatformTextField(
-                      labelText: "LOGIN THROUGH MOBILE NUMBER",
+                      labelText: "MOBILE NUMBER",
                       controller: contactController,
                       type: TextInputType.number,
                     ),
@@ -164,7 +164,7 @@ class _LoginPageState extends State<LoginPage> {
                           dropdownColor: Color(0XFFf5f5f5),
                           iconSize: 36,
                           icon: Icon(Icons.arrow_drop_down,
-                              color: Color(0xffDD0E1C)),
+                              color: Colors.black),
                           value: selectedArea,
                           style: TextStyle(color: Colors.black),
                           onChanged: (value) => {
@@ -184,7 +184,7 @@ class _LoginPageState extends State<LoginPage> {
                                 onPressed: () {
                                   startLoginProcess(context);
                                 },
-                                color: Color(0XFFDD0E1C),
+                                color: Colors.black,
                                 child: Text(
                                   "Login",
                                   style: TextStyle(

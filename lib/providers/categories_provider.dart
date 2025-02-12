@@ -56,7 +56,7 @@ class CategoriesProvider with ChangeNotifier {
   }
 
   Future<void> loadItemsForActiveCategory() async {
-    var url = "https://kidysadminapp-default-rtdb.firebaseio.com/Categories/" +
+    var url = "https://odo-admin-app-default-rtdb.asia-southeast1.firebasedatabase.app/Categories/" +
         activeCategoryKey +
         "/items.json";
     try {
@@ -68,14 +68,8 @@ class CategoriesProvider with ChangeNotifier {
             id: ItemId,
             imgUrl: ItemData['imgUrl'],
             itemName: ItemData['itemName'],
-            western_price: ItemData['western_price'],
-            modern_trade_price: ItemData['modern_trade_price'],
-            super_stockist_price: ItemData['super_stockist_price'],
-            delhi_ncr_price: ItemData['delhi_ncr_price'],
-            details: (ItemData['details'] == null || ItemData['details'] == '')
-                ? "NO DETAILS PROVIDED"
-                : ItemData['details'],
-            out_station_price: ItemData['out_station_price']));
+            itemPrice : ItemData['itemPrice'],
+            slab_1_start : ItemData['slab_1_start'] == null ? null : ItemData['slab_1_start']));
       });
       _items = loadedItems;
       _filteredItems = [..._items];

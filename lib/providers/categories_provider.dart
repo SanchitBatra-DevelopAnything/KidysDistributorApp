@@ -69,7 +69,15 @@ class CategoriesProvider with ChangeNotifier {
             imgUrl: ItemData['imgUrl'],
             itemName: ItemData['itemName'],
             itemPrice : ItemData['itemPrice'],
-            slab_1_start : ItemData['slab_1_start'] == null ? null : ItemData['slab_1_start']));
+            slab_1_start : ItemData['slab_1_start'] == null ? null : ItemData['slab_1_start'],
+            slab_1_end : ItemData['slab_1_end'] == null ? null : ItemData['slab_1_end'],
+            slab_2_start : ItemData['slab_2_start'] == null ? null : ItemData['slab_2_start'],
+            slab_2_end : ItemData['slab_2_end'] == null ? null : ItemData['slab_2_end'],
+            slab_3_start : ItemData['slab_3_start'] == null ? null : ItemData['slab_3_start'],
+            slab_3_end : ItemData['slab_3_end'] == null ? null : ItemData['slab_3_end'],
+            slab_1_discount : ItemData['slab_1_discount'] == null ? null : ItemData['slab_1_discount'],
+            slab_2_discount : ItemData['slab_2_discount'] == null ? null : ItemData['slab_2_discount'],
+            slab_3_discount : ItemData['slab_3_discount'] == null ? null : ItemData['slab_3_discount']));
       });
       _items = loadedItems;
       _filteredItems = [..._items];

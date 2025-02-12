@@ -74,8 +74,14 @@ class _ItemCardState extends State<ItemCard> {
                               itemDetails: widget.itemDetails,
                             )));
               },
+              child: Center(
               child: Container(
-                width: double.infinity,
+                width: 80,
+                height: 80,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: Colors.grey[300],
+                ),
                 child: Hero(
                     tag: widget.imgPath,
                     child: CachedNetworkImage(
@@ -85,8 +91,9 @@ class _ItemCardState extends State<ItemCard> {
                           (context, url, downloadProgress) => SpinKitPulse(
                         color: Color(0xffdd0e1c),
                       ),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
-                    )),
+                      errorWidget: (context, url, error) => Icon(Icons.error),),
+              ),
+            ),
               ),
             ),
           ),

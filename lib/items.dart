@@ -48,18 +48,7 @@ class _ItemsState extends State<Items> {
   }
 
   getPrice(Item item) {
-    var price_list = Provider.of<AuthProvider>(context).activePriceList;
-    if (price_list.toString().contains("delhi_ncr")) {
-      return item.delhi_ncr_price;
-    } else if (price_list.toString().contains("super_stockist")) {
-      return item.super_stockist_price;
-    } else if (price_list.toString().contains("modern")) {
-      return item.modern_trade_price;
-    } else if (price_list.toString().contains("out_station")) {
-      return item.out_station_price;
-    } else if (price_list.toString().contains("western")) {
-      return item.western_price;
-    }
+    return item.itemPrice;
   }
 
   @override

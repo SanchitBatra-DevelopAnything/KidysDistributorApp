@@ -185,7 +185,7 @@ class _ItemsState extends State<Items> {
                             primary: false,
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
+                                    crossAxisCount: 1,
                                     childAspectRatio: 0.6,
                                     crossAxisSpacing: 10,
                                     mainAxisSpacing: 10),

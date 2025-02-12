@@ -23,6 +23,9 @@ class _LoginPageState extends State<LoginPage> {
   bool _isFirstTime = true;
   bool isLoading = true;
   bool _invalidLogin = false;
+  
+
+ 
 
   @override
   void didChangeDependencies() {
@@ -54,12 +57,13 @@ class _LoginPageState extends State<LoginPage> {
     var distributorKey = "";
     var distributors =
         Provider.of<AuthProvider>(context, listen: false).distributors;
-    distributors.forEach((distributor) {
+    distributors.asMap().forEach((index , distributor) {
       if (contactController.text.trim() ==
               distributor.contact.trim() &&
           selectedArea.toString().toLowerCase() ==
               distributor.area.toLowerCase()) {
         isPresent = true;
+        Provider.of<AuthProvider>(context , listen:false).setActiveDistributorIndex(index);
         distributorKey = distributor.id;
       }
       if (isPresent) {
@@ -68,13 +72,8 @@ class _LoginPageState extends State<LoginPage> {
             _invalidLogin = false;
           });
         }
-        // Provider.of<AuthProvider>(context, listen: false)
-        //     .setLoggedInDistributorAndArea(
-        //         "name",
-        //         contactController.text.toUpperCase(),
-        //         selectedArea!,
-        //         "normalPriceList",
-        //         distributorKey);
+        Provider.of<AuthProvider>(context, listen: false)
+            .setLoggedInDistributorAndArea(distributorKey);
 
         Navigator.of(context).pushReplacementNamed('/categories');
       } else {

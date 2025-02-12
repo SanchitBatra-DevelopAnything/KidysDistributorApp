@@ -15,6 +15,7 @@ class AuthProvider with ChangeNotifier {
   String loggedInArea = "";
   String activePriceList = "";
   String activeDistributorKey = "";
+  int activeDistributorIndex = -1;
 
   String dbURL = "https://odo-admin-app-default-rtdb.asia-southeast1.firebasedatabase.app/";
   String? _deviceToken = "";
@@ -39,6 +40,11 @@ class AuthProvider with ChangeNotifier {
     return [..._distributors]
         .map((retailer) => retailer.distributorName)
         .toList();
+  }
+
+   void setActiveDistributorIndex(int newIndex) {
+    activeDistributorIndex = newIndex;
+    notifyListeners(); // Notify widgets to rebuild
   }
 
   setupNotifications() async {
@@ -119,18 +125,18 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> setLoggedInDistributorAndArea(String distributorName,String contact,
-      String area, String priceList, String distributorKey) async {
+  Future<void> setLoggedInDistributorAndArea(String distributorKey) async {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
-    sharedPreferences.setString("loggedInDistributor", distributorName);
-    sharedPreferences.setString("loggedInArea", area);
-    sharedPreferences.setString("priceList", priceList);
-    sharedPreferences.setString("contact" , contact);
+    sharedPreferences.setString("loggedInDistributor", _distributors[activeDistributorIndex].distributorName);
+    sharedPreferences.setString("loggedInArea", _distributors[activeDistributorIndex].area);
+    sharedPreferences.setString("priceList", "normal");
+    sharedPreferences.setString("contact" , _distributors[activeDistributorIndex].contact);
+    sharedPreferences.setString("GSTNumber",_distributors[activeDistributorIndex].GSTNumber);
     sharedPreferences.setString("distributorKey", distributorKey);
-    this.loggedInDistributor = distributorName;
-    this.loggedInArea = area;
-    this.activePriceList = priceList;
+    this.loggedInDistributor = _distributors[activeDistributorIndex].distributorName;
+    this.loggedInArea = _distributors[activeDistributorIndex].area;
+    this.activePriceList = "normal";
     this.activeDistributorKey = distributorKey;
     notifyListeners();
   }

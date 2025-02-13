@@ -36,6 +36,12 @@ class _ItemCardState extends State<ItemCard> {
   var _isInCart = false;
   var _quantity = 0;
 
+  final List<Map<String, String>> tableData = [
+    {'qty': '1-5', 'price': '50', 'discount': '5%'},
+    {'qty': '6-10', 'price': '90', 'discount': '10%'},
+    {'qty': '11-15', 'price': '120', 'discount': '15%'},
+  ];
+
   @override
   Widget build(BuildContext context) {
     final cartProviderObject = Provider.of<CartProvider>(context);
@@ -76,8 +82,8 @@ class _ItemCardState extends State<ItemCard> {
               },
               child: Center(
               child: Container(
-                width: 80,
-                height: 80,
+                width: 120,
+                height: 120,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                   color: Colors.grey[300],
@@ -97,8 +103,21 @@ class _ItemCardState extends State<ItemCard> {
               ),
             ),
           ),
+           Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: Text(
+              "Max Quantity : 999",
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 12,
+              ),
+            ),
+          ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(2.0),
             child: Text(
               widget.itemName.toLowerCase(),
               maxLines: 1,
@@ -110,6 +129,27 @@ class _ItemCardState extends State<ItemCard> {
               ),
             ),
           ),
+          Container(
+              padding: EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(6),
+              ),
+              child: Table(
+                border: TableBorder.all(color: Colors.black45),
+                columnWidths: {
+                  0: FlexColumnWidth(1),
+                  1: FlexColumnWidth(1),
+                  2: FlexColumnWidth(1),
+                },
+                children: [
+                  _buildTableRow('Qty', 'Price/Unit', 'Discount', isHeader: true),
+                  for (var data in tableData)
+                    _buildTableRow(data['qty']!, data['price']!, data['discount']!,
+                        highlight: _isInRange(_quantity, data['qty']!)),
+                ],
+              ),
+            ),
           Divider(),
           loggedInDistributor != 'null'
               ? Row(
@@ -120,7 +160,7 @@ class _ItemCardState extends State<ItemCard> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          "Rs. " + widget.price.toString(),
+                          "MRP Rs. " + widget.price.toString(),
                           style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
@@ -204,4 +244,42 @@ class _ItemCardState extends State<ItemCard> {
       ),
     );
   }
+
+TableRow _buildTableRow(String col1, String col2, String col3, {bool isHeader = false, bool highlight = false}) {
+    return TableRow(
+      decoration: highlight ? BoxDecoration(color: Colors.greenAccent) : null,
+      children: [
+        _buildTableCell(col1, isHeader),
+        _buildTableCell(col2, isHeader),
+        _buildTableCell(col3, isHeader),
+      ],
+    );
+  }
+
+  Widget _buildTableCell(String text, bool isHeader) {
+    return Padding(
+      padding: EdgeInsets.all(4),
+      child: Text(
+        text,
+        style: TextStyle(
+          fontWeight: isHeader ? FontWeight.bold : FontWeight.normal,
+          fontSize: isHeader ? 14 : 12,
+          color: isHeader ? Colors.black : Colors.black87,
+        ),
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+
+  bool _isInRange(int quantity, String range) {
+    List<String> parts = range.split('-');
+    if (parts.length == 2) {
+      int start = int.parse(parts[0]);
+      int end = int.parse(parts[1]);
+      return quantity >= start && quantity <= end;
+    }
+    return false;
+  }
+
+
 }

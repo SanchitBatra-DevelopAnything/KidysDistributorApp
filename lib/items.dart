@@ -186,7 +186,7 @@ class _ItemsState extends State<Items> {
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 1,
-                                    childAspectRatio: 1.5,
+                                    childAspectRatio: 1,
                                     crossAxisSpacing: 10,
                                     mainAxisSpacing: 10),
                             itemBuilder: (context, index) => ItemCard(

@@ -60,22 +60,24 @@ class _ItemCardState extends State<ItemCard> {
   @override
   Widget build(BuildContext context) {
 
+    //avoiding string interpolation cuz sometimes we get $ in UI
     final List<Map<String, String>> tableData = [
-    {
-        'qty': '${widget.slab_1_start} - ${widget.slab_1_end}',
-        'price': calculatePrice(widget.slab_1_discount , widget.price), 
-        'discount': '${widget.slab_1_discount}%'
-      },
-      {
-        'qty': '${widget.slab_2_start} - ${widget.slab_2_end}',
-        'price': calculatePrice(widget.slab_2_discount , widget.price), 
-        'discount': '${widget.slab_2_discount}%'
-      },
-      {
-        'qty': '${widget.slab_3_start} - ${widget.slab_3_end}',
-        'price': calculatePrice(widget.slab_3_discount , widget.price), 
-        'discount': '${widget.slab_3_discount}%'
-      },
+   {
+  'qty': [widget.slab_1_start, widget.slab_1_end].join(" - "),
+  'price': calculatePrice(widget.slab_1_discount, widget.price),
+  'discount': widget.slab_1_discount.toString() + '%',
+},
+{
+  'qty': [widget.slab_2_start, widget.slab_2_end].join(" - "),
+  'price': calculatePrice(widget.slab_2_discount, widget.price),
+  'discount': widget.slab_2_discount.toString() + '%',
+},
+{
+  'qty': [widget.slab_3_start, widget.slab_3_end].join(" - "),
+  'price': calculatePrice(widget.slab_3_discount, widget.price),
+  'discount': widget.slab_3_discount.toString() + '%',
+},
+
   ];
 
 

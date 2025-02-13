@@ -63,17 +63,17 @@ class _ItemCardState extends State<ItemCard> {
     final List<Map<String, String>> tableData = [
     {
         'qty': '${widget.slab_1_start} - ${widget.slab_1_end}',
-        'price': '50', // Replace with actual price if needed
+        'price': calculatePrice(widget.slab_1_discount , widget.price), 
         'discount': '${widget.slab_1_discount}%'
       },
       {
         'qty': '${widget.slab_2_start} - ${widget.slab_2_end}',
-        'price': '90', // Replace with actual price if needed
+        'price': calculatePrice(widget.slab_2_discount , widget.price), 
         'discount': '${widget.slab_2_discount}%'
       },
       {
         'qty': '${widget.slab_3_start} - ${widget.slab_3_end}',
-        'price': '120', // Replace with actual price if needed
+        'price': calculatePrice(widget.slab_3_discount , widget.price), 
         'discount': '${widget.slab_3_discount}%'
       },
   ];
@@ -314,6 +314,15 @@ TableRow _buildTableRow(String col1, String col2, String col3, {bool isHeader = 
       return quantity >= start && quantity <= end;
     }
     return false;
+  }
+
+  dynamic calculatePrice(dynamic discount , dynamic price)
+  {
+    if(discount == 0)
+    {
+      return price.toString();
+    }
+    return (price-(price*(discount/100))).toString();
   }
 
 

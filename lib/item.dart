@@ -19,6 +19,15 @@ class ItemCard extends StatefulWidget {
       required this.price,
       required this.itemName,
       required this.itemDetails,
+      required this.slab_1_start,
+      required this.slab_1_end,
+      required this.slab_2_start,
+      required this.slab_2_end,
+      required this.slab_3_start , 
+      required this.slab_3_end,
+      required this.slab_1_discount,
+      required this.slab_2_discount,
+      required this.slab_3_discount,
       required this.itemId})
       : super(key: key);
 
@@ -27,6 +36,16 @@ class ItemCard extends StatefulWidget {
   final String itemName;
   final String itemId;
   final String itemDetails;
+  final dynamic slab_1_start;
+  final dynamic slab_2_start;
+  final dynamic slab_3_start;
+  final dynamic slab_1_end;
+  final dynamic slab_2_end;
+  final dynamic slab_3_end;
+  final dynamic slab_1_discount;
+  final dynamic slab_2_discount;
+  final dynamic slab_3_discount;
+
 
   @override
   _ItemCardState createState() => _ItemCardState();
@@ -36,14 +55,30 @@ class _ItemCardState extends State<ItemCard> {
   var _isInCart = false;
   var _quantity = 0;
 
-  final List<Map<String, String>> tableData = [
-    {'qty': '1-5', 'price': '50', 'discount': '5%'},
-    {'qty': '6-10', 'price': '90', 'discount': '10%'},
-    {'qty': '11-15', 'price': '120', 'discount': '15%'},
-  ];
+  
 
   @override
   Widget build(BuildContext context) {
+
+    final List<Map<String, String>> tableData = [
+    {
+        'qty': '${widget.slab_1_start} - ${widget.slab_1_end}',
+        'price': '50', // Replace with actual price if needed
+        'discount': '${widget.slab_1_discount}%'
+      },
+      {
+        'qty': '${widget.slab_2_start} - ${widget.slab_2_end}',
+        'price': '90', // Replace with actual price if needed
+        'discount': '${widget.slab_2_discount}%'
+      },
+      {
+        'qty': '${widget.slab_3_start} - ${widget.slab_3_end}',
+        'price': '120', // Replace with actual price if needed
+        'discount': '${widget.slab_3_discount}%'
+      },
+  ];
+
+
     final cartProviderObject = Provider.of<CartProvider>(context);
     var loggedInDistributor =
         Provider.of<AuthProvider>(context).loggedInDistributor;
@@ -106,7 +141,7 @@ class _ItemCardState extends State<ItemCard> {
            Padding(
             padding: const EdgeInsets.all(2.0),
             child: Text(
-              "Max Quantity : 999",
+              "Min Qty : 1 | Max Qty : 999",
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(

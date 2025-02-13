@@ -62,7 +62,7 @@ class _ItemsState extends State<Items> {
           FocusScope.of(context).unfocus();
         },
         child: Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.grey[100],
           body: _isLoading
               ? const Center(
                   child: SpinKitPulse(

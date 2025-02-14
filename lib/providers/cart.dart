@@ -121,10 +121,12 @@ class CartProvider with ChangeNotifier {
 
   num getTotalOrderPrice() {
     double totalPrice = 0;
-    _itemList.forEach((element) {
-      totalPrice += element.totalPrice;
-    });
-    return totalPrice;
+  _itemList.forEach((element) {
+    totalPrice += element.totalPriceAfterDiscount;
+  });
+
+  // Truncate to two decimal places
+  return (totalPrice * 100).truncateToDouble() / 100;
   }
 
   void removeItem(String itemId) {

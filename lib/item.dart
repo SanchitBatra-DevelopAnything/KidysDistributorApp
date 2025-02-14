@@ -242,7 +242,16 @@ class _ItemCardState extends State<ItemCard> {
                                         1,
                                         widget.itemName,
                                         widget.imgPath,
-                                        parentCategory);
+                                        parentCategory,
+                                        widget.slab_1_start,
+                                        widget.slab_1_end,
+                                        widget.slab_1_discount,
+                                        widget.slab_2_start,
+                                        widget.slab_2_end,
+                                        widget.slab_2_discount,
+                                        widget.slab_3_start,
+                                        widget.slab_3_end,
+                                        widget.slab_3_discount);
                                     setState(() {
                                       _isInCart = true;
                                     });
@@ -268,6 +277,15 @@ class _ItemCardState extends State<ItemCard> {
                                         widget.itemName.toLowerCase(),
                                         widget.imgPath,
                                         parentCategory,
+                                        widget.slab_1_start,
+                                        widget.slab_1_end,
+                                        widget.slab_1_discount,
+                                        widget.slab_2_start,
+                                        widget.slab_2_end,
+                                        widget.slab_2_discount,
+                                        widget.slab_3_start,
+                                        widget.slab_3_end,
+                                        widget.slab_3_discount,
                                       )
                                     }
                                 },

@@ -53,11 +53,22 @@ class _CartItemViewState extends State<CartItemView> {
                     fontWeight: FontWeight.bold),
               ),
               Text(
-                'Rs.${widget.cartItem.totalPrice}',
+                'Total : Rs.${widget.cartItem.totalPrice}',
                 style: TextStyle(color: Colors.black, fontSize: 12),
               ),
               SizedBox(
                 width: 10,
+              ),
+              Text(
+                'Discount : Rs.${widget.cartItem.discount_percentage}%',
+                style: TextStyle(color: Colors.black, fontSize: 12),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Text(
+                'You Pay : Rs.${widget.cartItem.totalPriceAfterDiscount}',
+                style: TextStyle(color: Colors.black, fontSize: 12),
               ),
             ],
           ),
@@ -84,6 +95,15 @@ class _CartItemViewState extends State<CartItemView> {
                             widget.cartItem.title,
                             widget.cartItem.imageUrl,
                             widget.cartItem.parentCategoryType,
+                            widget.cartItem.slab_1_start,
+                                        widget.cartItem.slab_1_end,
+                                        widget.cartItem.slab_1_discount,
+                                        widget.cartItem.slab_2_start,
+                                        widget.cartItem.slab_2_end,
+                                        widget.cartItem.slab_2_discount,
+                                        widget.cartItem.slab_3_start,
+                                        widget.cartItem.slab_3_end,
+                                        widget.cartItem.slab_3_discount
                           )
                         }
                     }),

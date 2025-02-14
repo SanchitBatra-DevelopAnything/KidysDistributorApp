@@ -8,10 +8,23 @@ class CartItem {
   final String id;
   final String title;
   final num quantity;
-  final num price;
+  final dynamic price; //MRP
   final String imageUrl;
   final String parentCategoryType;
-  final num totalPrice;
+  final dynamic totalPrice; //MRP*QUANTITY
+  final dynamic discount_percentage;
+  final dynamic totalPriceAfterDiscount;
+  final dynamic slab_1_start;
+  final dynamic slab_1_end;
+  final dynamic slab_1_discount;
+
+  final dynamic slab_2_start;
+  final dynamic slab_2_end;
+  final dynamic slab_2_discount;
+
+  final dynamic slab_3_start;
+  final dynamic slab_3_end;
+  final dynamic slab_3_discount;
 
   CartItem(
       {required this.id,
@@ -20,7 +33,18 @@ class CartItem {
       required this.parentCategoryType,
       required this.quantity,
       required this.totalPrice,
-      required this.price});
+      required this.price,
+      required this.discount_percentage,
+      required this.totalPriceAfterDiscount,
+      required this.slab_1_start,
+      required this.slab_1_end,
+      required this.slab_1_discount,
+      required this.slab_2_start,
+      required this.slab_2_end,
+      required this.slab_2_discount,
+      required this.slab_3_start,
+      required this.slab_3_end,
+      required this.slab_3_discount,});
 
   Map toJson() => {
         'id': this.id,
@@ -29,7 +53,9 @@ class CartItem {
         'price': this.price,
         'imageUrl': this.imageUrl,
         'parentCategoryType': this.parentCategoryType,
-        'totalPrice': this.totalPrice
+        'totalPrice': this.totalPrice,
+        'discount_percentage' : this.discount_percentage,
+        'totalPriceAfterDiscount' : this.totalPriceAfterDiscount
       };
 }
 
@@ -110,7 +136,18 @@ class CartProvider with ChangeNotifier {
           parentCategoryType: value.parentCategoryType,
           price: value.price,
           quantity: value.quantity,
-          title: value.title));
+          discount_percentage : value.discount_percentage,
+          totalPriceAfterDiscount : value.totalPriceAfterDiscount,
+          title: value.title,
+          slab_1_start : value.slab_1_start,
+          slab_1_end : value.slab_1_end,
+          slab_1_discount : value.slab_1_discount,
+          slab_2_start : value.slab_2_start,
+          slab_2_end : value.slab_2_end,
+          slab_2_discount : value.slab_2_discount,
+          slab_3_start : value.slab_3_start,
+          slab_3_end : value.slab_3_end,
+          slab_3_discount : value.slab_3_discount));
     });
     print("LIST OF CART BECOMES = ");
     _itemList.forEach((ci) => print(
@@ -124,9 +161,11 @@ class CartProvider with ChangeNotifier {
   // }
 
   void addItem(String itemId, num price, num quantity, String title,
-      String imgPath, String parentCategory) {
+      String imgPath, String parentCategory , dynamic slab_1_start , dynamic slab_1_end , dynamic slab_1_discount
+      , dynamic slab_2_start , dynamic slab_2_end , dynamic slab_2_discount, dynamic slab_3_start, dynamic slab_3_end,dynamic slab_3_discount) {
     print(
         "REQUEST TO ADD ${title} with price ${price.toString()} and quantity ${quantity} , making total = ${(price * quantity).toString()}");
+        var discountPercent = calculateDiscount(slab_1_start,slab_1_end,slab_2_start,slab_2_end,slab_3_start,slab_3_end,slab_1_discount,slab_2_discount,slab_3_discount , quantity);
     if (_items!.containsKey(itemId)) {
       //change quantity..
       print("Found update quantity = ${quantity}");
@@ -139,7 +178,18 @@ class CartProvider with ChangeNotifier {
               imageUrl: existingCartItem.imageUrl,
               parentCategoryType: existingCartItem.parentCategoryType,
               price: existingCartItem.price,
-              quantity: quantity));
+              quantity: quantity,
+              discount_percentage : discountPercent,
+              totalPriceAfterDiscount : (price*quantity) - ((price*quantity)*(discountPercent/100)),
+              slab_1_start : slab_1_start,
+              slab_1_end : slab_1_end,
+              slab_2_start : slab_2_start,
+              slab_2_end : slab_2_end,
+              slab_3_start : slab_3_start,
+              slab_3_end : slab_3_end,
+              slab_1_discount : slab_1_discount,
+              slab_2_discount : slab_2_discount,
+              slab_3_discount : slab_3_discount));
     } else {
       _items!.putIfAbsent(
           itemId,
@@ -150,13 +200,42 @@ class CartProvider with ChangeNotifier {
               title: title,
               quantity: 1,
               imageUrl: imgPath,
-              parentCategoryType: parentCategory));
+              parentCategoryType: parentCategory,
+              discount_percentage : discountPercent,
+              totalPriceAfterDiscount : (price*quantity) - ((price*quantity)*(discountPercent/100)),
+              slab_1_start : slab_1_start,
+              slab_1_end : slab_1_end,
+              slab_2_start : slab_2_start,
+              slab_2_end : slab_2_end,
+              slab_3_start : slab_3_start,
+              slab_3_end : slab_3_end,
+              slab_1_discount : slab_1_discount,
+              slab_2_discount : slab_2_discount,
+              slab_3_discount : slab_3_discount));
     }
     print("Formin list");
     formCartList();
     notifyListeners();
 
     print("ADDED ITEM");
+  }
+
+  dynamic calculateDiscount(dynamic slab_1_start , dynamic slab_1_end , dynamic slab_2_start , dynamic slab_2_end 
+  , dynamic slab_3_start , dynamic slab_3_end , dynamic slab_1_discount, dynamic slab_2_discount,dynamic slab_3_discount , num quantity)
+  {
+    if(quantity>=slab_1_start && quantity<=slab_1_end)
+    {
+      return slab_1_discount;
+    }
+    if(quantity>=slab_2_start && quantity<=slab_2_end)
+    {
+      return slab_2_discount;
+    }
+    if(quantity>=slab_3_start && quantity<=slab_3_end)
+    {
+      return slab_3_discount;
+    }
+    return 0;
   }
 
   Future<void> PlaceDistributorOrder(String area, String loggedInDistributor,
@@ -215,7 +294,7 @@ class CartProvider with ChangeNotifier {
 
   Future<void> fetchCartFromDB(String distributor, String area) async {
     var url =
-        "https://kidysadminapp-default-rtdb.firebaseio.com/cart/${area}/${distributor}/items.json";
+        "https://odo-admin-app-default-rtdb.asia-southeast1.firebasedatabase.app/cart/${area}/${distributor}/items.json";
     try {
       final response = await http.get(Uri.parse(url));
       if (response.body == 'null') {
@@ -244,6 +323,15 @@ class CartProvider with ChangeNotifier {
           cartItem['title'],
           cartItem['imageUrl'],
           cartItem['parentCategoryType'],
+          cartItem['slab_1_start'],
+          cartItem['slab_1_end'],
+          cartItem.slab_1_discount,
+          cartItem.slab_2_start,
+          cartItem.slab_2_end,
+          cartItem.slab_2_discount,
+          cartItem.slab_3_start,
+          cartItem.slab_3_end,
+          cartItem.slab_3_discount
         );
       });
     } catch (error) {

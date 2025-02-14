@@ -119,12 +119,22 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  num getTotalOrderPrice() {
+  num getTotalOrderPrice({bool isMrpCalculated = false}) {
     double totalPrice = 0;
-  _itemList.forEach((element) {
-    totalPrice += element.totalPriceAfterDiscount;
-  });
-
+    if(isMrpCalculated)
+    {
+      //actual MRP Total.
+      _itemList.forEach((element) {
+        totalPrice += element.totalPrice;
+      });
+    }
+    else
+    {
+        //total discountedPrice
+        _itemList.forEach((element) {
+          totalPrice += element.totalPriceAfterDiscount;
+      });
+    }
   // Truncate to two decimal places
   return (totalPrice * 100).truncateToDouble() / 100;
   }
@@ -250,37 +260,40 @@ class CartProvider with ChangeNotifier {
   }
 
   Future<void> PlaceDistributorOrder(String area, String loggedInDistributor,
-      String time, String activePriceList, String deviceToken) async {
-    var todaysDate = DateTime.now();
-    var year = todaysDate.year.toString();
-    var month = todaysDate.month.toString();
-    var day = todaysDate.day.toString();
-    var date = day + month + year;
-    var url =
-        "https://kidysadminapp-default-rtdb.firebaseio.com/activeDistributorOrders/${area}/${loggedInDistributor}.json";
-    try {
-      await http.post(Uri.parse(url),
-          body: json.encode({
-            "area": area,
-            "orderedBy": loggedInDistributor,
-            "orderTime": time,
-            "orderDate": date,
-            "dispatchDate": dispatchDateSelected,
-            "priceList": activePriceList,
-            "items": formOrderItemList(),
-            "deviceToken": deviceToken,
-            "totalPrice": getTotalOrderPrice(),
-          }));
-    } catch (error) {
-      print("ERROR IS");
-      print(error);
-      throw error;
-    }
+      String time, String activePriceList, String deviceToken , String shop , String GST , String contact) async {
+    // var todaysDate = DateTime.now();
+    // var year = todaysDate.year.toString();
+    // var month = todaysDate.month.toString();
+    // var day = todaysDate.day.toString();
+    // var date = day +"-"+month +"-"+ year;
+    // var url =
+    //     "https://odo-admin-app-default-rtdb.asia-southeast1.firebasedatabase.app/activeDistributorOrders/${area}/${loggedInDistributor}.json";
+    // try {
+    //   await http.post(Uri.parse(url),
+    //       body: json.encode({
+    //         "area": area,
+    //         "shop" : shop,
+    //         "GST" : GST,
+    //         "orderedBy": loggedInDistributor,
+    //         "orderTime": time,
+    //         "orderDate": date,
+    //         "items": formOrderItemList(),
+    //         "deviceToken": deviceToken,
+    //         "totalPrice": getTotalOrderPrice(true),
+    //         "totalPriceAfterDiscount" : getTotalOrderPrice(false)
+    //       }));
+    // } catch (error) {
+    //   print("ERROR IS");
+    //   print(error);
+    //   throw error;
+    // }
+
+    print("Received shop =  ${shop} , GST = ${GST} , contact = ${contact}");
   }
 
   Future<void> deleteCartOnDB(String distributor, String area) async {
     var url =
-        "https://kidysadminapp-default-rtdb.firebaseio.com/cart/${area}/${distributor}.json";
+        "https://odo-admin-app-default-rtdb.asia-southeast1.firebasedatabase.app/cart/${area}/${distributor}.json";
     try {
       await http.delete(Uri.parse(url));
     } catch (error) {

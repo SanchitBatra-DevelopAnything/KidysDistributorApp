@@ -16,6 +16,9 @@ class AuthProvider with ChangeNotifier {
   String activePriceList = "";
   String activeDistributorKey = "";
   int activeDistributorIndex = -1;
+  String loggedInShop = "";
+  String loggedIncontact = "";
+  String loggedInGSTNumber = "";
 
   String dbURL = "https://odo-admin-app-default-rtdb.asia-southeast1.firebasedatabase.app/";
   String? _deviceToken = "";
@@ -122,6 +125,9 @@ class AuthProvider with ChangeNotifier {
     this.activePriceList = sharedPreferences.getString("priceList").toString();
     this.activeDistributorKey =
         sharedPreferences.getString("distributorKey").toString();
+    this.loggedInShop = sharedPreferences.getString("loggedInShop").toString();
+    this.loggedIncontact = sharedPreferences.getString("loggedIncontact").toString();
+    this.loggedInGSTNumber = sharedPreferences.getString("loggedInGSTNumber").toString();
     notifyListeners();
   }
 
@@ -131,8 +137,9 @@ class AuthProvider with ChangeNotifier {
     sharedPreferences.setString("loggedInDistributor", _distributors[activeDistributorIndex].distributorName);
     sharedPreferences.setString("loggedInArea", _distributors[activeDistributorIndex].area);
     sharedPreferences.setString("priceList", "normal");
-    sharedPreferences.setString("contact" , _distributors[activeDistributorIndex].contact);
-    sharedPreferences.setString("GSTNumber",_distributors[activeDistributorIndex].GSTNumber);
+    sharedPreferences.setString("loggedInShop" , _distributors[activeDistributorIndex].shop);
+    sharedPreferences.setString("loggedIncontact" , _distributors[activeDistributorIndex].contact);
+    sharedPreferences.setString("loggedInGSTNumber",_distributors[activeDistributorIndex].GSTNumber);
     sharedPreferences.setString("distributorKey", distributorKey);
     this.loggedInDistributor = _distributors[activeDistributorIndex].distributorName;
     this.loggedInArea = _distributors[activeDistributorIndex].area;

@@ -54,23 +54,14 @@ class _CartScreenState extends State<CartScreen> {
         .setDispatchDate("${day}-${month}-${year}");
   }
 
-  placeOrder(BuildContext context, String dispatchDate) async {
-    if (dispatchDate == "") {
-      showDialog(
-          context: context,
-          builder: (context) => PlatformDialog(
-              title: "Select Dispatch Details",
-              content:
-                  "Please make sure you've selected dispatch details before placing the order"));
-    } else {
+  placeOrder(BuildContext context) async {
+    
       setState(() {
         isPlacingOrder = true;
       });
       final cartObject = Provider.of<CartProvider>(context, listen: false);
       final distributor =
           Provider.of<AuthProvider>(context, listen: false).loggedInDistributor;
-      final priceList =
-          Provider.of<AuthProvider>(context, listen: false).activePriceList;
       final area =
           Provider.of<AuthProvider>(context, listen: false).loggedInArea;
       final timeArrayComponent =
@@ -80,15 +71,20 @@ class _CartScreenState extends State<CartScreen> {
           timeArrayComponent[timeArrayComponent.length - 1];
       String token =
           Provider.of<AuthProvider>(context, listen: false).deviceToken!;
+      
+      
+
+      String shop = Provider.of<AuthProvider>(context, listen: false).loggedInShop;
+      String GST = Provider.of<AuthProvider>(context, listen: false).loggedInGSTNumber;
+      String contact = Provider.of<AuthProvider>(context, listen: false).loggedIncontact;
+
       await Provider.of<CartProvider>(context, listen: false)
-          .PlaceDistributorOrder(area, distributor, time, priceList, token);
+          .PlaceDistributorOrder(area, distributor, time, "normalPriceList", token , shop , GST, contact);
       cartObject.clearCart();
       await cartObject.deleteCartOnDB(distributor, area);
-      cartObject.resetDispatchDate();
       Navigator.pushNamedAndRemoveUntil(
           context, "/orderPlaced", (route) => false);
     }
-  }
 
   saveCart(
       AuthProvider authProviderObject, CartProvider cartProviderObject) async {
@@ -110,7 +106,6 @@ class _CartScreenState extends State<CartScreen> {
     final cartItemsList = cartProviderObject.itemList;
     // var totalOrderPrice = cartProviderObject.getTotalOrderPrice();
     var totalOrderPrice = cartProviderObject.getTotalOrderPrice();
-    var dispatchDate = cartProviderObject.dispatchDateSelected;
 
     return WillPopScope(
       onWillPop: () async {
@@ -185,7 +180,7 @@ class _CartScreenState extends State<CartScreen> {
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                               onPressed: () {
-                                placeOrder(context, dispatchDate);
+                                placeOrder(context);
                               },
                               color: Colors.black,
                             )

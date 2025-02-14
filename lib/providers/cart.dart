@@ -261,34 +261,32 @@ class CartProvider with ChangeNotifier {
 
   Future<void> PlaceDistributorOrder(String area, String loggedInDistributor,
       String time, String activePriceList, String deviceToken , String shop , String GST , String contact) async {
-    // var todaysDate = DateTime.now();
-    // var year = todaysDate.year.toString();
-    // var month = todaysDate.month.toString();
-    // var day = todaysDate.day.toString();
-    // var date = day +"-"+month +"-"+ year;
-    // var url =
-    //     "https://odo-admin-app-default-rtdb.asia-southeast1.firebasedatabase.app/activeDistributorOrders/${area}/${loggedInDistributor}.json";
-    // try {
-    //   await http.post(Uri.parse(url),
-    //       body: json.encode({
-    //         "area": area,
-    //         "shop" : shop,
-    //         "GST" : GST,
-    //         "orderedBy": loggedInDistributor,
-    //         "orderTime": time,
-    //         "orderDate": date,
-    //         "items": formOrderItemList(),
-    //         "deviceToken": deviceToken,
-    //         "totalPrice": getTotalOrderPrice(true),
-    //         "totalPriceAfterDiscount" : getTotalOrderPrice(false)
-    //       }));
-    // } catch (error) {
-    //   print("ERROR IS");
-    //   print(error);
-    //   throw error;
-    // }
-
-    print("Received shop =  ${shop} , GST = ${GST} , contact = ${contact}");
+    var todaysDate = DateTime.now();
+    var year = todaysDate.year.toString();
+    var month = todaysDate.month.toString();
+    var day = todaysDate.day.toString();
+    var date = day +"-"+month +"-"+ year;
+    var url =
+        "https://odo-admin-app-default-rtdb.asia-southeast1.firebasedatabase.app/activeDistributorOrders.json";
+    try {
+      await http.post(Uri.parse(url),
+          body: json.encode({
+            "area": area,
+            "shop" : shop,
+            "GST" : GST,
+            "orderedBy": loggedInDistributor,
+            "orderTime": time,
+            "orderDate": date,
+            "items": formOrderItemList(),
+            "deviceToken": deviceToken,
+            "totalPrice": getTotalOrderPrice(isMrpCalculated : true),
+            "totalPriceAfterDiscount" : getTotalOrderPrice(isMrpCalculated: false)
+          }));
+    } catch (error) {
+      print("ERROR IS");
+      print(error);
+      throw error;
+    }
   }
 
   Future<void> deleteCartOnDB(String distributor, String area) async {
@@ -376,12 +374,14 @@ class CartProvider with ChangeNotifier {
   formOrderItemList() {
     var items = [];
     _itemList.forEach((cartItem) {
+      var discountPercent = calculateDiscount(cartItem.slab_1_start,cartItem.slab_1_end,cartItem.slab_2_start,cartItem.slab_2_end,cartItem.slab_3_start,cartItem.slab_3_end,cartItem.slab_1_discount,cartItem.slab_2_discount,cartItem.slab_3_discount , cartItem.quantity);
       items.add(DistributorOrderItem(
               item: cartItem.title,
-              imageUrl: cartItem.imageUrl,
-              CategoryName: cartItem.parentCategoryType,
+              brand: cartItem.parentCategoryType,
               quantity: cartItem.quantity,
-              price: cartItem.totalPrice)
+              price: cartItem.totalPrice,
+              priceAfterDiscount : cartItem.totalPriceAfterDiscount,
+              discount_percentage : discountPercent)
           .toJson());
     });
     return items;

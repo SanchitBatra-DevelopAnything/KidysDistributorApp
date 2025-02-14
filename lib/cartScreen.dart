@@ -187,7 +187,7 @@ class _CartScreenState extends State<CartScreen> {
                               onPressed: () {
                                 placeOrder(context, dispatchDate);
                               },
-                              color: const Color(0xffdd0e1c),
+                              color: Colors.black,
                             )
                           : SpinKitPulse(
                               color: Color(0xffDD0E1C),
@@ -206,9 +206,9 @@ class _CartScreenState extends State<CartScreen> {
                   child: const Padding(
                     padding: EdgeInsets.all(10.0),
                     child: Text(
-                      "Discounts will be applied on actual dispatched quantities , if applicable.",
+                      "All applicable discounts on your cart are shown below.",
                       style: TextStyle(
-                          color: Color(0xffdd0e1c),
+                          color: Colors.black,
                           fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -235,61 +235,14 @@ class _CartScreenState extends State<CartScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      color: dispatchDate == ""
-                                          ? const Color.fromARGB(
-                                              255, 235, 229, 229)
-                                          : Colors.green),
-                                  child: dispatchDate == ""
-                                      ? const Icon(
-                                          Icons.alarm,
-                                          size: 35,
-                                          color: Colors.black,
-                                        )
-                                      : const Icon(
-                                          color: Colors.white,
-                                          size: 35,
-                                          Icons.done)),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  "Select Dispatch Details",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                dispatchDate == ""
-                                    ? const Text(
-                                        "Click Here!",
-                                        style: TextStyle(color: Colors.black54),
-                                      )
-                                    : Text(
-                                        "Dispatch Date : \${dispatchDate}",
-                                        style: const TextStyle(
-                                            color: Colors.black54),
-                                      ),
-                              ],
-                            ),
-                          ],
-                        ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             "Total : Rs.${totalOrderPrice}",
                             style: const TextStyle(
-                                color: Colors.black54,
-                                fontWeight: FontWeight.bold),
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize : 18),
                           ),
                         ),
                       ],

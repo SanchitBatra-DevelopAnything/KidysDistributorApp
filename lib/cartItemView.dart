@@ -53,7 +53,7 @@ class _CartItemViewState extends State<CartItemView> {
                     fontWeight: FontWeight.bold),
               ),
               Text(
-                'Total : Rs.${widget.cartItem.totalPrice}',
+                'MRP Total : Rs.${widget.cartItem.totalPrice}',
                 style: TextStyle(color: Colors.black, fontSize: 12),
               ),
               SizedBox(
@@ -61,14 +61,14 @@ class _CartItemViewState extends State<CartItemView> {
               ),
               Text(
                 'Discount : Rs.${widget.cartItem.discount_percentage}%',
-                style: TextStyle(color: Colors.black, fontSize: 12),
+                style: TextStyle(color: Colors.green, fontSize: 14),
               ),
               SizedBox(
                 width: 10,
               ),
               Text(
                 'You Pay : Rs.${widget.cartItem.totalPriceAfterDiscount}',
-                style: TextStyle(color: Colors.black, fontSize: 12),
+                style: TextStyle(color: Colors.black, fontSize: 14),
               ),
             ],
           ),

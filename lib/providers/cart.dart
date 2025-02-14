@@ -55,7 +55,16 @@ class CartItem {
         'parentCategoryType': this.parentCategoryType,
         'totalPrice': this.totalPrice,
         'discount_percentage' : this.discount_percentage,
-        'totalPriceAfterDiscount' : this.totalPriceAfterDiscount
+        'totalPriceAfterDiscount' : this.totalPriceAfterDiscount,
+        'slab_1_start': this.slab_1_start,
+      'slab_1_end': this.slab_1_end,
+      'slab_1_discount': this.slab_1_discount,
+      'slab_2_start': this.slab_2_start,
+      'slab_2_end': this.slab_2_end,
+      'slab_2_discount': this.slab_2_discount,
+      'slab_3_start': this.slab_3_start,
+      'slab_3_end': this.slab_3_end,
+      'slab_3_discount': this.slab_3_discount,
       };
 }
 
@@ -281,7 +290,7 @@ class CartProvider with ChangeNotifier {
 
   Future<void> saveCart(String distributor, String area) async {
     var url =
-        "https://kidysadminapp-default-rtdb.firebaseio.com/cart/${area}/${distributor}.json";
+        "https://odo-admin-app-default-rtdb.asia-southeast1.firebasedatabase.app/cart/${area}/${distributor}.json";
     try {
       await http.put(Uri.parse(url),
           body: json.encode({"items": formSaveCartList()}));
@@ -325,13 +334,13 @@ class CartProvider with ChangeNotifier {
           cartItem['parentCategoryType'],
           cartItem['slab_1_start'],
           cartItem['slab_1_end'],
-          cartItem.slab_1_discount,
-          cartItem.slab_2_start,
-          cartItem.slab_2_end,
-          cartItem.slab_2_discount,
-          cartItem.slab_3_start,
-          cartItem.slab_3_end,
-          cartItem.slab_3_discount
+          cartItem['slab_1_discount'],
+          cartItem['slab_2_start'],
+          cartItem['slab_2_end'],
+          cartItem['slab_2_discount'],
+          cartItem['slab_3_start'],
+          cartItem['slab_3_end'],
+          cartItem['slab_3_discount']
         );
       });
     } catch (error) {

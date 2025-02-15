@@ -124,29 +124,29 @@ class _MyProfileState extends State<MyProfile> {
                   SizedBox(
                     height: 10,
                   ),
-                  ListTile(
-                      onTap: (() => {
-                            Navigator.of(context).pushNamed("/myOrders"),
-                          }),
-                      trailing: Icon(
-                        Icons.arrow_forward_ios,
-                        color: Colors.black,
-                        size: 25,
-                      ),
-                      leading: Icon(
-                        Icons.shopping_bag,
-                        size: 28,
-                        color: Colors.black,
-                      ),
-                      tileColor: Colors.white,
-                      subtitle: Text("Get updates on your orders here"),
-                      title: Text(
-                        "My Orders",
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold),
-                      )),
+                  // ListTile(
+                  //     onTap: (() => {
+                  //           Navigator.of(context).pushNamed("/myOrders"),
+                  //         }),
+                  //     trailing: Icon(
+                  //       Icons.arrow_forward_ios,
+                  //       color: Colors.black,
+                  //       size: 25,
+                  //     ),
+                  //     leading: Icon(
+                  //       Icons.shopping_bag,
+                  //       size: 28,
+                  //       color: Colors.black,
+                  //     ),
+                  //     tileColor: Colors.white,
+                  //     subtitle: Text("Get updates on your orders here"),
+                  //     title: Text(
+                  //       "My Orders",
+                  //       style: TextStyle(
+                  //           color: Colors.black,
+                  //           fontSize: 20,
+                  //           fontWeight: FontWeight.bold),
+                  //     )),
                   // SizedBox(
                   //   height: 10,
                   // ),
@@ -212,7 +212,7 @@ class _MyProfileState extends State<MyProfile> {
                         color: Color(0XFFDD0E1C),
                       ),
                       tileColor: Colors.white,
-                      subtitle: Text("You'll be no longer our distributor"),
+                      subtitle: Text("You'll be no longer me a member of ODO."),
                       title: Text(
                         "Delete My Account",
                         style: TextStyle(

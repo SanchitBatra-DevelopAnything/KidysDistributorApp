@@ -131,7 +131,7 @@ class _CategoriesState extends State<Categories> {
                     width: 150.0,
                     child: loggedInDistributor != 'null'
                         ? Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: <Widget>[
                               IconButton(
                                 icon: Icon(Icons.account_circle),
@@ -142,12 +142,13 @@ class _CategoriesState extends State<Categories> {
                                 },
                               ),
                               Consumer<CartProvider>(
-                                builder: (_, cart, ch) => CartBadge(
+                                builder: (_, cart, ch) =>  CartBadge(
                                   value: cart.itemCount.toString(),
                                   color: Colors.red,
                                   child: ch!,
                                 ),
-                                child: IconButton(
+                                child: 
+                                IconButton(
                                   onPressed: () {
                                     moveToCart(context);
                                   },

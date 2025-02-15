@@ -277,6 +277,7 @@ class CartProvider with ChangeNotifier {
             "orderedBy": loggedInDistributor,
             "orderTime": time,
             "orderDate": date,
+            "contact" : contact,
             "items": formOrderItemList(),
             "deviceToken": deviceToken,
             "totalPrice": getTotalOrderPrice(isMrpCalculated : true),

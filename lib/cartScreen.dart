@@ -201,7 +201,7 @@ class _CartScreenState extends State<CartScreen> {
                   child: const Padding(
                     padding: EdgeInsets.all(10.0),
                     child: Text(
-                      "All applicable discounts on your cart are shown below.",
+                      "All applicable margins on your cart are shown below.",
                       style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold),

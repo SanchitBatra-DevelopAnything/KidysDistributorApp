@@ -60,14 +60,14 @@ class _CartItemViewState extends State<CartItemView> {
                 width: 10,
               ),
               Text(
-                'Discount : Rs.${widget.cartItem.discount_percentage}%',
+                'Margin : Rs.${widget.cartItem.discount_percentage}%',
                 style: TextStyle(color: Colors.green, fontSize: 14),
               ),
               SizedBox(
                 width: 10,
               ),
               Text(
-                'You Pay : Rs.${widget.cartItem.totalPriceAfterDiscount}',
+                'You Pay : Rs.${widget.cartItem.totalPriceAfterDiscount.toStringAsFixed(2)}',
                 style: TextStyle(color: Colors.black, fontSize: 14),
               ),
             ],

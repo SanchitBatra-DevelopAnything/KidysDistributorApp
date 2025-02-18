@@ -187,6 +187,7 @@ class CartProvider with ChangeNotifier {
     print(
         "REQUEST TO ADD ${title} with price ${price.toString()} and quantity ${quantity} , making total = ${(price * quantity).toString()}");
         var discountPercent = calculateDiscount(slab_1_start,slab_1_end,slab_2_start,slab_2_end,slab_3_start,slab_3_end,slab_1_discount,slab_2_discount,slab_3_discount , quantity);
+
     if (_items!.containsKey(itemId)) {
       //change quantity..
       print("Found update quantity = ${quantity}");
@@ -201,7 +202,7 @@ class CartProvider with ChangeNotifier {
               price: existingCartItem.price,
               quantity: quantity,
               discount_percentage : discountPercent,
-              totalPriceAfterDiscount : (price*quantity) - ((price*quantity)*(discountPercent/100)),
+              totalPriceAfterDiscount : (price*quantity)/(1 + (discountPercent/100)),
               slab_1_start : slab_1_start,
               slab_1_end : slab_1_end,
               slab_2_start : slab_2_start,
@@ -223,7 +224,7 @@ class CartProvider with ChangeNotifier {
               imageUrl: imgPath,
               parentCategoryType: parentCategory,
               discount_percentage : discountPercent,
-              totalPriceAfterDiscount : (price*quantity) - ((price*quantity)*(discountPercent/100)),
+              totalPriceAfterDiscount : (price*quantity)/(1 + (discountPercent/100)),
               slab_1_start : slab_1_start,
               slab_1_end : slab_1_end,
               slab_2_start : slab_2_start,

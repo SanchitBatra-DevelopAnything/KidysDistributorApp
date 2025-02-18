@@ -180,7 +180,7 @@ class _ItemCardState extends State<ItemCard> {
                   2: FlexColumnWidth(1),
                 },
                 children: [
-                  _buildTableRow('Qty', 'Price/Unit', 'Discount', isHeader: true),
+                  _buildTableRow('Qty', 'Price/Unit', 'Margin', isHeader: true),
                   for (var data in tableData)
                     _buildTableRow(data['qty']!, data['price']!, data['discount']!,
                         highlight: _isInRange(_quantity, data['qty']!)),
@@ -342,7 +342,8 @@ TableRow _buildTableRow(String col1, String col2, String col3, {bool isHeader = 
     {
       return price.toString();
     }
-    return (price-(price*(discount/100))).toString();
+    var modifiedDiscountAsPerMarket = 1 + (discount/100);
+    return (price/modifiedDiscountAsPerMarket).toStringAsFixed(2);
   }
 
 

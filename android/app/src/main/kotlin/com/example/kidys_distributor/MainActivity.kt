@@ -1,4 +1,4 @@
-package com.production.kidysDistributor
+package com.production.ODO
 
 import io.flutter.embedding.android.FlutterActivity
 

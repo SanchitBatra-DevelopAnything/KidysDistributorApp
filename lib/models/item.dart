@@ -18,6 +18,7 @@ class Item {
   dynamic slab_1_discount;
   dynamic slab_2_discount;
   dynamic slab_3_discount;
+  Map<String,dynamic> areaPrices;
 
   Item({
     required this.id,
@@ -39,5 +40,6 @@ class Item {
     this.slab_1_discount,
     this.slab_2_discount,
     this.slab_3_discount,
+    required this.areaPrices,
   });
 }

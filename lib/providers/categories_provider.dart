@@ -77,7 +77,8 @@ class CategoriesProvider with ChangeNotifier {
             slab_3_end : ItemData['slab_3_end'] == null ? null : ItemData['slab_3_end'],
             slab_1_discount : ItemData['slab_1_discount'] == null ? null : ItemData['slab_1_discount'],
             slab_2_discount : ItemData['slab_2_discount'] == null ? null : ItemData['slab_2_discount'],
-            slab_3_discount : ItemData['slab_3_discount'] == null ? null : ItemData['slab_3_discount']));
+            slab_3_discount : ItemData['slab_3_discount'] == null ? null : ItemData['slab_3_discount'],
+            areaPrices : ItemData['areaPrices'] == null ? {} : ItemData['areaPrices']));
       });
       _items = loadedItems;
       _filteredItems = [..._items];

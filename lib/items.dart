@@ -47,15 +47,17 @@ class _ItemsState extends State<Items> {
     Provider.of<CategoriesProvider>(context, listen: false).filterItems(text);
   }
 
-  getPrice(Item item) {
-    return item.itemPrice;
-  }
+  dynamic getPrice(Item item, String loggedInArea) {
+  // If areaPrices map is null or does not contain the loggedInArea, return the default price
+  return item.areaPrices?[loggedInArea.toLowerCase().trim()] ?? item.itemPrice;
+}
 
   @override
   Widget build(BuildContext context) {
     var items = Provider.of<CategoriesProvider>(context).filteredItems;
     var loggedInDistributor =
         Provider.of<AuthProvider>(context).loggedInDistributor;
+    var loggedInArea = Provider.of<AuthProvider>(context).loggedInArea;
     return SafeArea(
       child: GestureDetector(
         onTap: () {
@@ -191,7 +193,7 @@ class _ItemsState extends State<Items> {
                                     mainAxisSpacing: 10),
                             itemBuilder: (context, index) => ItemCard(
                                   imgPath: items[index].imgUrl,
-                                  price: getPrice(items[index]),
+                                  price: getPrice(items[index] , loggedInArea),
                                   itemId: items[index].id,
                                   itemName: items[index].itemName,
                                   itemDetails: items[index].details,

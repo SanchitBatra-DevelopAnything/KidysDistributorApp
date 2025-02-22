@@ -49,8 +49,12 @@ class _ItemsState extends State<Items> {
 
   dynamic getPrice(Item item, String loggedInArea) {
   // If areaPrices map is null or does not contain the loggedInArea, return the default price
-  return item.areaPrices?[loggedInArea.toLowerCase().trim()] ?? item.itemPrice;
-}
+  if(item.areaPrices?[loggedInArea.trim().toLowerCase()] == null || item.areaPrices?[loggedInArea.trim().toLowerCase()] == "")
+  {
+    return item.itemPrice;
+  }
+  return item.areaPrices?[loggedInArea.toLowerCase().trim()];
+  }
 
   @override
   Widget build(BuildContext context) {

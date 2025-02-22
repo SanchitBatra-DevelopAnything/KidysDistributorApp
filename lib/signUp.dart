@@ -138,7 +138,7 @@ class _SignUpFormState extends State<SignUpForm> {
                       height: 20,
                     ),
                     PlatformTextField(
-                      labelText: "GST NUMBER",
+                      labelText: "GST/PAN-CARD NO.",
                       controller: GSTController,
                       type: TextInputType.visiblePassword,
                     ),

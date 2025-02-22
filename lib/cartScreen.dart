@@ -106,6 +106,7 @@ class _CartScreenState extends State<CartScreen> {
     final cartItemsList = cartProviderObject.itemList;
     // var totalOrderPrice = cartProviderObject.getTotalOrderPrice();
     var totalOrderPrice = cartProviderObject.getTotalOrderPrice();
+    var remainingPrice = 3000-totalOrderPrice;
 
     return WillPopScope(
       onWillPop: () async {
@@ -179,10 +180,10 @@ class _CartScreenState extends State<CartScreen> {
                                 "Place Order",
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              onPressed: () {
+                              onPressed: totalOrderPrice>=3000 ? () {
                                 placeOrder(context);
-                              },
-                              color: Colors.black,
+                              } : null,
+                              color: totalOrderPrice>=3000 ? Colors.black : Colors.grey,
                             )
                           : SpinKitPulse(
                               color: Color(0xffDD0E1C),
@@ -216,6 +217,24 @@ class _CartScreenState extends State<CartScreen> {
               const SizedBox(
                 height: 5,
               ),
+              Padding(
+                padding:  EdgeInsets.all(8.0),
+                child: Container(
+                  child:  Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Text(
+                      remainingPrice > 0 ? "Please shop for Rs.${remainingPrice.toStringAsFixed(2)} more to place your order" : "YAY! you can now place your order!",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: Colors.white),
+                      color: const Color.fromARGB(255, 241, 157, 163)),
+                ),
+              ) ,
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GestureDetector(

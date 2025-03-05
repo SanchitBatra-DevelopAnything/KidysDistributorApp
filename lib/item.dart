@@ -342,8 +342,9 @@ TableRow _buildTableRow(String col1, String col2, String col3, {bool isHeader = 
     {
       return price.toString();
     }
-    var modifiedDiscountAsPerMarket = 1 + (discount/100);
-    return (price/modifiedDiscountAsPerMarket).toStringAsFixed(2);
+    return (price-(price*(discount/100))).toString();
+    // var modifiedDiscountAsPerMarket = 1 + (discount/100);
+    // return (price/modifiedDiscountAsPerMarket).toStringAsFixed(2);
   }
 
 

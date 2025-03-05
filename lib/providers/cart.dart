@@ -202,7 +202,7 @@ class CartProvider with ChangeNotifier {
               price: existingCartItem.price,
               quantity: quantity,
               discount_percentage : discountPercent,
-              totalPriceAfterDiscount : (price*quantity) - ((price*quantity)*(discountPercent/100)),
+              totalPriceAfterDiscount : calculatePriceByDiscountFormula(price , quantity,discountPercent),
               slab_1_start : slab_1_start,
               slab_1_end : slab_1_end,
               slab_2_start : slab_2_start,
@@ -224,7 +224,7 @@ class CartProvider with ChangeNotifier {
               imageUrl: imgPath,
               parentCategoryType: parentCategory,
               discount_percentage : discountPercent,
-              totalPriceAfterDiscount : (price*quantity) - ((price*quantity)*(discountPercent/100)),
+              totalPriceAfterDiscount : calculatePriceByDiscountFormula(price , quantity , discountPercent),
               slab_1_start : slab_1_start,
               slab_1_end : slab_1_end,
               slab_2_start : slab_2_start,
@@ -240,6 +240,14 @@ class CartProvider with ChangeNotifier {
     notifyListeners();
 
     print("ADDED ITEM");
+  }
+
+  dynamic calculatePriceByDiscountFormula(dynamic price , dynamic quantity , dynamic discount_percentage)
+  {
+    var factor = (discount_percentage/100);
+    var totalPrice = price*quantity;
+
+    return totalPrice - (factor*totalPrice);
   }
 
   dynamic calculateDiscount(dynamic slab_1_start , dynamic slab_1_end , dynamic slab_2_start , dynamic slab_2_end 

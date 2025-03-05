@@ -342,9 +342,12 @@ TableRow _buildTableRow(String col1, String col2, String col3, {bool isHeader = 
     {
       return price.toString();
     }
-    return (price-(price*(discount/100))).toString();
-    // var modifiedDiscountAsPerMarket = 1 + (discount/100);
-    // return (price/modifiedDiscountAsPerMarket).toStringAsFixed(2);
+
+    var factor = (discount/100);
+    var totalPrice = price;
+
+    var discountCalculated = totalPrice - (factor*totalPrice);
+    return discountCalculated.toStringAsFixed(2);
   }
 
 

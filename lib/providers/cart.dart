@@ -247,7 +247,8 @@ class CartProvider with ChangeNotifier {
     var factor = (discount_percentage/100);
     var totalPrice = price*quantity;
 
-    return totalPrice - (factor*totalPrice);
+    var discountCalculatedPrice = totalPrice - (factor*totalPrice);
+    return discountCalculatedPrice;
   }
 
   dynamic calculateDiscount(dynamic slab_1_start , dynamic slab_1_end , dynamic slab_2_start , dynamic slab_2_end 

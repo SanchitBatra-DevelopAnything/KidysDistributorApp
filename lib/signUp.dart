@@ -44,7 +44,8 @@ class _SignUpFormState extends State<SignUpForm> {
         selectedArea.toString().trim().toUpperCase(),
         GSTController.text.trim(),
         shopController.text.trim().toString().toUpperCase(),
-        contactController.text.trim());
+        contactController.text.trim(),
+        shopAddressController.text.trim());
 
     setState(() {
       showAlertDialog(context);

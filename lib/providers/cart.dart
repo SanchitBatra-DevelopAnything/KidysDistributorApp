@@ -270,7 +270,7 @@ class CartProvider with ChangeNotifier {
   }
 
   Future<void> PlaceDistributorOrder(String area, String loggedInDistributor,
-      String time, String activePriceList, String deviceToken , String shop , String GST , String contact) async {
+      String time, String activePriceList, String deviceToken , String shop , String GST , String contact , String shopAddress) async {
     var todaysDate = DateTime.now();
     var year = todaysDate.year.toString();
     var month = todaysDate.month.toString();
@@ -284,6 +284,7 @@ class CartProvider with ChangeNotifier {
             "area": area,
             "shop" : shop,
             "GST" : GST,
+            "shopAddress" : shopAddress,
             "orderedBy": loggedInDistributor,
             "orderTime": time,
             "orderDate": date,

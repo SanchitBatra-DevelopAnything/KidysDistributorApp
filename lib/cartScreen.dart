@@ -77,9 +77,10 @@ class _CartScreenState extends State<CartScreen> {
       String shop = Provider.of<AuthProvider>(context, listen: false).loggedInShop;
       String GST = Provider.of<AuthProvider>(context, listen: false).loggedInGSTNumber;
       String contact = Provider.of<AuthProvider>(context, listen: false).loggedIncontact;
+      String shopAddress = Provider.of<AuthProvider>(context , listen:false).loggedInShopAddress;
 
       await Provider.of<CartProvider>(context, listen: false)
-          .PlaceDistributorOrder(area, distributor, time, "normalPriceList", token , shop , GST, contact);
+          .PlaceDistributorOrder(area, distributor, time, "normalPriceList", token , shop , GST, contact , shopAddress);
       cartObject.clearCart();
       await cartObject.deleteCartOnDB(distributor, area);
       Navigator.pushNamedAndRemoveUntil(

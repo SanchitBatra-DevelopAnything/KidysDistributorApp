@@ -5,6 +5,7 @@ class Distributor {
   String contact;
   String area;
   String shop;
+  String shopAddress;
   String attached_price_list;
 
   Distributor(
@@ -13,6 +14,7 @@ class Distributor {
       required this.shop,
       required this.id,
       required this.GSTNumber,
+      required this.shopAddress,
       required this.attached_price_list,
       required this.area});
 }

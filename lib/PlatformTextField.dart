@@ -5,12 +5,14 @@ class PlatformTextField extends StatelessWidget {
   final String labelText;
   final TextEditingController controller;
   final TextInputType type;
+  final int maxLines;
 
   const PlatformTextField(
       {Key? key,
       required this.labelText,
       required this.controller,
-      required this.type})
+      required this.type,
+      this.maxLines = 1})
       : super(key: key);
 
   @override
@@ -41,6 +43,7 @@ class PlatformTextField extends StatelessWidget {
         : TextFormField(
             style: TextStyle(fontSize: 18),
             keyboardType: type,
+            maxLines : maxLines,
             decoration: InputDecoration(
                 label: Text(labelText),
                 border: OutlineInputBorder(

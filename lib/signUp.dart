@@ -21,6 +21,7 @@ class _SignUpFormState extends State<SignUpForm> {
   TextEditingController shopController = TextEditingController();
   TextEditingController GSTController = TextEditingController();
   TextEditingController contactController = TextEditingController();
+  TextEditingController shopAddressController = TextEditingController();
   final FocusScopeNode _focusScopeNode = FocusScopeNode();
   String? selectedArea;
   bool _isFirstTime = true;
@@ -143,6 +144,15 @@ class _SignUpFormState extends State<SignUpForm> {
                       type: TextInputType.visiblePassword,
                     ),
                     const SizedBox(
+                      height: 20,
+                    ),
+                    PlatformTextField(
+                      labelText:"Shop Address",
+                      controller : shopAddressController,
+                      type : TextInputType.multiline,
+                      maxLines : 3
+                    ),
+    const SizedBox(
                       height: 10,
                     ),
                     Container(

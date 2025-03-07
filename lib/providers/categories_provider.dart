@@ -41,12 +41,21 @@ class CategoriesProvider with ChangeNotifier {
         loadedCategories.add(Category(
             id: categoryId,
             imageUrl: categoryData['imageUrl'],
+            sortOrder : categoryData['sortOrder']!=null ? categoryData['sortOrder'] : 99999,
             categoryName: categoryData['categoryName']));
       });
-      print("fetched category data  = ");
-      loadedCategories.forEach((element) {
-        print(element);
-      });
+      // print("fetched category data  = ");
+      // loadedCategories.forEach((element) {
+      //   print(element);
+      // });
+
+       // Sort categories based on sortOrder, if it's not null
+    loadedCategories.sort((a, b) {
+      if (a.sortOrder == null) return 1; // Put null sortOrder at the end
+      if (b.sortOrder == null) return -1;
+      return a.sortOrder!.compareTo(b.sortOrder!); // Compare based on sortOrder
+    });
+
       _categories = loadedCategories;
       notifyListeners();
     } catch (error) {

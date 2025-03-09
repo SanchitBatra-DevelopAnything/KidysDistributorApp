@@ -12,7 +12,7 @@ class SignUpCompleted extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Sign up is completed, please try to login after 1 hour. Our approval process typically takes 1 hour to complete.',
+                'Sign up is completed, please try to login after 1 hour. Our approval process usually takes 1 hour to complete.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 20,

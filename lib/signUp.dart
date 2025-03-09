@@ -48,8 +48,9 @@ class _SignUpFormState extends State<SignUpForm> {
         shopAddressController.text.trim());
 
     setState(() {
-      showAlertDialog(context);
+      // showAlertDialog(context);
       isSigningUp = false;
+      Navigator.pushReplacementNamed(context , '/afterSignUp');
     });
   }
 

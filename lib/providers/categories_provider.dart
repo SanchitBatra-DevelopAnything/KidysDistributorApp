@@ -89,6 +89,7 @@ class CategoriesProvider with ChangeNotifier {
             slab_3_discount : ItemData['slab_3_discount'] == null ? null : ItemData['slab_3_discount'],
             areaPrices : ItemData['areaPrices'] == null ? {} : ItemData['areaPrices']));
       });
+      loadedItems.sort((a, b) => a.itemName.toLowerCase().compareTo(b.itemName.toLowerCase()));
       _items = loadedItems;
       _filteredItems = [..._items];
       notifyListeners();

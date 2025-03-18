@@ -97,7 +97,7 @@ class MaterialAppWithInitialRoute extends StatelessWidget {
             print("idhar aaya");
             return MaterialApp(
               debugShowCheckedModeBanner: false,
-              title: 'Kidys Distributor',
+              title: 'ODO',
               theme: ThemeData(primarySwatch: Colors.blue),
               initialRoute: '/',
               routes: {

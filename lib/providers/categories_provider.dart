@@ -30,7 +30,7 @@ class CategoriesProvider with ChangeNotifier {
   String activeCategoryName = "";
   String activeCategoryKey = "";
 
-  Future<void> fetchCategoriesFromDB() async {
+  Future<void> fetchCategoriesFromDB({bool isBulandshehar = false}) async {
     const url =
         "https://odo-admin-app-default-rtdb.asia-southeast1.firebasedatabase.app/onlyCategories.json";
     try {
@@ -49,12 +49,18 @@ class CategoriesProvider with ChangeNotifier {
       //   print(element);
       // });
 
+      if (isBulandshehar) {
+        loadedCategories.removeWhere((category) => category.categoryName == "Coca Cola");
+      } 
+
        // Sort categories based on sortOrder, if it's not null
     loadedCategories.sort((a, b) {
       if (a.sortOrder == null) return 1; // Put null sortOrder at the end
       if (b.sortOrder == null) return -1;
       return a.sortOrder!.compareTo(b.sortOrder!); // Compare based on sortOrder
     });
+
+
 
       _categories = loadedCategories;
       notifyListeners();

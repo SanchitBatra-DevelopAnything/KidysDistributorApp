@@ -34,7 +34,7 @@ class _CategoriesState extends State<Categories> {
           .then((_) => {
                 doAuthStuff().then((_) => {
                       Provider.of<CategoriesProvider>(context, listen: false)
-                          .fetchCategoriesFromDB()
+                          .fetchCategoriesFromDB(isBulandshehar : decideOnCoke())
                           .then((value) => setState(() {
                                 var distributor = Provider.of<AuthProvider>(
                                         context,
@@ -65,6 +65,18 @@ class _CategoriesState extends State<Categories> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
+  }
+
+  bool decideOnCoke()
+  {
+    var area = Provider.of<AuthProvider>(context,
+                                        listen: false)
+                                    .loggedInArea;
+    if(area.toString().trim().toLowerCase() == "bulandshehar")
+    {
+      return true;
+    }
+    return false;
   }
 
   Future<void> doAuthStuff() async {

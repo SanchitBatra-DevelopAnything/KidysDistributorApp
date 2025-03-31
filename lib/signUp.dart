@@ -6,6 +6,7 @@ import 'package:kidys_distributor/PlatformDialog.dart';
 import 'package:kidys_distributor/PlatformTextField.dart';
 import 'package:kidys_distributor/providers/auth.dart';
 import 'package:provider/provider.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 import 'bottomSheetModal.dart';
 
@@ -35,9 +36,14 @@ class _SignUpFormState extends State<SignUpForm> {
   }
 
   Future<void> signUp(BuildContext context) async {
-    setState(() {
-      isSigningUp = true;
-    });
+
+    bool result = validateForm(context);
+
+    if(result)
+    {
+        setState(() {
+          isSigningUp = true;
+        });
 
     await Provider.of<AuthProvider>(context, listen: false).distributorSignUp(
         usernameController.text.trim().toString().toUpperCase(),
@@ -52,6 +58,67 @@ class _SignUpFormState extends State<SignUpForm> {
       isSigningUp = false;
       Navigator.pushReplacementNamed(context , '/afterSignUp');
     });
+  }
+
+    
+  }
+
+  showSnackBar(BuildContext context , String msg)
+  {
+    final snackBar = SnackBar(
+                                      /// need to set following properties for best effect of awesome_snackbar_content
+                                      elevation: 0,
+                                      behavior: SnackBarBehavior.floating,
+                                      backgroundColor: Colors.transparent,
+                                      content: AwesomeSnackbarContent(
+                                        title: 'Fill All Fields!',
+                                        message: msg
+                                            ,
+
+                                        /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                                        contentType: ContentType.help,
+                                      ),
+                                    );
+
+    // Show the snackBar
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+
+
+  validateForm(BuildContext context)
+  {
+    if(usernameController.text==null || usernameController.text.trim() == "")
+    {
+      showSnackBar(context , "username should not be empty");
+      return false;
+    }
+    if(shopAddressController.text == null || shopAddressController.text.trim() == "")
+    {
+      showSnackBar(context , "shopAddress should not be empty");
+      return false;
+    }
+    if(shopController.text == null || shopController.text.trim() == "")
+    {
+      showSnackBar(context , "shop name should not be empty");
+      return false;
+    }
+    if(GSTController.text == null || GSTController.text.trim() == "")
+    {
+      showSnackBar(context , "Please enter your GST Number");
+      return false;
+    }
+    if(contactController.text == null || contactController.text.trim() == "" || contactController.text.trim().length!=10)
+    {
+      showSnackBar(context , "Mobile number not valid");
+      return false;
+    }
+    if(selectedArea == null)
+    {
+      showSnackBar(context , "Selecting your area is necessary!");
+      return false;
+    }
+    return true;
   }
 
   @override

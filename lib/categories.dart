@@ -23,43 +23,52 @@ class _CategoriesState extends State<Categories> {
   bool _isLoading = true;
 
   @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    if (_isFirstTime) {
-      // setState(() {
-      //   _isLoading = true;
-      // });
-      Provider.of<AuthProvider>(context, listen: false)
-          .setupNotifications()
-          .then((_) => {
-                doAuthStuff().then((_) => {
-                      Provider.of<CategoriesProvider>(context, listen: false)
-                          .fetchCategoriesFromDB(isBulandshehar : decideOnCoke())
-                          .then((value) => setState(() {
-                                var distributor = Provider.of<AuthProvider>(
-                                        context,
-                                        listen: false)
-                                    .loggedInDistributor;
+void didChangeDependencies() {
+  super.didChangeDependencies();
 
-                                var area = Provider.of<AuthProvider>(context,
-                                        listen: false)
-                                    .loggedInArea;
-                                Provider.of<CartProvider>(context,
-                                        listen: false)
-                                    .fetchCartFromDB(distributor, area)
-                                    .then((_) => {
-                                          print("FETCH COMPLETE!"),
-                                          setState(() {
-                                            _isLoading = false;
-                                          })
-                                        });
-                              }))
-                    })
-              });
-    }
-    _isFirstTime = false; //never run the above if again.
-    super.didChangeDependencies();
+  if (_isFirstTime) {
+    _initializeData();
+    _isFirstTime = false;
   }
+}
+
+Future<void> _initializeData() async {
+  try {
+    // Optionally show loading
+    // setState(() {
+    //   _isLoading = true;
+    // });
+
+    await Provider.of<AuthProvider>(context, listen: false).setupNotifications();
+    if (!mounted) return;
+
+    await doAuthStuff();
+    if (!mounted) return;
+
+    await Provider.of<CategoriesProvider>(context, listen: false)
+        .fetchCategoriesFromDB(isBulandshehar: decideOnCoke());
+    if (!mounted) return;
+
+    var distributor = Provider.of<AuthProvider>(context, listen: false)
+        .loggedInDistributor;
+    var area = Provider.of<AuthProvider>(context, listen: false).loggedInArea;
+
+    await Provider.of<CartProvider>(context, listen: false)
+        .fetchCartFromDB(distributor, area);
+    if (!mounted) return;
+
+    print("FETCH COMPLETE!");
+
+    // Safely update UI
+    setState(() {
+      _isLoading = false;
+    });
+  } catch (error) {
+    print("Error during initialization: $error");
+    // Optionally handle error or show error UI
+  }
+}
+
 
   @override
   void dispose() {

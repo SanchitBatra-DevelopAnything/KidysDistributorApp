@@ -220,7 +220,7 @@ class CartProvider with ChangeNotifier {
               totalPrice: price * quantity,
               price: price,
               title: title,
-              quantity: 1,
+              quantity: quantity, //not using 1 as we were seeing race conditions.
               imageUrl: imgPath,
               parentCategoryType: parentCategory,
               discount_percentage : discountPercent,

@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 import 'bottomSheetModal.dart';
-
+import 'package:geolocator/geolocator.dart';
 class SignUpForm extends StatefulWidget {
   const SignUpForm({Key? key}) : super(key: key);
 
@@ -35,7 +35,37 @@ class _SignUpFormState extends State<SignUpForm> {
     );
   }
 
+ Future<void> getUserLocation(BuildContext context) async {
+  Position? position;
+
+  // Always request permission each time the method is called
+  LocationPermission permission = await Geolocator.requestPermission();
+
+  if (permission == LocationPermission.denied || 
+      permission == LocationPermission.deniedForever) {
+    showSnackBar(context, "Location permission is required for signup!");
+    return;
+  }
+
+  try {
+    position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+  } catch (e) {
+    showSnackBar(context, "Unable to get your location. Please try again.");
+    return;
+  }
+
+  if (position != null) {
+    print("Location fetched successfully: ${position?.latitude}, ${position?.longitude}");
+  } else {
+    showSnackBar(context, "Unable to get your location. Please try again.");
+  }
+}
+
   Future<void> signUp(BuildContext context) async {
+
+    
+    await getUserLocation(context);
 
     bool result = validateForm(context);
 
@@ -256,8 +286,14 @@ class _SignUpFormState extends State<SignUpForm> {
                       children: [
                         !isSigningUp
                             ? CupertinoButton(
-                                onPressed: () {
-                                  signUp(context);
+                                onPressed: () async{
+                                  setState(() {
+                                    isSigningUp = true;
+                                  });
+                                  await signUp(context);
+                                  setState(() {
+                                    isSigningUp = false;
+                                  });
                                 },
                                 color: Colors.black,
                                 child: Text(

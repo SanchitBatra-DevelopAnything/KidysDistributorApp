@@ -7,6 +7,8 @@ class Distributor {
   String shop;
   String shopAddress;
   String attached_price_list;
+  String latitude;
+  String longitude;
 
   Distributor(
       {required this.distributorName,
@@ -16,5 +18,7 @@ class Distributor {
       required this.GSTNumber,
       required this.shopAddress,
       required this.attached_price_list,
-      required this.area});
+      required this.area,
+      required this.latitude,
+      required this.longitude});
 }

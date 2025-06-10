@@ -20,6 +20,8 @@ class AuthProvider with ChangeNotifier {
   String loggedIncontact = "";
   String loggedInGSTNumber = "";
   String loggedInShopAddress = "";
+  String loggedInLatitude = "";
+  String loggedInLongitude = "";
 
   String dbURL = "https://odo-admin-app-default-rtdb.asia-southeast1.firebasedatabase.app/";
   String? _deviceToken = "";
@@ -112,6 +114,8 @@ class AuthProvider with ChangeNotifier {
             contact: distributorData['contact'].toString(),
             attached_price_list : "normal-price-list",
             shopAddress : distributorData['shopAddress'].toString(),
+            latitude: distributorData['latitude']?.toString() ?? "not-found",
+            longitude: distributorData['longitude']?.toString() ?? "not-found",
             GSTNumber: distributorData['GST']));
       });
       _distributors = loadedDistributors;
@@ -134,6 +138,8 @@ class AuthProvider with ChangeNotifier {
     this.loggedIncontact = sharedPreferences.getString("loggedIncontact").toString();
     this.loggedInGSTNumber = sharedPreferences.getString("loggedInGSTNumber").toString();
     this.loggedInShopAddress = sharedPreferences.getString("loggedInShopAddress").toString();
+    this.loggedInLatitude = sharedPreferences.getString("latitude").toString();
+    this.loggedInLongitude = sharedPreferences.getString("longitude").toString();
     notifyListeners();
   }
 
@@ -148,6 +154,8 @@ class AuthProvider with ChangeNotifier {
     sharedPreferences.setString("loggedInGSTNumber",_distributors[activeDistributorIndex].GSTNumber);
     sharedPreferences.setString("loggedInShopAddress" , _distributors[activeDistributorIndex].shopAddress);
     sharedPreferences.setString("distributorKey", distributorKey);
+    sharedPreferences.setString("latitude", _distributors[activeDistributorIndex].latitude);
+    sharedPreferences.setString("longitude", _distributors[activeDistributorIndex].longitude);
     this.loggedInDistributor = _distributors[activeDistributorIndex].distributorName;
     this.loggedInArea = _distributors[activeDistributorIndex].area;
     this.activePriceList = "normal";

@@ -35,7 +35,7 @@ class _SignUpFormState extends State<SignUpForm> {
     );
   }
 
- Future<void> getUserLocation(BuildContext context) async {
+ Future<Position?> getUserLocation(BuildContext context) async {
   Position? position;
 
   // Always request permission each time the method is called
@@ -44,7 +44,7 @@ class _SignUpFormState extends State<SignUpForm> {
   if (permission == LocationPermission.denied || 
       permission == LocationPermission.deniedForever) {
     showSnackBar(context, "Location permission is required for signup!");
-    return;
+    return null;
   }
 
   try {
@@ -52,22 +52,31 @@ class _SignUpFormState extends State<SignUpForm> {
         desiredAccuracy: LocationAccuracy.high);
   } catch (e) {
     showSnackBar(context, "Unable to get your location. Please try again.");
-    return;
+    return null;
   }
 
   if (position != null) {
-    print("Location fetched successfully: ${position?.latitude}, ${position?.longitude}");
+    return position;
   } else {
     showSnackBar(context, "Unable to get your location. Please try again.");
+    return null;
   }
 }
 
   Future<void> signUp(BuildContext context) async {
 
     
-    await getUserLocation(context);
+    Position? position = await getUserLocation(context);
+
+    if(position == null)
+    {
+      showSnackBar(context, "Location not found. Please enable location services.");
+      return;
+    }
 
     bool result = validateForm(context);
+
+    
 
     if(result)
     {
@@ -81,7 +90,9 @@ class _SignUpFormState extends State<SignUpForm> {
         GSTController.text.trim(),
         shopController.text.trim().toString().toUpperCase(),
         contactController.text.trim(),
-        shopAddressController.text.trim());
+        shopAddressController.text.trim(),
+        position.latitude.toString(),
+        position.longitude.toString());
 
     setState(() {
       // showAlertDialog(context);

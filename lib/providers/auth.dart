@@ -86,7 +86,7 @@ class AuthProvider with ChangeNotifier {
   }
 
   Future<void> fetchAreasFromDB() async {
-    const url = "https://odo-admin-app-default-rtdb.asia-southeast1.firebasedatabase.app/Areas.json";
+    const url = "http://10.0.2.2:8080/v1/areas";
     try {
       final response = await http.get(Uri.parse(url));
       final List<Area> loadedAreas = [];

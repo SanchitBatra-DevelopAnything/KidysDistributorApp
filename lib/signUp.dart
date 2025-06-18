@@ -84,21 +84,33 @@ class _SignUpFormState extends State<SignUpForm> {
           isSigningUp = true;
         });
 
+    try {
     await Provider.of<AuthProvider>(context, listen: false).distributorSignUp(
-        usernameController.text.trim().toString().toUpperCase(),
-        selectedArea.toString().trim().toUpperCase(),
-        GSTController.text.trim(),
-        shopController.text.trim().toString().toUpperCase(),
-        contactController.text.trim(),
-        shopAddressController.text.trim(),
-        position.latitude.toString(),
-        position.longitude.toString());
+      usernameController.text.trim().toString().toUpperCase(),
+      selectedArea.toString().trim().toUpperCase(),
+      GSTController.text.trim(),
+      shopController.text.trim().toString().toUpperCase(),
+      contactController.text.trim(),
+      shopAddressController.text.trim(),
+      position.latitude.toString(),
+      position.longitude.toString(),
+    );
 
+    
+
+
+    // Navigate only if the request succeeds
     setState(() {
-      // showAlertDialog(context);
       isSigningUp = false;
-      Navigator.pushReplacementNamed(context , '/afterSignUp');
     });
+    Navigator.pushReplacementNamed(context, '/afterSignUp');
+  } catch (e) {
+    // Handle the exception and show an error message
+    setState(() {
+      isSigningUp = false;
+    });
+    showSnackBar(context, "Signup failed. Please try again.");
+  }
   }
 
     

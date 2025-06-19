@@ -8,15 +8,22 @@ import 'package:kidys_distributor/providers/auth.dart';
 import 'package:provider/provider.dart';
 
 import '../models/cataegory.dart';
+import '../models/cataegory.dart';
+import '../models/brand.dart';
 import 'package:http/http.dart' as http;
 
 class CategoriesProvider with ChangeNotifier {
   List<Category> _categories = [];
+  List<Brand> _brands = [];
   List<Item> _items = [];
   List<Item> _filteredItems = [];
 
   List<Category> get categories {
     return [..._categories];
+  }
+
+  List<Brand> get brands {
+    return [..._brands];
   }
 
   List<Item> get items {
@@ -29,32 +36,30 @@ class CategoriesProvider with ChangeNotifier {
 
   String activeCategoryName = "";
   String activeCategoryKey = "";
+  String activeBrandName = "";
+  String activeBrandKey = "";
 
-  Future<void> fetchCategoriesFromDB({bool isBulandshehar = false}) async {
+  Future<void> fetchBrandsFromDB({bool isBulandshehar = false}) async {
     const url =
-        "https://odo-admin-app-default-rtdb.asia-southeast1.firebasedatabase.app/onlyCategories.json";
+        "http://10.0.2.2:8080/v1/brands";
     try {
       final response = await http.get(Uri.parse(url));
-      final List<Category> loadedCategories = [];
+      final List<Brand> loadedBrands = [];
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
-      extractedData.forEach((categoryId, categoryData) {
-        loadedCategories.add(Category(
-            id: categoryId,
-            imageUrl: categoryData['imageUrl'],
-            sortOrder : categoryData['sortOrder']!=null ? categoryData['sortOrder'] : 99999,
-            categoryName: categoryData['categoryName']));
+      extractedData.forEach((brandId, brandData) {
+        loadedBrands.add(Brand(
+            id: brandId,
+            imageUrl: brandData['imageUrl'],
+            sortOrder : brandData['sortOrder']!=null ? brandData['sortOrder'] : 99999,
+            brandName: brandData['brandName']));
       });
-      // print("fetched category data  = ");
-      // loadedCategories.forEach((element) {
-      //   print(element);
-      // });
 
       if (isBulandshehar) {
-        loadedCategories.removeWhere((category) => category.categoryName == "Coca Cola");
+        loadedBrands.removeWhere((brand) => brand.brandName == "Coca Cola");
       } 
 
-       // Sort categories based on sortOrder, if it's not null
-    loadedCategories.sort((a, b) {
+    
+    loadedBrands.sort((a, b) {
       if (a.sortOrder == null) return 1; // Put null sortOrder at the end
       if (b.sortOrder == null) return -1;
       return a.sortOrder!.compareTo(b.sortOrder!); // Compare based on sortOrder
@@ -62,7 +67,7 @@ class CategoriesProvider with ChangeNotifier {
 
 
 
-      _categories = loadedCategories;
+      _brands = loadedBrands;
       notifyListeners();
     } catch (error) {
       print("CATEGORIES FETCH FAILED!");

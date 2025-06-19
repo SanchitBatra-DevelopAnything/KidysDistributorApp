@@ -106,7 +106,7 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> fetchDistributorsFromDB() async {
     const url =
-        "https://odo-admin-app-default-rtdb.asia-southeast1.firebasedatabase.app/Distributors.json";
+        "http://10.0.2.2:8080/v1/members";
     try {
       final response = await http.get(Uri.parse(url));
       final List<Distributor> loadedDistributors = [];

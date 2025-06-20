@@ -329,8 +329,8 @@ TableRow _buildTableRow(String col1, String col2, String col3, {bool isHeader = 
   bool _isInRange(int quantity, String range) {
     List<String> parts = range.split('-');
     if (parts.length == 2) {
-      int start = int.parse(parts[0]);
-      int end = int.parse(parts[1]);
+      double start = double.parse(parts[0]);
+      double end = double.parse(parts[1]);
       return quantity >= start && quantity <= end;
     }
     return false;

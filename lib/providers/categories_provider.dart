@@ -71,39 +71,26 @@ class CategoriesProvider with ChangeNotifier {
   }
 
   Future<void> loadItemsForActiveCategory() async {
-    var url = "https://odo-admin-app-default-rtdb.asia-southeast1.firebasedatabase.app/Categories/" +
-        activeCategoryKey +
-        "/items.json";
-    try {
-      final response = await http.get(Uri.parse(url));
-      final List<Item> loadedItems = [];
-      final extractedData = json.decode(response.body) as Map<String, dynamic>;
-      extractedData.forEach((ItemId, ItemData) {
-        loadedItems.add(Item(
-            id: ItemId,
-            imgUrl: ItemData['imgUrl'],
-            itemName: ItemData['itemName'],
-            itemPrice : ItemData['itemPrice'],
-            slab_1_start : ItemData['slab_1_start'] == null ? null : ItemData['slab_1_start'],
-            slab_1_end : ItemData['slab_1_end'] == null ? null : ItemData['slab_1_end'],
-            slab_2_start : ItemData['slab_2_start'] == null ? null : ItemData['slab_2_start'],
-            slab_2_end : ItemData['slab_2_end'] == null ? null : ItemData['slab_2_end'],
-            slab_3_start : ItemData['slab_3_start'] == null ? null : ItemData['slab_3_start'],
-            slab_3_end : ItemData['slab_3_end'] == null ? null : ItemData['slab_3_end'],
-            slab_1_discount : ItemData['slab_1_discount'] == null ? null : ItemData['slab_1_discount'],
-            slab_2_discount : ItemData['slab_2_discount'] == null ? null : ItemData['slab_2_discount'],
-            slab_3_discount : ItemData['slab_3_discount'] == null ? null : ItemData['slab_3_discount'],
-            areaPrices : ItemData['areaPrices'] == null ? {} : ItemData['areaPrices']));
-      });
-      loadedItems.sort((a, b) => a.itemName.toLowerCase().compareTo(b.itemName.toLowerCase()));
-      _items = loadedItems;
-      _filteredItems = [..._items];
-      notifyListeners();
-    } catch (error) {
-      print("ITEMS FETCH FAILED!");
-      throw error;
-    }
+  final url = "https://odo-admin-app-default-rtdb.asia-southeast1.firebasedatabase.app/Categories/$activeCategoryKey/items.json";
+  try {
+    final response = await http.get(Uri.parse(url));
+    final List<Item> loadedItems = [];
+    final extractedData = json.decode(response.body) as Map<String, dynamic>;
+
+    extractedData.forEach((itemId, itemData) {
+      loadedItems.add(Item.fromJson(itemId, itemData));
+    });
+
+    loadedItems.sort((a, b) => a.itemName.toLowerCase().compareTo(b.itemName.toLowerCase()));
+    _items = loadedItems;
+    _filteredItems = [..._items];
+    notifyListeners();
+  } catch (error) {
+    print("ITEMS FETCH FAILED!");
+    throw error;
   }
+}
+
 
   void filterItems(String searchFor) {
     if (searchFor == '') {

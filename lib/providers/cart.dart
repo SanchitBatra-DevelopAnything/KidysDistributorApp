@@ -335,9 +335,9 @@ class CartProvider with ChangeNotifier {
     }
   }
 
-  Future<void> fetchCartFromDB(String distributor, String area) async {
+  Future<void> fetchCartFromDB(String member, String memberKey) async {
     var url =
-        "https://odo-admin-app-default-rtdb.asia-southeast1.firebasedatabase.app/cart/${area}/${distributor}/items.json";
+        "http://10.0.2.2:8080/v1/cart/get/${memberKey}";
     try {
       final response = await http.get(Uri.parse(url));
       if (response.body == 'null') {

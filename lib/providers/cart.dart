@@ -69,7 +69,10 @@ class CartItem {
       'slab_3_end': this.slab_3_end,
       'slab_3_discount': this.slab_3_discount,
       };
+
+    
 }
+
 
 class CartProvider with ChangeNotifier {
   Map<String, CartItem>? _items = {}; //product db id as key.
@@ -359,13 +362,16 @@ class CartProvider with ChangeNotifier {
         //     quantity: cartItem['quantity'],
         //     title: cartItem['title'],
         //     totalPrice: cartItem['totalPrice']));
+        
+        
+        print("Cart Item Map: $cartItem");
         addItem(
           cartItem['id'],
           cartItem['price'],
           cartItem['quantity'],
           cartItem['title'],
           cartItem['imageUrl'],
-          cartItem['parentCategoryType'],
+          cartItem['parentCategoryType']??"will-be-added",
           cartItem['parentBrandName'],
           cartItem['slab_1_start'],
           cartItem['slab_1_end'],
@@ -378,9 +384,10 @@ class CartProvider with ChangeNotifier {
           cartItem['slab_3_discount']
         );
       });
-    } catch (error) {
+    } catch (error , stackTrace) {
       print("ERROR IS");
       print(error);
+      print(stackTrace);
       throw error;
     }
   }

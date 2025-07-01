@@ -81,6 +81,7 @@ class _CartItemViewState extends State<CartItemView> {
             child: CountButtonView(
                 itemId: widget.cartItem.id,
                 parentCategory: widget.cartItem.parentCategoryType,
+                parentBrandName:widget.cartItem.parentBrandName,
                 onChange: (count) => {
                       if (count == 0)
                         {
@@ -95,6 +96,7 @@ class _CartItemViewState extends State<CartItemView> {
                             widget.cartItem.title,
                             widget.cartItem.imageUrl,
                             widget.cartItem.parentCategoryType,
+                            widget.cartItem.parentBrandName,
                             widget.cartItem.slab_1_start,
                                         widget.cartItem.slab_1_end,
                                         widget.cartItem.slab_1_discount,

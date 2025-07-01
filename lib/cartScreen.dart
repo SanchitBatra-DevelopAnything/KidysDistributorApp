@@ -94,14 +94,13 @@ class _CartScreenState extends State<CartScreen> {
   saveCart(
       AuthProvider authProviderObject, CartProvider cartProviderObject) async {
     await cartProviderObject.saveCart(authProviderObject.loggedInDistributor,
-        authProviderObject.loggedInArea);
+        authProviderObject.activeDistributorKey);
   }
 
   deleteCart(
       AuthProvider authProviderObject, CartProvider cartProviderObject) async {
-    await cartProviderObject.deleteCartOnDB(
-        authProviderObject.loggedInDistributor,
-        authProviderObject.loggedInArea);
+    await cartProviderObject.deleteCartOnDB(authProviderObject.loggedInDistributor,
+        authProviderObject.activeDistributorKey);
   }
 
   @override

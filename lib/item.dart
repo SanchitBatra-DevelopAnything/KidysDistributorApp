@@ -85,6 +85,8 @@ class _ItemCardState extends State<ItemCard> {
 
     var parentCategory =
         Provider.of<CategoriesProvider>(context).activeCategoryName;
+    var parentBrandName =
+        Provider.of<CategoriesProvider>(context).activeBrandName;
 
     return Container(
       decoration: BoxDecoration(
@@ -239,6 +241,7 @@ class _ItemCardState extends State<ItemCard> {
                                       widget.itemName,
                                       widget.imgPath,
                                       parentCategory,
+                                      parentBrandName,
                                       widget.slab_1_start,
                                       widget.slab_1_end,
                                       widget.slab_1_discount,
@@ -258,6 +261,7 @@ class _ItemCardState extends State<ItemCard> {
                             : CountButtonView(
                                 itemId: widget.itemId,
                                 parentCategory: parentCategory,
+                                parentBrandName:parentBrandName,
                                 onChange: (count) {
                                   if (count == 0) {
                                     cartProviderObject
@@ -271,6 +275,7 @@ class _ItemCardState extends State<ItemCard> {
                                       widget.itemName.toLowerCase(),
                                       widget.imgPath,
                                       parentCategory,
+                                      parentBrandName,
                                       widget.slab_1_start,
                                       widget.slab_1_end,
                                       widget.slab_1_discount,

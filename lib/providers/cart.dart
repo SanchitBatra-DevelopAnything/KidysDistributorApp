@@ -25,6 +25,7 @@ class CartItem {
   final dynamic slab_3_start;
   final dynamic slab_3_end;
   final dynamic slab_3_discount;
+  final String parentBrandName;
 
   CartItem(
       {required this.id,
@@ -44,6 +45,7 @@ class CartItem {
       required this.slab_2_discount,
       required this.slab_3_start,
       required this.slab_3_end,
+      required this.parentBrandName,
       required this.slab_3_discount,});
 
   Map toJson() => {
@@ -53,6 +55,7 @@ class CartItem {
         'price': this.price,
         'imageUrl': this.imageUrl,
         'parentCategoryType': this.parentCategoryType,
+        'parentBrandName':this.parentBrandName,
         'totalPrice': this.totalPrice,
         'discount_percentage' : this.discount_percentage,
         'totalPriceAfterDiscount' : this.totalPriceAfterDiscount,
@@ -155,6 +158,7 @@ class CartProvider with ChangeNotifier {
           totalPrice: value.totalPrice,
           imageUrl: value.imageUrl,
           parentCategoryType: value.parentCategoryType,
+          parentBrandName: value.parentBrandName,
           price: value.price,
           quantity: value.quantity,
           discount_percentage : value.discount_percentage,
@@ -182,7 +186,7 @@ class CartProvider with ChangeNotifier {
   // }
 
   void addItem(String itemId, num price, num quantity, String title,
-      String imgPath, String parentCategory , dynamic slab_1_start , dynamic slab_1_end , dynamic slab_1_discount
+      String imgPath, String parentCategory , String parentBrandName , dynamic slab_1_start , dynamic slab_1_end , dynamic slab_1_discount
       , dynamic slab_2_start , dynamic slab_2_end , dynamic slab_2_discount, dynamic slab_3_start, dynamic slab_3_end,dynamic slab_3_discount) {
     print(
         "REQUEST TO ADD ${title} with price ${price.toString()} and quantity ${quantity} , making total = ${(price * quantity).toString()}");
@@ -199,6 +203,7 @@ class CartProvider with ChangeNotifier {
               title: existingCartItem.title,
               imageUrl: existingCartItem.imageUrl,
               parentCategoryType: existingCartItem.parentCategoryType,
+              parentBrandName: existingCartItem.parentBrandName,
               price: existingCartItem.price,
               quantity: quantity,
               discount_percentage : discountPercent,
@@ -223,6 +228,7 @@ class CartProvider with ChangeNotifier {
               quantity: quantity, //not using 1 as we were seeing race conditions.
               imageUrl: imgPath,
               parentCategoryType: parentCategory,
+              parentBrandName:parentBrandName,
               discount_percentage : discountPercent,
               totalPriceAfterDiscount : calculatePriceByDiscountFormula(price , quantity , discountPercent),
               slab_1_start : slab_1_start,
@@ -303,9 +309,9 @@ class CartProvider with ChangeNotifier {
     }
   }
 
-  Future<void> deleteCartOnDB(String distributor, String area) async {
+  Future<void> deleteCartOnDB(String member, String memberKey) async {
     var url =
-        "https://odo-admin-app-default-rtdb.asia-southeast1.firebasedatabase.app/cart/${area}/${distributor}.json";
+        "http://10.0.2.2:8080/v1/cart/delete/${memberKey}";
     try {
       await http.delete(Uri.parse(url));
     } catch (error) {
@@ -315,11 +321,12 @@ class CartProvider with ChangeNotifier {
     }
   }
 
-  Future<void> saveCart(String distributor, String area) async {
+  Future<void> saveCart(String member, String memberKey) async {
     var url =
-        "https://odo-admin-app-default-rtdb.asia-southeast1.firebasedatabase.app/cart/${area}/${distributor}.json";
+        "http://10.0.2.2:8080/v1/cart/save/${memberKey}";
     try {
       await http.put(Uri.parse(url),
+          headers: {"Content-Type": "application/json"},
           body: json.encode({"items": formSaveCartList()}));
     } catch (error) {
       print("ERROR IS");
@@ -359,6 +366,7 @@ class CartProvider with ChangeNotifier {
           cartItem['title'],
           cartItem['imageUrl'],
           cartItem['parentCategoryType'],
+          cartItem['parentBrandName'],
           cartItem['slab_1_start'],
           cartItem['slab_1_end'],
           cartItem['slab_1_discount'],
@@ -382,6 +390,7 @@ class CartProvider with ChangeNotifier {
     itemList.forEach((cartItem) {
       items.add(cartItem.toJson());
     });
+    print("Formed item list successfully!");
     return items;
   }
 
@@ -398,6 +407,7 @@ class CartProvider with ChangeNotifier {
               discount_percentage : discountPercent)
           .toJson());
     });
+    
     return items;
   }
 }

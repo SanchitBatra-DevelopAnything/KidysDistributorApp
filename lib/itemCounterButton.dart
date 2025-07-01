@@ -8,12 +8,14 @@ class CountButtonView extends StatefulWidget {
   final String itemId;
   final CountButtonClickCallBack onChange;
   final String parentCategory;
+  final String parentBrandName;
 
   const CountButtonView({
     Key? key,
     required this.itemId,
     required this.onChange,
     required this.parentCategory,
+    required this.parentBrandName,
   }) : super(key: key);
 
   @override

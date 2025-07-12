@@ -5,11 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:kidys_distributor/providers/auth.dart';
 import 'package:kidys_distributor/providers/cart.dart';
+import 'package:kidys_distributor/providers/banner.dart';
 import 'package:kidys_distributor/providers/categories_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'PlatformDialog.dart';
 import 'cartBadge.dart';
+import 'bannerOverlay.dart';
 
 class Categories extends StatefulWidget {
   const Categories({Key? key}) : super(key: key);
@@ -34,11 +36,6 @@ void didChangeDependencies() {
 
 Future<void> _initializeData() async {
   try {
-    // Optionally show loading
-    // setState(() {
-    //   _isLoading = true;
-    // });
-
     await Provider.of<AuthProvider>(context, listen: false).setupNotifications();
     if (!mounted) return;
 
@@ -49,25 +46,51 @@ Future<void> _initializeData() async {
         .fetchCategoriesFromDB(isBulandshehar: decideOnCoke());
     if (!mounted) return;
 
-    var distributor = Provider.of<AuthProvider>(context, listen: false)
-        .loggedInDistributor;
+    var distributor = Provider.of<AuthProvider>(context, listen: false).loggedInDistributor;
     var area = Provider.of<AuthProvider>(context, listen: false).loggedInArea;
 
     await Provider.of<CartProvider>(context, listen: false)
         .fetchCartFromDB(distributor, area);
     if (!mounted) return;
 
-    print("FETCH COMPLETE!");
+    await Provider.of<BannerProvider>(context, listen: false).fetchBannersFromDB();
+    if (!mounted) return;
 
-    // Safely update UI
-    setState(() {
-      _isLoading = false;
-    });
+    var bannerList = Provider.of<BannerProvider>(context, listen: false).banners;
+
+    if (bannerList.isNotEmpty) {
+      // Preload all banner images
+      await Future.wait(bannerList.map((banner) async {
+        await precacheImage(NetworkImage(banner.imageUrl), context);
+      }));
+
+      // After preload, show overlay banners
+      Navigator.of(context).push(
+        PageRouteBuilder(
+          opaque: false,
+          barrierDismissible: false,
+          pageBuilder: (_, __, ___) => BannerOverlay(
+            bannerList: bannerList,
+            onComplete: () {
+              setState(() {
+                _isLoading = false;
+              });
+            },
+          ),
+        ),
+      );
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+
+    print("FETCH COMPLETE!");
   } catch (error) {
     print("Error during initialization: $error");
-    // Optionally handle error or show error UI
   }
 }
+
 
 
   @override

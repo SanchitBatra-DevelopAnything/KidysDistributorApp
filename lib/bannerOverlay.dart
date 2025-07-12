@@ -51,7 +51,7 @@ class _BannerOverlayState extends State<BannerOverlay> {
                     aspectRatio: 9 / 16,
                     child: Image.network(
                       banner.imageUrl,
-                      fit: BoxFit.cover,
+                      fit: BoxFit.fill,
                       loadingBuilder: (context, child, progress) {
                         if (progress == null) return child;
                         return Center(child: CircularProgressIndicator());

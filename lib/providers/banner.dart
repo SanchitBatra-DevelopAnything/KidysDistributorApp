@@ -27,6 +27,13 @@ class BannerProvider with ChangeNotifier {
     try {
       final response = await http.get(Uri.parse(url));
       final List<BannerModel> loadedBanners = [];
+      print(response.body);
+      if (response.body == null || response.body == "null") {
+        _banners = loadedBanners;
+      notifyListeners();
+  print("Server response is null or empty.");
+  return; // Return an empty map or handle it as needed
+}
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
       extractedData.forEach((bannerId, bannerData) {
         loadedBanners.add(BannerModel(
